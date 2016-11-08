@@ -1,0 +1,209 @@
+
+atlas.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+current_marker
+  rotate: false
+  xy: 8, 45
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+player-right0
+  rotate: false
+  xy: 96, 77
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+player-right1
+  rotate: false
+  xy: 152, 77
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+player-right2
+  rotate: false
+  xy: 208, 77
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+player-right3
+  rotate: false
+  xy: 264, 77
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+player-right4
+  rotate: false
+  xy: 320, 77
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+player-right5
+  rotate: false
+  xy: 376, 77
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+blue_button0_np
+  rotate: false
+  xy: 8, 7
+  size: 36, 36
+  split: 4, 4, 4, 4
+  orig: 36, 36
+  offset: 0, 0
+  index: -1
+blue_button1_np
+  rotate: false
+  xy: 432, 89
+  size: 36, 36
+  split: 4, 4, 4, 4
+  orig: 36, 36
+  offset: 0, 0
+  index: -1
+green_button0_np
+  rotate: false
+  xy: 52, 7
+  size: 36, 36
+  split: 4, 4, 4, 4
+  orig: 36, 36
+  offset: 0, 0
+  index: -1
+green_button1_np
+  rotate: false
+  xy: 96, 39
+  size: 36, 36
+  split: 4, 4, 4, 4
+  orig: 36, 36
+  offset: 0, 0
+  index: -1
+test-box-0
+  rotate: false
+  xy: 140, 43
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+test-box-1
+  rotate: false
+  xy: 180, 43
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+test-box-2
+  rotate: false
+  xy: 220, 43
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+test-box-3
+  rotate: false
+  xy: 260, 43
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+test-box-4
+  rotate: false
+  xy: 300, 43
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+test-np-0
+  rotate: false
+  xy: 476, 101
+  size: 24, 24
+  split: 0, 0, 0, 0
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+test-np-1
+  rotate: false
+  xy: 96, 13
+  size: 24, 24
+  split: 0, 0, 0, 0
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+test-np-2
+  rotate: false
+  xy: 340, 51
+  size: 24, 24
+  split: 0, 0, 0, 0
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+test-np-3
+  rotate: false
+  xy: 372, 51
+  size: 24, 24
+  split: 0, 0, 0, 0
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+test-np-4
+  rotate: false
+  xy: 404, 51
+  size: 24, 24
+  split: 0, 0, 0, 0
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+text-field-bg-np
+  rotate: false
+  xy: 404, 51
+  size: 24, 24
+  split: 0, 0, 0, 0
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+font-cursor-np
+  rotate: false
+  xy: 128, 13
+  size: 3, 24
+  split: 0, 0, 0, 0
+  orig: 3, 24
+  offset: 0, 0
+  index: -1
+vertical-bar-empty-np
+  rotate: false
+  xy: 8, 2
+  size: 14, 3
+  split: 0, 0, 0, 0
+  orig: 14, 3
+  offset: 0, 0
+  index: -1
+vertical-bar-fill-np
+  rotate: false
+  xy: 476, 96
+  size: 14, 3
+  split: 0, 0, 0, 0
+  orig: 14, 3
+  offset: 0, 0
+  index: -1
+horizontal-bar-empty-np
+  rotate: false
+  xy: 340, 43
+  size: 3, 6
+  split: 0, 0, 0, 0
+  orig: 3, 6
+  offset: 0, 0
+  index: -1
+horizontal-bar-fill-np
+  rotate: false
+  xy: 432, 81
+  size: 3, 6
+  split: 0, 0, 0, 0
+  orig: 3, 6
+  offset: 0, 0
+  index: -1

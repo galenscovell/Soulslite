@@ -1,27 +1,22 @@
 package galenscovell.soulslite.ui.screens
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics._
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d._
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui._
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
-import com.badlogic.gdx.utils.viewport.FitViewport
-import com.badlogic.gdx.{Gdx, Screen}
 import galenscovell.soulslite.Main
 import galenscovell.soulslite.util._
 
 
-class LoadScreen(root: Main) extends Screen {
-  private val camera: OrthographicCamera = new OrthographicCamera(Gdx.graphics.getWidth, Gdx.graphics.getHeight)
-  private var stage: Stage = _
+class LoadScreen(root: Main) extends AbstractScreen(root) {
   private var loadingBar: ProgressBar = _
 
 
-
-  private def create(): Unit = {
-    val viewport: FitViewport = new FitViewport(Constants.EXACT_X, Constants.EXACT_Y, camera)
-    stage = new Stage(viewport, root.spriteBatch)
+  override def create(): Unit = {
+    super.create()
 
     val loadingMain: Table = new Table
     loadingMain.setFillParent(true)
@@ -29,6 +24,7 @@ class LoadScreen(root: Main) extends Screen {
     loadingBar = createBar
     barTable.add(loadingBar).width(400).expand.fill
     loadingMain.add(barTable).expand.fill
+
     stage.addActor(loadingMain)
   }
 
@@ -44,15 +40,12 @@ class LoadScreen(root: Main) extends Screen {
   }
 
 
-
   /**********************
     * Screen Operations *
     **********************/
   override def render(delta: Float): Unit = {
-    Gdx.gl.glClearColor(0, 0, 0, 1)
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-    stage.act(delta)
-    stage.draw()
+    super.render(delta)
+
     if (Resources.assetManager.update) {
       Resources.done()
       stage.getRoot.addAction(Actions.sequence(Actions.fadeOut(0.4f), toMainMenuScreen))
@@ -67,35 +60,12 @@ class LoadScreen(root: Main) extends Screen {
     stage.getRoot.addAction(Actions.sequence(Actions.fadeIn(0.4f)))
   }
 
-  override def resize(width: Int, height: Int): Unit = {
-    if (stage != null) {
-      stage.getViewport.update(width, height, true)
-    }
-  }
-
-  override def hide(): Unit = {
-    Gdx.input.setInputProcessor(null)
-  }
-
-  override def dispose(): Unit = {
-    if (stage != null) {
-      stage.dispose()
-    }
-  }
-
-  override def pause(): Unit =  {}
-
-  override def resume(): Unit =  {}
-
-
 
   /***************************
     * Custom Scene2D Actions *
     ***************************/
-  private[screens] var toMainMenuScreen: Action = new Action() {
-    def act(delta: Float): Boolean = {
-      root.setScreen(root.mainMenuScreen)
-      true
-    }
+  private[screens] var toMainMenuScreen: Action = (delta: Float) => {
+    root.setScreen(root.mainMenuScreen)
+    true
   }
 }

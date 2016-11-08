@@ -10,7 +10,6 @@ class Main extends Game {
   var spriteBatch: SpriteBatch = _
   var loadScreen: LoadScreen = _
   var mainMenuScreen: MainMenuScreen = _
-//    var startScreen: StartScreen = _
   var gameScreen: GameScreen = _
 
 
@@ -24,20 +23,10 @@ class Main extends Game {
   override def dispose(): Unit =  {
     loadScreen.dispose()
     mainMenuScreen.dispose()
-//    if (startScreen != null) {
-//      startScreen.dispose()
-//    }
     if (gameScreen != null) {
       gameScreen.dispose()
     }
     Resources.dispose()
-  }
-
-  def createStartScreen(): Unit = {
-//    if (startScreen != null) {
-//      startScreen.dispose()
-//    }
-//    startScreen = new StartScreen(this)
   }
 
   def createGameScreen(): Unit =  {
@@ -48,10 +37,6 @@ class Main extends Game {
   }
 
   def loadGame(): Unit = {
-    // TODO: Not yet implemented
-  }
-
-  def createPreferenceScreen(): Unit =  {
     // TODO: Not yet implemented
   }
 

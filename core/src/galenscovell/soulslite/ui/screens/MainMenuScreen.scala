@@ -1,31 +1,25 @@
 package galenscovell.soulslite.ui.screens
 
-import com.badlogic.gdx.graphics.{GL20, OrthographicCamera}
 import com.badlogic.gdx.scenes.scene2d._
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui._
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.Align
-import com.badlogic.gdx.utils.viewport.FitViewport
-import com.badlogic.gdx.{Gdx, Screen}
 import galenscovell.soulslite.Main
 import galenscovell.soulslite.util._
 
 
-class MainMenuScreen(root: Main) extends Screen {
-  private val camera: OrthographicCamera = new OrthographicCamera(Gdx.graphics.getWidth, Gdx.graphics.getHeight)
-  private var stage: Stage = _
+class MainMenuScreen(root: Main) extends AbstractScreen(root) {
 
 
-  private def create(): Unit = {
-    val viewport: FitViewport = new FitViewport(Constants.EXACT_X, Constants.EXACT_Y, camera)
-    stage = new Stage(viewport, root.spriteBatch)
+  override def create(): Unit = {
+    super.create()
 
     val mainTable: Table = new Table
     mainTable.setFillParent(true)
 
     val titleTable: Table = new Table
-    val titleLabel: Label = new Label("Hinterstar", Resources.labelXLargeStyle)
+    val titleLabel: Label = new Label("Soulslite", Resources.labelXLargeStyle)
     titleLabel.setAlignment(Align.center, Align.left)
     titleTable.add(titleLabel).width(760).height(60)
 
@@ -36,7 +30,7 @@ class MainMenuScreen(root: Main) extends Screen {
     newGameButton.getLabel.setAlignment(Align.center, Align.center)
     newGameButton.addListener(new ClickListener() {
       override def clicked(event: InputEvent, x: Float, y: Float): Unit = {
-        root.createStartScreen()
+        root.createGameScreen()
         stage.getRoot.addAction(Actions.sequence(
           Actions.fadeOut(0.3f),
           toStartScreenAction)
@@ -75,7 +69,7 @@ class MainMenuScreen(root: Main) extends Screen {
     })
 
     val detailTable: Table = new Table
-    val detailLabel: Label = new Label(s"v0.1a 2016 Galen Scovell", Resources.labelSmallStyle)
+    val detailLabel: Label = new Label(s"v1a 2016 Galen Scovell", Resources.labelSmallStyle)
     detailLabel.setAlignment(Align.center, Align.right)
     detailTable.add(detailLabel).width(760).height(40)
 
@@ -105,57 +99,15 @@ class MainMenuScreen(root: Main) extends Screen {
   }
 
 
-
-  /**********************
-    * Screen Operations *
-    **********************/
-  override def render(delta: Float): Unit = {
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-    Gdx.gl.glClearColor(0, 0, 0, 1)
-    stage.act(delta)
-    stage.draw()
-  }
-
-  override def resize(width: Int, height: Int): Unit = {
-    if (stage != null) {
-      stage.getViewport.update(width, height, true)
-    }
-  }
-
-  override def show(): Unit = {
-    create()
-    Gdx.input.setInputProcessor(stage)
-  }
-
-  override def hide(): Unit = {
-    Gdx.input.setInputProcessor(null)
-  }
-
-  override def dispose(): Unit = {
-    if (stage != null) {
-      stage.dispose()
-    }
-  }
-
-  override def pause(): Unit =  {}
-
-  override def resume(): Unit =  {}
-
-
-
   /***************************
     * Custom Scene2D Actions *
     ***************************/
-  private[screens] var toStartScreenAction: Action = new Action() {
-    def act(delta: Float): Boolean = {
-      // root.setScreen(root.startScreen)
-      true
-    }
+  private[screens] var toStartScreenAction: Action = (delta: Float) => {
+    root.setScreen(root.gameScreen)
+    true
   }
-  private[screens] var quitGameAction: Action = new Action() {
-    def act(delta: Float): Boolean = {
-      root.quitGame()
-      true
-    }
+  private[screens] var quitGameAction: Action = (delta: Float) => {
+    root.quitGame()
+    true
   }
 }
