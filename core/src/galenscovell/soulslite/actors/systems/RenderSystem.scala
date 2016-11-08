@@ -7,14 +7,14 @@ import galenscovell.soulslite.actors.components.{PositionComponent, SpriteCompon
 
 
 class RenderSystem(family: Family, spriteBatch: SpriteBatch) extends IteratingSystem(family) {
-  private val sm: ComponentMapper[SpriteComponent] = ComponentMapper.getFor(classOf[SpriteComponent])
-  private val pm: ComponentMapper[PositionComponent] = ComponentMapper.getFor(classOf[PositionComponent])
+  private val spriteMapper: ComponentMapper[SpriteComponent] = ComponentMapper.getFor(classOf[SpriteComponent])
+  private val positionMapper: ComponentMapper[PositionComponent] = ComponentMapper.getFor(classOf[PositionComponent])
 
 
   override def processEntity(entity: Entity, deltaTime: Float): Unit = {
-    val sc: SpriteComponent = sm.get(entity)
-    val pc: PositionComponent = pm.get(entity)
+    val spriteComponent: SpriteComponent = spriteMapper.get(entity)
+    val positionComponent: PositionComponent = positionMapper.get(entity)
 
-    spriteBatch.draw(sc.getSprite, pc.x, pc.y, 48, 48)
+    spriteBatch.draw(spriteComponent.getSprite, positionComponent.x, positionComponent.y, 48, 48)
   }
 }

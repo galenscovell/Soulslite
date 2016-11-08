@@ -6,15 +6,15 @@ import galenscovell.soulslite.actors.components.{PositionComponent, VelocityComp
 
 
 class MovementSystem(family: Family) extends IteratingSystem(family) {
-  private val pm: ComponentMapper[PositionComponent] = ComponentMapper.getFor(classOf[PositionComponent])
-  private val vm: ComponentMapper[VelocityComponent] = ComponentMapper.getFor(classOf[VelocityComponent])
+  private val positionMapper: ComponentMapper[PositionComponent] = ComponentMapper.getFor(classOf[PositionComponent])
+  private val velocityMapper: ComponentMapper[VelocityComponent] = ComponentMapper.getFor(classOf[VelocityComponent])
 
 
   override def processEntity(entity: Entity, deltaTime: Float): Unit = {
-    val position: PositionComponent = pm.get(entity)
-    val velocity: VelocityComponent = vm.get(entity)
+    val position: PositionComponent = positionMapper.get(entity)
+    val velocity: VelocityComponent = velocityMapper.get(entity)
 
-    position.x += velocity.velocity * deltaTime
-    position.y += velocity.velocity * deltaTime
+    position.x += velocity.vx * deltaTime
+    position.y += velocity.vy * deltaTime
   }
 }

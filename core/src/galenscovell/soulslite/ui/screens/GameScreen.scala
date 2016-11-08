@@ -1,20 +1,25 @@
 package galenscovell.soulslite.ui.screens
 
 import com.badlogic.ashley.core.Engine
+import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics._
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShaderProgram
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.{Gdx, _}
 import galenscovell.soulslite.Main
-import galenscovell.soulslite.processing.{EntityManager, EnvironmentRenderer}
+import galenscovell.soulslite.processing._
 
 
 class GameScreen(root: Main) extends AbstractScreen(root) {
   private val entityBatch: SpriteBatch = new SpriteBatch()
   private var entityManager: EntityManager = _
   private val renderer: EnvironmentRenderer = new EnvironmentRenderer
-  private val input: InputMultiplexer = new InputMultiplexer
+  private val inputMultiplexer: InputMultiplexer = new InputMultiplexer
+  private val inputHandler: InputHandler = new InputHandler
+
+  private val timestep: Float = (1 / 60.0f) * 30
+  private var accumulator: Float = 0
 
   private var time: Float = 0f
   private var shader: ShaderProgram = _
@@ -27,7 +32,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     ********************/
   override def create(): Unit = {
     stage = new Stage(viewport, root.spriteBatch)
-    entityManager = new EntityManager(new Engine, entityBatch)
+    entityManager = new EntityManager(new Engine, entityBatch, inputHandler)
     enableInput()
     setupShader()
   }
@@ -46,8 +51,9 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   }
 
   private def enableInput(): Unit = {
-    input.addProcessor(stage)
-    Gdx.input.setInputProcessor(input)
+    inputMultiplexer.addProcessor(stage)
+    inputMultiplexer.addProcessor(inputHandler)
+    Gdx.input.setInputProcessor(inputMultiplexer)
   }
 
 
@@ -78,6 +84,11 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 //    shader.begin()
 //    shader.setUniformf("u_time", time)
 //    shader.end()
+
+    if (accumulator > timestep) {
+      accumulator -= timestep
+    }
+    accumulator += delta
 
     // renderer.render(accumulator / timestep)
 
