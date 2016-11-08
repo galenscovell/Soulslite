@@ -16,9 +16,9 @@ class InputSystem(family: Family, inputHandler: InputHandler) extends IteratingS
     if (inputHandler.leftPressed && inputHandler.rightPressed) {
       velocity.vx = 0
     } else if (inputHandler.leftPressed) {
-      velocity.vx -= 6
+      velocity.vx = -128
     } else if (inputHandler.rightPressed) {
-      velocity.vx += 6
+      velocity.vx = 128
     } else {
       velocity.vx = 0
     }
@@ -26,9 +26,9 @@ class InputSystem(family: Family, inputHandler: InputHandler) extends IteratingS
     if (inputHandler.upPressed && inputHandler.downPressed) {
       velocity.vx = 0
     } else if (inputHandler.upPressed) {
-      velocity.vy += 6
+      velocity.vy = 128
     } else if (inputHandler.downPressed) {
-      velocity.vy -= 6
+      velocity.vy = -128
     } else {
       velocity.vy = 0
     }
