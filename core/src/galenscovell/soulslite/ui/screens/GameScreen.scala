@@ -1,10 +1,11 @@
 package galenscovell.soulslite.ui.screens
 
 import com.badlogic.ashley.core.Engine
-import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics._
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShaderProgram
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.physics.box2d.{Box2DDebugRenderer, World}
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.{Gdx, _}
 import galenscovell.soulslite.Main
@@ -12,13 +13,19 @@ import galenscovell.soulslite.processing._
 
 
 class GameScreen(root: Main) extends AbstractScreen(root) {
+  private val world: World = new World(new Vector2(0, 0), true)  // Gravity, whether to sleep or not
+  private val debugWorldRenderer: Box2DDebugRenderer = new Box2DDebugRenderer()
+
   private val entityBatch: SpriteBatch = new SpriteBatch()
   private var entityManager: EntityManager = _
   private val renderer: EnvironmentRenderer = new EnvironmentRenderer
+
   private val inputMultiplexer: InputMultiplexer = new InputMultiplexer
   private val inputHandler: InputHandler = new InputHandler
 
-  private val timestep: Float = (1 / 60.0f) * 30
+  // Box2d has a limit on velocity of 2.0 units per step
+  // The max speed is 120m/s at 60fps
+  private val timestep: Float = 1 / 120.0f
   private var accumulator: Float = 0
 
   private var time: Float = 0f
@@ -32,7 +39,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     ********************/
   override def create(): Unit = {
     stage = new Stage(viewport, root.spriteBatch)
-    entityManager = new EntityManager(new Engine, entityBatch, inputHandler)
+    entityManager = new EntityManager(new Engine, entityBatch, inputHandler, world)
     enableInput()
     setupShader()
   }
@@ -85,14 +92,19 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 //    shader.setUniformf("u_time", time)
 //    shader.end()
 
-    if (accumulator > timestep) {
+    val frameTime: Float = Math.min(delta, 0.25f)
+    accumulator += frameTime
+    while (accumulator > timestep) {
+      world.step(timestep, 6, 2)
       accumulator -= timestep
     }
-    accumulator += delta
 
     // renderer.render(accumulator / timestep)
 
     camera.update()
+
+    debugWorldRenderer.render(world, camera.combined)
+
     entityBatch.setProjectionMatrix(camera.combined)
     entityBatch.begin()
     entityManager.update(delta)

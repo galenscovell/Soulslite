@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 
 class SpriteComponent(sprite: Sprite) extends Component {
 
+
   def getSprite: Sprite = {
     sprite
   }
