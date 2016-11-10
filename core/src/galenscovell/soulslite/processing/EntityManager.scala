@@ -2,7 +2,6 @@ package galenscovell.soulslite.processing
 
 import com.badlogic.ashley.core._
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d._
 import galenscovell.soulslite.actors.components._
@@ -11,10 +10,13 @@ import galenscovell.soulslite.util.Resources
 
 
 class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: InputHandler, world: World) {
-  setup()
+  setupSystems()
+
+  makePlayerEntityAt(96, 96)
+  makeEntityAt(200, 200)
 
 
-  private def setup(): Unit = {
+  private def setupSystems(): Unit = {
     val movementSystem: MovementSystem = new MovementSystem(
       Family.all(
         classOf[BodyComponent],
@@ -24,7 +26,7 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: Inpu
     val renderSystem: RenderSystem = new RenderSystem(
       Family.all(
         classOf[RenderableComponent],
-        classOf[SpriteComponent],
+        classOf[AnimationComponent],
         classOf[BodyComponent]
       ).get(),
       spriteBatch
@@ -33,7 +35,8 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: Inpu
       Family.all(
         classOf[PlayerComponent],
         classOf[BodyComponent],
-        classOf[VelocityComponent]
+        classOf[VelocityComponent],
+        classOf[AnimationComponent]
       ).get(),
       inputHandler
     )
@@ -41,28 +44,57 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: Inpu
     engine.addSystem(inputSystem)
     engine.addSystem(movementSystem)
     engine.addSystem(renderSystem)
+  }
 
+  def makePlayerEntityAt(x: Float, y: Float): Unit = {
     val bodyDef: BodyDef = new BodyDef
     bodyDef.`type` = BodyType.DynamicBody
-    bodyDef.position.set(96, 96)
+    // bodyDef.fixedRotation = true
+    bodyDef.angularDamping = 1f
+    bodyDef.position.set(x, y)
     val body: Body = world.createBody(bodyDef)
     val shape: PolygonShape = new PolygonShape()
     shape.setAsBox(24, 24)
     val fixtureDef: FixtureDef = new FixtureDef
     fixtureDef.shape = shape
     fixtureDef.density = 1f
+    fixtureDef.friction = 1f
+    val fixture: Fixture = body.createFixture(fixtureDef)
+
+    val e: Entity = new Entity
+    e
+      .add(new AnimationComponent("player"))
+      .add(new VelocityComponent(0, 0))
+      .add(new BodyComponent(body, fixture))
+      .add(new RenderableComponent)
+      .add(new PlayerComponent)
+
+    shape.dispose()
+    engine.addEntity(e)
+  }
+
+  def makeEntityAt(x: Float, y: Float): Unit = {
+    val bodyDef: BodyDef = new BodyDef
+    bodyDef.`type` = BodyType.DynamicBody
+    // bodyDef.fixedRotation = true
+    bodyDef.angularDamping = 1f
+    bodyDef.position.set(x, y)
+    val body: Body = world.createBody(bodyDef)
+    val shape: PolygonShape = new PolygonShape()
+    shape.setAsBox(24, 24)
+    val fixtureDef: FixtureDef = new FixtureDef
+    fixtureDef.shape = shape
+    fixtureDef.density = 1f
+    fixtureDef.friction = 1f
     val fixture: Fixture = body.createFixture(fixtureDef)
 
     val e: Entity = new Entity
     e
       .add(new VelocityComponent(0, 0))
       .add(new BodyComponent(body, fixture))
-      .add(new SpriteComponent(Resources.atlas.createSprite("player-right0")))
       .add(new RenderableComponent)
-      .add(new PlayerComponent)
 
     shape.dispose()
-
     engine.addEntity(e)
   }
 
