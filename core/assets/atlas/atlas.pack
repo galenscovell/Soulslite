@@ -73,39 +73,102 @@ player-idle8
   orig: 72, 72
   offset: 0, 0
   index: -1
+rat-idle0
+  rotate: false
+  xy: 816, 54
+  size: 72, 72
+  orig: 72, 72
+  offset: 0, 0
+  index: -1
+rat-right0
+  rotate: false
+  xy: 816, 54
+  size: 72, 72
+  orig: 72, 72
+  offset: 0, 0
+  index: -1
+rat-idle1
+  rotate: false
+  xy: 896, 54
+  size: 72, 72
+  orig: 72, 72
+  offset: 0, 0
+  index: -1
+rat-right1
+  rotate: false
+  xy: 896, 54
+  size: 72, 72
+  orig: 72, 72
+  offset: 0, 0
+  index: -1
+rat-idle2
+  rotate: false
+  xy: 976, 54
+  size: 72, 72
+  orig: 72, 72
+  offset: 0, 0
+  index: -1
+rat-right2
+  rotate: false
+  xy: 976, 54
+  size: 72, 72
+  orig: 72, 72
+  offset: 0, 0
+  index: -1
+rat-idle3
+  rotate: false
+  xy: 1056, 54
+  size: 72, 72
+  orig: 72, 72
+  offset: 0, 0
+  index: -1
+rat-right3
+  rotate: false
+  xy: 1056, 54
+  size: 72, 72
+  orig: 72, 72
+  offset: 0, 0
+  index: -1
 player-right0
   rotate: false
-  xy: 816, 78
+  xy: 1136, 78
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 player-right1
   rotate: false
-  xy: 872, 78
+  xy: 1192, 78
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 player-right2
   rotate: false
-  xy: 928, 78
+  xy: 1248, 78
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-test-box-0
+player-right3
   rotate: false
-  xy: 984, 94
-  size: 32, 32
-  orig: 32, 32
+  xy: 1304, 78
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: -1
-test-box-1
+player-right4
   rotate: false
-  xy: 984, 60
-  size: 32, 32
-  orig: 32, 32
+  xy: 1360, 78
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+player-right5
+  rotate: false
+  xy: 1416, 78
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: -1
 blue_button0_np
@@ -118,36 +181,15 @@ blue_button0_np
   index: -1
 blue_button1_np
   rotate: false
-  xy: 52, 8
+  xy: 1472, 90
   size: 36, 36
   split: 4, 4, 4, 4
   orig: 36, 36
   offset: 0, 0
   index: -1
-player-right3
-  rotate: false
-  xy: 96, 4
-  size: 48, 48
-  orig: 48, 48
-  offset: 0, 0
-  index: -1
-player-right4
-  rotate: false
-  xy: 152, 4
-  size: 48, 48
-  orig: 48, 48
-  offset: 0, 0
-  index: -1
-player-right5
-  rotate: false
-  xy: 208, 4
-  size: 48, 48
-  orig: 48, 48
-  offset: 0, 0
-  index: -1
 green_button0_np
   rotate: false
-  xy: 264, 16
+  xy: 52, 8
   size: 36, 36
   split: 4, 4, 4, 4
   orig: 36, 36
@@ -155,36 +197,50 @@ green_button0_np
   index: -1
 green_button1_np
   rotate: false
-  xy: 308, 16
+  xy: 96, 16
   size: 36, 36
   split: 4, 4, 4, 4
   orig: 36, 36
   offset: 0, 0
   index: -1
+test-box-0
+  rotate: false
+  xy: 1516, 94
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+test-box-1
+  rotate: false
+  xy: 140, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 test-box-2
   rotate: false
-  xy: 352, 20
+  xy: 1556, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 test-box-3
   rotate: false
-  xy: 392, 20
+  xy: 180, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 test-box-4
   rotate: false
-  xy: 432, 20
+  xy: 1596, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 test-np-0
   rotate: false
-  xy: 472, 28
+  xy: 220, 28
   size: 24, 24
   split: 0, 0, 0, 0
   orig: 24, 24
@@ -192,7 +248,7 @@ test-np-0
   index: -1
 test-np-1
   rotate: false
-  xy: 472, 2
+  xy: 220, 2
   size: 24, 24
   split: 0, 0, 0, 0
   orig: 24, 24
@@ -200,7 +256,7 @@ test-np-1
   index: -1
 test-np-2
   rotate: false
-  xy: 504, 28
+  xy: 1636, 102
   size: 24, 24
   split: 0, 0, 0, 0
   orig: 24, 24
@@ -208,7 +264,7 @@ test-np-2
   index: -1
 test-np-3
   rotate: false
-  xy: 504, 2
+  xy: 252, 28
   size: 24, 24
   split: 0, 0, 0, 0
   orig: 24, 24
@@ -216,7 +272,7 @@ test-np-3
   index: -1
 test-np-4
   rotate: false
-  xy: 536, 28
+  xy: 252, 2
   size: 24, 24
   split: 0, 0, 0, 0
   orig: 24, 24
@@ -224,7 +280,7 @@ test-np-4
   index: -1
 text-field-bg-np
   rotate: false
-  xy: 536, 28
+  xy: 252, 2
   size: 24, 24
   split: 0, 0, 0, 0
   orig: 24, 24
@@ -232,7 +288,7 @@ text-field-bg-np
   index: -1
 font-cursor-np
   rotate: false
-  xy: 536, 2
+  xy: 1668, 102
   size: 3, 24
   split: 0, 0, 0, 0
   orig: 3, 24
@@ -240,7 +296,7 @@ font-cursor-np
   index: -1
 vertical-bar-empty-np
   rotate: false
-  xy: 816, 73
+  xy: 1136, 73
   size: 14, 3
   split: 0, 0, 0, 0
   orig: 14, 3
@@ -248,7 +304,7 @@ vertical-bar-empty-np
   index: -1
 vertical-bar-fill-np
   rotate: false
-  xy: 8, 3
+  xy: 1472, 85
   size: 14, 3
   split: 0, 0, 0, 0
   orig: 14, 3
@@ -256,7 +312,7 @@ vertical-bar-fill-np
   index: -1
 horizontal-bar-empty-np
   rotate: false
-  xy: 264, 8
+  xy: 96, 8
   size: 3, 6
   split: 0, 0, 0, 0
   orig: 3, 6
@@ -264,7 +320,7 @@ horizontal-bar-empty-np
   index: -1
 horizontal-bar-fill-np
   rotate: false
-  xy: 568, 46
+  xy: 1636, 94
   size: 3, 6
   split: 0, 0, 0, 0
   orig: 3, 6

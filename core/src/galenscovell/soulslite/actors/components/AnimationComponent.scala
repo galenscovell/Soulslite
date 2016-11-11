@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.{Animation, TextureRegion}
 import galenscovell.soulslite.util.Resources
 
 
-class AnimationComponent(entityType: String) extends Component {
+class AnimationComponent(entityType: String, idleFrames: Int, motionFrames: Int) extends Component {
   private val idle: Animation = createAnimation("idle")
   private val moving: Animation = createAnimation("right")
 
@@ -16,8 +16,8 @@ class AnimationComponent(entityType: String) extends Component {
 
   private def createAnimation(t: String): Animation = {
     val count: Int = t match {
-      case "idle" => 9
-      case _ => 6
+      case "idle" => idleFrames
+      case _ => motionFrames
     }
     val textures: Array[TextureRegion] = new Array[TextureRegion](count)
 
@@ -25,7 +25,7 @@ class AnimationComponent(entityType: String) extends Component {
       textures(i) = Resources.atlas.findRegion(entityType + "-" + t + i.toString)
     }
 
-    new Animation(1.0f / count, textures:_*)
+    new Animation(0.1f, textures:_*)
   }
 
   def getCurrentAnimation: Animation = {

@@ -6,14 +6,14 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d._
 import galenscovell.soulslite.actors.components._
 import galenscovell.soulslite.actors.systems._
-import galenscovell.soulslite.util.Resources
+import galenscovell.soulslite.util.Constants
 
 
 class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: InputHandler, world: World) {
   setupSystems()
-
-  makePlayerEntityAt(96, 96)
-  makeEntityAt(200, 200)
+  makeEntity("player", 200, 200, 9, 6)
+  makeEntity("rat", 400, 400, 4, 4)
+  makeEntity("rat", 600, 600, 4, 4)
 
 
   private def setupSystems(): Unit = {
@@ -46,7 +46,7 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: Inpu
     engine.addSystem(renderSystem)
   }
 
-  def makePlayerEntityAt(x: Float, y: Float): Unit = {
+  private def makeEntity(etype: String, x: Float, y: Float, idleFrames: Int, motionFrames: Int): Unit = {
     val bodyDef: BodyDef = new BodyDef
     bodyDef.`type` = BodyType.DynamicBody
     // bodyDef.fixedRotation = true
@@ -59,45 +59,23 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: Inpu
     fixtureDef.shape = shape
     fixtureDef.density = 1f
     fixtureDef.friction = 1f
+    fixtureDef.filter.categoryBits = Constants.ENTITY_CATEGORY
+    fixtureDef.filter.maskBits = Constants.ENTITY_MASK
     val fixture: Fixture = body.createFixture(fixtureDef)
 
     val e: Entity = new Entity
-    e
-      .add(new AnimationComponent("player"))
-      .add(new VelocityComponent(0, 0))
-      .add(new BodyComponent(body, fixture))
-      .add(new RenderableComponent)
-      .add(new PlayerComponent)
+    e.add(new VelocityComponent(0, 0))
+    e.add(new BodyComponent(body, fixture))
+    e.add(new RenderableComponent)
+    e.add(new AnimationComponent(etype, idleFrames, motionFrames))
+
+    if (etype == "player") {
+      e.add(new PlayerComponent)
+    }
 
     shape.dispose()
     engine.addEntity(e)
   }
-
-  def makeEntityAt(x: Float, y: Float): Unit = {
-    val bodyDef: BodyDef = new BodyDef
-    bodyDef.`type` = BodyType.DynamicBody
-    // bodyDef.fixedRotation = true
-    bodyDef.angularDamping = 1f
-    bodyDef.position.set(x, y)
-    val body: Body = world.createBody(bodyDef)
-    val shape: PolygonShape = new PolygonShape()
-    shape.setAsBox(24, 24)
-    val fixtureDef: FixtureDef = new FixtureDef
-    fixtureDef.shape = shape
-    fixtureDef.density = 1f
-    fixtureDef.friction = 1f
-    val fixture: Fixture = body.createFixture(fixtureDef)
-
-    val e: Entity = new Entity
-    e
-      .add(new VelocityComponent(0, 0))
-      .add(new BodyComponent(body, fixture))
-      .add(new RenderableComponent)
-
-    shape.dispose()
-    engine.addEntity(e)
-  }
-
 
   def update(delta: Float): Unit = {
     engine.update(delta)

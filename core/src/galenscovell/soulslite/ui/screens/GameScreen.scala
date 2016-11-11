@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.{Box2DDebugRenderer, World}
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.{Gdx, _}
 import galenscovell.soulslite.Main
+import galenscovell.soulslite.environment.Tile
 import galenscovell.soulslite.processing._
 
 
@@ -18,7 +19,6 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 
   private val entityBatch: SpriteBatch = new SpriteBatch()
   private var entityManager: EntityManager = _
-  private val renderer: EnvironmentRenderer = new EnvironmentRenderer
 
   private val inputMultiplexer: InputMultiplexer = new InputMultiplexer
   private val inputHandler: InputHandler = new InputHandler
@@ -40,6 +40,9 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   override def create(): Unit = {
     stage = new Stage(viewport, root.spriteBatch)
     entityManager = new EntityManager(new Engine, entityBatch, inputHandler, world)
+
+    val tile: Tile = new Tile(20, 20, world)
+
     enableInput()
     setupShader()
   }
