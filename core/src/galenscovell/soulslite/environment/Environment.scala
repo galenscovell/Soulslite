@@ -2,42 +2,40 @@ package galenscovell.soulslite.environment
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.physics.box2d.World
-import galenscovell.soulslite.util.Constants
 
 import scala.util.Random
 
 
-class Environment(width: Int, height: Int, world: World, spriteBatch: SpriteBatch) {
-  private val tiles: Array[Array[Tile]] = Array.ofDim[Tile](width, height)
+class Environment(columns: Int, rows: Int, world: World, spriteBatch: SpriteBatch) {
+  private val tiles: Array[Array[Tile]] = Array.ofDim[Tile](columns, rows)
+
   build()
-  debugPrint()
-//  smooth()
-//  debugPrint()
+  smooth(3)
 
 
   private def build(): Unit = {
     val random: Random = new Random()
 
-    for (x <- 0 until width) {
-      for (y <- 0 until height) {
-        tiles(y)(x) = new Tile(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE, world, width, height)
+    for (x <- 0 until columns) {
+      for (y <- 0 until rows) {
+        tiles(x)(y) = new Tile(x, y, world, columns, rows)
         val chance = random.nextInt(100)
         if (chance < 40) {
-          tiles(y)(x).makeFloor()
+          tiles(x)(y).makeFloor()
         } else {
-          tiles(y)(x).makeWall()
+          tiles(x)(y).makeWall()
         }
       }
     }
   }
 
   def checkAdjacent(): Unit = {
-    for (row <- tiles) {
-      for (tile <- row) {
+    for (column <- tiles) {
+      for (tile <- column) {
         var floorNeighbors: Int = 0
         val neighborPoints: Array[Point] = tile.getNeighborPoints
         for (p: Point <- neighborPoints) {
-          if (tiles(p.y)(p.x).isFloor) {
+          if (tiles(p.x)(p.y).isFloor) {
             floorNeighbors += 1
           }
         }
@@ -46,11 +44,11 @@ class Environment(width: Int, height: Int, world: World, spriteBatch: SpriteBatc
     }
   }
 
-  def smooth(): Unit = {
-    for (t <- 0 until 1) {
+  def smooth(n: Int): Unit = {
+    for (t <- 0 until n) {
       checkAdjacent()
-      for (row <- tiles) {
-        for (tile <- row) {
+      for (column <- tiles) {
+        for (tile <- column) {
           if (tile.floorNeighbors > 3) {
             tile.makeFloor()
           } else if (tile.floorNeighbors < 3) {
@@ -62,8 +60,8 @@ class Environment(width: Int, height: Int, world: World, spriteBatch: SpriteBatc
   }
 
   def render(): Unit = {
-    for (row <- tiles) {
-      for (tile <- row) {
+    for (column <- tiles) {
+      for (tile <- column) {
         tile.draw(spriteBatch)
       }
     }
@@ -71,9 +69,9 @@ class Environment(width: Int, height: Int, world: World, spriteBatch: SpriteBatc
 
   private def debugPrint(): Unit = {
     println()
-    for (row <- tiles) {
+    for (column <- tiles) {
       println()
-      for (tile <- row) {
+      for (tile <- column) {
         print(tile.debugDraw)
       }
     }

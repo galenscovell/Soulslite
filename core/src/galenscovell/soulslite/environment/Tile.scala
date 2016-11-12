@@ -24,7 +24,7 @@ class Tile(tx: Int, ty: Int, world: World, columns: Int, rows: Int) {
     bodyDef.`type` = BodyType.StaticBody
     bodyDef.fixedRotation = true
     bodyDef.angularDamping = 1f
-    bodyDef.position.set(tx, ty)
+    bodyDef.position.set(tx * Constants.TILE_SIZE, ty * Constants.TILE_SIZE)
 
     world.createBody(bodyDef)
   }
@@ -50,12 +50,12 @@ class Tile(tx: Int, ty: Int, world: World, columns: Int, rows: Int) {
     val points: ArrayBuffer[Point] = new ArrayBuffer[Point]()
     var sumX, sumY: Int = 0
 
-    for (i <- -1 to 1) {
-      for (j <- -1 to 1) {
-        sumX = tx + i
-        sumY = ty + j
+    for (x <- -1 to 1) {
+      for (y <- -1 to 1) {
+        sumX = tx + x
+        sumY = ty + y
 
-        if (!((sumX == tx && sumY == ty) || isOutOfBounds(sumX, sumY))) {
+        if (!(sumX == tx && sumY == ty) && !isOutOfBounds(sumX, sumY)) {
           points.append(new Point(sumX, sumY))
         }
       }
@@ -64,14 +64,8 @@ class Tile(tx: Int, ty: Int, world: World, columns: Int, rows: Int) {
     points.toArray
   }
 
-  private def isOutOfBounds(i: Int, j: Int): Boolean = {
-    if (i < 0 || j < 0){
-      true
-    } else if (i >= columns || j >= rows){
-      true
-    } else {
-      false
-    }
+  private def isOutOfBounds(x: Int, y: Int): Boolean = {
+    (x < 0 || y < 0) || (x >= columns || y >= rows)
   }
 
   def getNeighborPoints: Array[Point] = {

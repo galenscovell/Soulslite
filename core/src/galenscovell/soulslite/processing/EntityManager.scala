@@ -50,8 +50,10 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: Inpu
     bodyDef.angularDamping = 1f
     bodyDef.position.set(x, y)
     val body: Body = world.createBody(bodyDef)
-    val shape: PolygonShape = new PolygonShape()
-    shape.setAsBox(Constants.ENTITY_SIZE / 3, Constants.ENTITY_SIZE / 3)
+    // val shape: PolygonShape = new PolygonShape()
+    // shape.setAsBox(Constants.ENTITY_SIZE / 3, Constants.ENTITY_SIZE / 3)
+    val shape: CircleShape = new CircleShape()
+    shape.setRadius(Constants.ENTITY_SIZE / 3)
     val fixtureDef: FixtureDef = new FixtureDef
     fixtureDef.shape = shape
     fixtureDef.density = 1f

@@ -44,7 +44,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 
     world = new World(new Vector2(0, 0), true)  // Gravity, whether to sleep or not
     entityManager = new EntityManager(new Engine, entityBatch, inputHandler, world)
-    environment = new Environment(20, 20, world, entityBatch)
+    environment = new Environment(30, 24, world, entityBatch)
 
     entityManager.makeEntity("player", 200, 200, 9, 6)
     entityManager.makeEntity("rat", 400, 400, 4, 4)
