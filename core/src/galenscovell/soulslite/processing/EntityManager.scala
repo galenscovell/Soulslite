@@ -11,9 +11,6 @@ import galenscovell.soulslite.util.Constants
 
 class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: InputHandler, world: World) {
   setupSystems()
-  makeEntity("player", 200, 200, 9, 6)
-  makeEntity("rat", 400, 400, 4, 4)
-  makeEntity("rat", 600, 600, 4, 4)
 
 
   private def setupSystems(): Unit = {
@@ -46,7 +43,7 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: Inpu
     engine.addSystem(renderSystem)
   }
 
-  private def makeEntity(etype: String, x: Float, y: Float, idleFrames: Int, motionFrames: Int): Unit = {
+  def makeEntity(etype: String, x: Float, y: Float, idleFrames: Int, motionFrames: Int): Unit = {
     val bodyDef: BodyDef = new BodyDef
     bodyDef.`type` = BodyType.DynamicBody
     // bodyDef.fixedRotation = true
@@ -54,7 +51,7 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: Inpu
     bodyDef.position.set(x, y)
     val body: Body = world.createBody(bodyDef)
     val shape: PolygonShape = new PolygonShape()
-    shape.setAsBox(24, 24)
+    shape.setAsBox(Constants.ENTITY_SIZE / 3, Constants.ENTITY_SIZE / 3)
     val fixtureDef: FixtureDef = new FixtureDef
     fixtureDef.shape = shape
     fixtureDef.density = 1f

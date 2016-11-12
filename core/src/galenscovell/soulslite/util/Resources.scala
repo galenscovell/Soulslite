@@ -26,6 +26,8 @@ object Resources {
   npFontCursor, npTextFieldBg, npHorizontalBarFill, npHorizontalBarEmpty,
   npVerticalBarFill, npVerticalBarEmpty: NinePatchDrawable = _
 
+  var spTest0, spTest1, spTest2, spTest3, spTest4: Sprite = _
+
   var buttonMenuStyle, buttonMapStyle0, buttonMapStyle1, buttonMapStyle2,
   buttonEventStyle, toggleButtonStyle, greenButtonStyle, blueButtonStyle: TextButtonStyle = _
 
@@ -128,7 +130,11 @@ object Resources {
   }
 
   private def loadSprites(): Unit = {
-
+    spTest0 = new Sprite(atlas.createSprite("test-box-0"))
+    spTest1 = new Sprite(atlas.createSprite("test-box-1"))
+    spTest2 = new Sprite(atlas.createSprite("test-box-2"))
+    spTest3 = new Sprite(atlas.createSprite("test-box-3"))
+    spTest4 = new Sprite(atlas.createSprite("test-box-4"))
   }
 
   private def loadAnimations(): Unit = {

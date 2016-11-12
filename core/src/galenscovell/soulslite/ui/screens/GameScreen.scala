@@ -9,16 +9,19 @@ import com.badlogic.gdx.physics.box2d.{Box2DDebugRenderer, World}
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.{Gdx, _}
 import galenscovell.soulslite.Main
-import galenscovell.soulslite.environment.Tile
+import galenscovell.soulslite.environment.Environment
 import galenscovell.soulslite.processing._
 
 
 class GameScreen(root: Main) extends AbstractScreen(root) {
-  private val world: World = new World(new Vector2(0, 0), true)  // Gravity, whether to sleep or not
+  private val entityBatch: SpriteBatch = new SpriteBatch()
+
   private val debugWorldRenderer: Box2DDebugRenderer = new Box2DDebugRenderer()
 
-  private val entityBatch: SpriteBatch = new SpriteBatch()
+  private var world: World = _
+  private var environment: Environment = _
   private var entityManager: EntityManager = _
+  private var shader: ShaderProgram = _
 
   private val inputMultiplexer: InputMultiplexer = new InputMultiplexer
   private val inputHandler: InputHandler = new InputHandler
@@ -29,7 +32,6 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   private var accumulator: Float = 0
 
   private var time: Float = 0f
-  private var shader: ShaderProgram = _
 
   create()
 
@@ -39,9 +41,15 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     ********************/
   override def create(): Unit = {
     stage = new Stage(viewport, root.spriteBatch)
-    entityManager = new EntityManager(new Engine, entityBatch, inputHandler, world)
 
-    val tile: Tile = new Tile(20, 20, world)
+    world = new World(new Vector2(0, 0), true)  // Gravity, whether to sleep or not
+    entityManager = new EntityManager(new Engine, entityBatch, inputHandler, world)
+    environment = new Environment(20, 20, world, entityBatch)
+
+    entityManager.makeEntity("player", 200, 200, 9, 6)
+    entityManager.makeEntity("rat", 400, 400, 4, 4)
+    entityManager.makeEntity("rat", 600, 600, 4, 4)
+    entityManager.makeEntity("rat", 800, 800, 4, 4)
 
     enableInput()
     setupShader()
@@ -102,16 +110,15 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
       accumulator -= timestep
     }
 
-    // renderer.render(accumulator / timestep)
-
     camera.update()
-
-    debugWorldRenderer.render(world, camera.combined)
 
     entityBatch.setProjectionMatrix(camera.combined)
     entityBatch.begin()
+    environment.render()
     entityManager.update(delta)
     entityBatch.end()
+
+    debugWorldRenderer.render(world, camera.combined)
 
     // stage.act()
     // stage.draw()
