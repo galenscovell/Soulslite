@@ -12,7 +12,7 @@ class MovementSystem(family: Family) extends IteratingSystem(family) {
 
 
   override def processEntity(entity: Entity, deltaTime: Float): Unit = {
-    val body: Body = bodyMapper.get(entity).getBody
+    val body: Body = bodyMapper.get(entity).body
     val velocity: VelocityComponent = velocityMapper.get(entity)
 
     body.setLinearVelocity(velocity.vx, velocity.vy)

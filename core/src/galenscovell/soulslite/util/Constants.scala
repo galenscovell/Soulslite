@@ -13,18 +13,21 @@ object Constants {
   val ENTITY_MASK: Short = (WALL_CATEGORY | ENTITY_CATEGORY).toShort
   val NO_MASK: Short = -1  // Collides with nothing
 
-  // Camera give to reduce pop-in
-  val CAMERA_GIVE: Int = 32
-
   // Exact pixel dimensions
   val EXACT_X: Int = 1280
-  val EXACT_Y: Int = 960
-
-  // Environment tile size
-  val ENTITY_SIZE: Int = 80
-  val TILE_SIZE: Int = 32
+  val EXACT_Y: Int = 720
 
   // Custom screen dimension units
-  val SCREEN_X: Int = 200
-  val SCREEN_Y: Int = 120
+  // Game runs at 360p (16:9, 640x360)
+  val SCREEN_X: Int = 640
+  val SCREEN_Y: Int = 360
+
+  // Sprite sizes
+  val SMALL_ENTITY_SIZE: Int = 16
+  val MID_ENTITY_SIZE: Int = 32
+  val LARGE_ENTITY_SIZE: Int = 64
+  val TILE_SIZE: Int = 16
+
+  // Camera give, if player is within this distance of environment bounds, camera will stop following
+  val CAMERA_GIVE: Int = TILE_SIZE * 2 + (TILE_SIZE / 2)
 }

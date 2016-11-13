@@ -55,10 +55,9 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     entityManager = new EntityManager(new Engine, entityBatch, inputHandler, world, this)
     environment = new Environment(60, 60, world, entityBatch)
 
-    player = entityManager.makeEntity("player", 800, 800, 1, 12)
-    playerBody = player.getComponent(classOf[BodyComponent]).getBody
+    player = entityManager.makeEntity("player", Constants.MID_ENTITY_SIZE, 800, 800, 1, 12)
+    playerBody = player.getComponent(classOf[BodyComponent]).body
 
-//    entityManager.makeEntity("player", 200, 200, 9, 6)
 //    entityManager.makeEntity("rat", 400, 400, 4, 4)
 //    entityManager.makeEntity("rat", 600, 600, 4, 4)
 //    entityManager.makeEntity("rat", 800, 800, 4, 4)
@@ -116,23 +115,24 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     // Camera will center onto player unless they are within a certain distance of the map bounds
     val environmentDimensions: Vector2 = environment.getDimensions
 
-    if (playerBody.getPosition.x > 608 && playerBody.getPosition.x < environmentDimensions.x - 608) {
+    if (playerBody.getPosition.x > Constants.CAMERA_GIVE &&
+      playerBody.getPosition.x < environmentDimensions.x - Constants.CAMERA_GIVE) {
       lerpPos.x = playerBody.getPosition.x
     }
-    if (playerBody.getPosition.y > 608 && playerBody.getPosition.y < environmentDimensions.y - 608) {
+    if (playerBody.getPosition.y > Constants.CAMERA_GIVE &&
+      playerBody.getPosition.y < environmentDimensions.y - Constants.CAMERA_GIVE) {
       lerpPos.y = playerBody.getPosition.y
     }
 
-    // lerpPos.set(playerBody.getPosition.x, playerBody.getPosition.y, 0)
-    camera.position.lerp(lerpPos, 0.025f)
+    camera.position.lerp(lerpPos, 0.05f)
   }
 
   def inCamera(x: Float, y: Float): Boolean = {
     // Determines if a point falls within the camera (+/- some give to reduce chances of pop-in)
-    (x + Constants.CAMERA_GIVE) >= minCamX &&
-      (y + Constants.CAMERA_GIVE) >= minCamY &&
-      (x - Constants.CAMERA_GIVE) <= maxCamX &&
-      (y - Constants.CAMERA_GIVE) <= maxCamY
+    (x + Constants.TILE_SIZE) >= minCamX &&
+      (y + Constants.TILE_SIZE) >= minCamY &&
+      (x - Constants.TILE_SIZE) <= maxCamX &&
+      (y - Constants.TILE_SIZE) <= maxCamY
   }
 
 

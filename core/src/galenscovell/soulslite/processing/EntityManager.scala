@@ -2,16 +2,13 @@ package galenscovell.soulslite.processing
 
 import com.badlogic.ashley.core._
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d._
 import galenscovell.soulslite.actors.components._
 import galenscovell.soulslite.actors.systems._
 import galenscovell.soulslite.ui.screens.GameScreen
-import galenscovell.soulslite.util.Constants
 
 
-class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: InputHandler,
-                    world: World, gameScreen: GameScreen) {
+class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: InputHandler, world: World, gameScreen: GameScreen) {
   setupSystems()
 
 
@@ -26,7 +23,8 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: Inpu
       Family.all(
         classOf[RenderableComponent],
         classOf[AnimationComponent],
-        classOf[BodyComponent]
+        classOf[BodyComponent],
+        classOf[SizeComponent]
       ).get(),
       spriteBatch,
       gameScreen
@@ -46,36 +44,18 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: Inpu
     engine.addSystem(renderSystem)
   }
 
-  def makeEntity(etype: String, x: Float, y: Float, idleFrames: Int, motionFrames: Int): Entity = {
-    val bodyDef: BodyDef = new BodyDef
-    bodyDef.`type` = BodyType.DynamicBody
-    // bodyDef.fixedRotation = true
-    bodyDef.angularDamping = 1f
-    bodyDef.position.set(x, y)
-    val body: Body = world.createBody(bodyDef)
-//    val shape: PolygonShape = new PolygonShape()
-//    shape.setAsBox(Constants.ENTITY_SIZE / 3, Constants.ENTITY_SIZE / 3)
-    val shape: CircleShape = new CircleShape()
-    shape.setRadius(Constants.ENTITY_SIZE / 3)
-    val fixtureDef: FixtureDef = new FixtureDef
-    fixtureDef.shape = shape
-    fixtureDef.density = 1f
-    fixtureDef.friction = 1f
-    fixtureDef.filter.categoryBits = Constants.ENTITY_CATEGORY
-    fixtureDef.filter.maskBits = Constants.ENTITY_MASK
-    val fixture: Fixture = body.createFixture(fixtureDef)
-
+  def makeEntity(etype: String, size: Int, posX: Float, posY: Float, idleFrames: Int, motionFrames: Int): Entity = {
     val e: Entity = new Entity
     e.add(new VelocityComponent(0, 0))
-    e.add(new BodyComponent(body, fixture))
+    e.add(new BodyComponent(world, posX, posY, size))
     e.add(new RenderableComponent)
     e.add(new AnimationComponent(etype, idleFrames, motionFrames))
+    e.add(new SizeComponent(size))
 
     if (etype == "player") {
       e.add(new PlayerComponent)
     }
 
-    shape.dispose()
     engine.addEntity(e)
 
     e

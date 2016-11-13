@@ -31,7 +31,7 @@ class AnimationComponent(entityType: String, idleFrames: Int, motionFrames: Int)
       textures(i) = Resources.atlas.findRegion("player/" + entityType + "-" + t + i.toString)
     }
 
-    new Animation(0.125f, textures:_*)
+    new Animation(0.1f, textures:_*)
   }
 
   def getCurrentAnimation: Animation = {
