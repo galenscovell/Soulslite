@@ -21,7 +21,6 @@ class RenderSystem(family: Family, spriteBatch: SpriteBatch, gameScreen: GameScr
     val currentY: Float = body.getPosition.y
 
     if (gameScreen.inCamera(currentX, currentY)) {
-      println("Rendered:", entity)
       val animation: AnimationComponent = animationMapper.get(entity)
       animation.stateTime += deltaTime
       val currentFrame: TextureRegion = animation.getCurrentAnimation.getKeyFrame(animation.stateTime, true)
@@ -31,7 +30,7 @@ class RenderSystem(family: Family, spriteBatch: SpriteBatch, gameScreen: GameScr
         currentY - Constants.ENTITY_SIZE / 2,
         Constants.ENTITY_SIZE / 2, Constants.ENTITY_SIZE / 2,
         Constants.ENTITY_SIZE, Constants.ENTITY_SIZE,
-        animation.direction, 1, 0)
+        1, 1, 0)
     }
   }
 

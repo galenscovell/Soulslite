@@ -21,7 +21,7 @@ object Constants {
   val EXACT_Y: Int = 960
 
   // Environment tile size
-  val ENTITY_SIZE: Int = 48
+  val ENTITY_SIZE: Int = 80
   val TILE_SIZE: Int = 32
 
   // Custom screen dimension units

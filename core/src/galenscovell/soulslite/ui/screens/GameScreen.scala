@@ -1,14 +1,15 @@
 package galenscovell.soulslite.ui.screens
 
-import com.badlogic.ashley.core.Engine
+import com.badlogic.ashley.core.{Engine, Entity}
 import com.badlogic.gdx.graphics._
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShaderProgram
 import com.badlogic.gdx.math.{Vector2, Vector3}
-import com.badlogic.gdx.physics.box2d.{Box2DDebugRenderer, World}
+import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.{Gdx, _}
 import galenscovell.soulslite.Main
+import galenscovell.soulslite.actors.components.BodyComponent
 import galenscovell.soulslite.environment.Environment
 import galenscovell.soulslite.processing._
 import galenscovell.soulslite.util.Constants
@@ -38,6 +39,8 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   // For camera smooth movement and bounds
   private var lerpPos: Vector3 = new Vector3(0, 0, 0)
   private var minCamX, minCamY, maxCamX, maxCamY: Float = 0f
+  private var player: Entity = _
+  private var playerBody: Body = _
 
   create()
 
@@ -50,12 +53,15 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 
     world = new World(new Vector2(0, 0), true)  // Gravity, whether to sleep or not
     entityManager = new EntityManager(new Engine, entityBatch, inputHandler, world, this)
-    environment = new Environment(40, 30, world, entityBatch)
+    environment = new Environment(60, 60, world, entityBatch)
 
-    entityManager.makeEntity("player", 200, 200, 9, 6)
-    entityManager.makeEntity("rat", 400, 400, 4, 4)
-    entityManager.makeEntity("rat", 600, 600, 4, 4)
-    entityManager.makeEntity("rat", 800, 800, 4, 4)
+    player = entityManager.makeEntity("player", 800, 800, 1, 12)
+    playerBody = player.getComponent(classOf[BodyComponent]).getBody
+
+//    entityManager.makeEntity("player", 200, 200, 9, 6)
+//    entityManager.makeEntity("rat", 400, 400, 4, 4)
+//    entityManager.makeEntity("rat", 600, 600, 4, 4)
+//    entityManager.makeEntity("rat", 800, 800, 4, 4)
 
     enableInput()
     setupShader()
@@ -108,17 +114,25 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 
   private def centerCameraOnPlayer(): Unit = {
     // Camera will center onto player unless they are within a certain distance of the map bounds
-    lerpPos.set(0, 0, 0)
-    // Maybe want a slow, smooth camera movement?
-    camera.position.lerp(lerpPos, 0.1f)
+    val environmentDimensions: Vector2 = environment.getDimensions
+
+    if (playerBody.getPosition.x > 608 && playerBody.getPosition.x < environmentDimensions.x - 608) {
+      lerpPos.x = playerBody.getPosition.x
+    }
+    if (playerBody.getPosition.y > 608 && playerBody.getPosition.y < environmentDimensions.y - 608) {
+      lerpPos.y = playerBody.getPosition.y
+    }
+
+    // lerpPos.set(playerBody.getPosition.x, playerBody.getPosition.y, 0)
+    camera.position.lerp(lerpPos, 0.025f)
   }
 
   def inCamera(x: Float, y: Float): Boolean = {
     // Determines if a point falls within the camera (+/- some give to reduce chances of pop-in)
     (x + Constants.CAMERA_GIVE) >= minCamX &&
       (y + Constants.CAMERA_GIVE) >= minCamY &&
-      x <= maxCamX &&
-      y <= maxCamY
+      (x - Constants.CAMERA_GIVE) <= maxCamX &&
+      (y - Constants.CAMERA_GIVE) <= maxCamY
   }
 
 
@@ -153,7 +167,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     entityManager.update(delta)
     entityBatch.end()
 
-    debugWorldRenderer.render(world, camera.combined)
+     debugWorldRenderer.render(world, camera.combined)
 
     // stage.act()
     // stage.draw()

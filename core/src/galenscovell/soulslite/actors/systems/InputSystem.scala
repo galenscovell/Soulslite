@@ -18,9 +18,9 @@ class InputSystem(family: Family, inputHandler: InputHandler) extends IteratingS
     if (inputHandler.leftPressed && inputHandler.rightPressed) {
       velocity.vx = 0
     } else if (inputHandler.leftPressed) {
-      velocity.vx = -240
+      velocity.vx = -150
     } else if (inputHandler.rightPressed) {
-      velocity.vx = 240
+      velocity.vx  = 150
     } else {
       velocity.vx = 0
     }
@@ -28,17 +28,28 @@ class InputSystem(family: Family, inputHandler: InputHandler) extends IteratingS
     if (inputHandler.upPressed && inputHandler.downPressed) {
       velocity.vy = 0
     } else if (inputHandler.upPressed) {
-      velocity.vy = 160
+      velocity.vy = 150
     } else if (inputHandler.downPressed) {
-      velocity.vy = -160
+      velocity.vy = -150
     } else {
       velocity.vy = 0
     }
 
-    if (velocity.vx > 0) {
-      animationComponent.direction = 1
-    } else if (velocity.vx < 0) {
-      animationComponent.direction = -1
+    //    0
+    // 3     1
+    //    2
+    if (Math.abs(velocity.vx) > Math.abs(velocity.vy)) {
+      if (velocity.vx > 0) {
+        animationComponent.direction = 1
+      } else {
+        animationComponent.direction = 3
+      }
+    } else if (Math.abs(velocity.vy) > Math.abs(velocity.vx)) {
+      if (velocity.vy > 0) {
+        animationComponent.direction = 0
+      } else {
+        animationComponent.direction = 2
+      }
     }
 
     if (velocity.vx == 0 && velocity.vy == 0) {

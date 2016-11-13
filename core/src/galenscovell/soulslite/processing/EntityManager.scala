@@ -46,15 +46,15 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: Inpu
     engine.addSystem(renderSystem)
   }
 
-  def makeEntity(etype: String, x: Float, y: Float, idleFrames: Int, motionFrames: Int): Unit = {
+  def makeEntity(etype: String, x: Float, y: Float, idleFrames: Int, motionFrames: Int): Entity = {
     val bodyDef: BodyDef = new BodyDef
     bodyDef.`type` = BodyType.DynamicBody
     // bodyDef.fixedRotation = true
     bodyDef.angularDamping = 1f
     bodyDef.position.set(x, y)
     val body: Body = world.createBody(bodyDef)
-    // val shape: PolygonShape = new PolygonShape()
-    // shape.setAsBox(Constants.ENTITY_SIZE / 3, Constants.ENTITY_SIZE / 3)
+//    val shape: PolygonShape = new PolygonShape()
+//    shape.setAsBox(Constants.ENTITY_SIZE / 3, Constants.ENTITY_SIZE / 3)
     val shape: CircleShape = new CircleShape()
     shape.setRadius(Constants.ENTITY_SIZE / 3)
     val fixtureDef: FixtureDef = new FixtureDef
@@ -77,6 +77,8 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: Inpu
 
     shape.dispose()
     engine.addEntity(e)
+
+    e
   }
 
   def update(delta: Float): Unit = {

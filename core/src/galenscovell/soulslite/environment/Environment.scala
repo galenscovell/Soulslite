@@ -1,18 +1,25 @@
 package galenscovell.soulslite.environment
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.World
+import galenscovell.soulslite.util.Constants
 
 import scala.util.Random
 
 
 class Environment(columns: Int, rows: Int, world: World, spriteBatch: SpriteBatch) {
   private val tiles: Array[Array[Tile]] = Array.ofDim[Tile](columns, rows)
+  private val dimensions: Vector2 = new Vector2(columns * Constants.TILE_SIZE, rows * Constants.TILE_SIZE)
 
   build()
   smooth(3)
   skin()
 
+
+  def getDimensions: Vector2 = {
+    dimensions
+  }
 
   private def build(): Unit = {
     val random: Random = new Random()

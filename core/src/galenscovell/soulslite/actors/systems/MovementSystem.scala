@@ -15,7 +15,6 @@ class MovementSystem(family: Family) extends IteratingSystem(family) {
     val body: Body = bodyMapper.get(entity).getBody
     val velocity: VelocityComponent = velocityMapper.get(entity)
 
-    // body.applyForceToCenter(velocity.vx, velocity.vy, true)
     body.setLinearVelocity(velocity.vx, velocity.vy)
   }
 }
