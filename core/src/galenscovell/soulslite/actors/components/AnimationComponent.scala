@@ -22,7 +22,7 @@ class AnimationComponent(entityType: String, idleFrames: Int, motionFrames: Int)
     val textures: Array[TextureRegion] = new Array[TextureRegion](count)
 
     for (i: Int <- 0 until count) {
-      textures(i) = Resources.atlas.findRegion(entityType + "-" + t + i.toString)
+      textures(i) = Resources.atlas.findRegion("entities/" + entityType + "-" + t + i.toString)
     }
 
     new Animation(0.1f, textures:_*)

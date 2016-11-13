@@ -6,10 +6,12 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d._
 import galenscovell.soulslite.actors.components._
 import galenscovell.soulslite.actors.systems._
+import galenscovell.soulslite.ui.screens.GameScreen
 import galenscovell.soulslite.util.Constants
 
 
-class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: InputHandler, world: World) {
+class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: InputHandler,
+                    world: World, gameScreen: GameScreen) {
   setupSystems()
 
 
@@ -26,7 +28,8 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: Inpu
         classOf[AnimationComponent],
         classOf[BodyComponent]
       ).get(),
-      spriteBatch
+      spriteBatch,
+      gameScreen
     )
     val inputSystem: InputSystem = new InputSystem(
       Family.all(

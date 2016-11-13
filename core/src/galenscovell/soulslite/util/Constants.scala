@@ -13,13 +13,16 @@ object Constants {
   val ENTITY_MASK: Short = (WALL_CATEGORY | ENTITY_CATEGORY).toShort
   val NO_MASK: Short = -1  // Collides with nothing
 
+  // Camera give to reduce pop-in
+  val CAMERA_GIVE: Int = 32
+
   // Exact pixel dimensions
   val EXACT_X: Int = 1280
   val EXACT_Y: Int = 960
 
   // Environment tile size
   val ENTITY_SIZE: Int = 48
-  val TILE_SIZE: Int = 48
+  val TILE_SIZE: Int = 32
 
   // Custom screen dimension units
   val SCREEN_X: Int = 200

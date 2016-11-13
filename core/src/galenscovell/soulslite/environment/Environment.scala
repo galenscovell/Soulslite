@@ -11,6 +11,7 @@ class Environment(columns: Int, rows: Int, world: World, spriteBatch: SpriteBatc
 
   build()
   smooth(3)
+  skin()
 
 
   private def build(): Unit = {
@@ -55,6 +56,17 @@ class Environment(columns: Int, rows: Int, world: World, spriteBatch: SpriteBatc
             tile.makeWall()
           }
         }
+      }
+    }
+  }
+
+  def skin(): Unit = {
+    val bitmasker: Bitmasker = new Bitmasker
+    for (column <- tiles) {
+      for (tile <- column) {
+        val mask: Int = bitmasker.findBitmask(tile, tiles)
+        tile.setBitmask(mask)
+        tile.skin()
       }
     }
   }

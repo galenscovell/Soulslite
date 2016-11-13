@@ -4,13 +4,14 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.graphics._
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShaderProgram
-import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.{Vector2, Vector3}
 import com.badlogic.gdx.physics.box2d.{Box2DDebugRenderer, World}
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.{Gdx, _}
 import galenscovell.soulslite.Main
 import galenscovell.soulslite.environment.Environment
 import galenscovell.soulslite.processing._
+import galenscovell.soulslite.util.Constants
 
 
 class GameScreen(root: Main) extends AbstractScreen(root) {
@@ -31,7 +32,12 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   private val timestep: Float = 1 / 120.0f
   private var accumulator: Float = 0
 
+  // For shader timing
   private var time: Float = 0f
+
+  // For camera smooth movement and bounds
+  private var lerpPos: Vector3 = new Vector3(0, 0, 0)
+  private var minCamX, minCamY, maxCamX, maxCamY: Float = 0f
 
   create()
 
@@ -43,8 +49,8 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     stage = new Stage(viewport, root.spriteBatch)
 
     world = new World(new Vector2(0, 0), true)  // Gravity, whether to sleep or not
-    entityManager = new EntityManager(new Engine, entityBatch, inputHandler, world)
-    environment = new Environment(30, 24, world, entityBatch)
+    entityManager = new EntityManager(new Engine, entityBatch, inputHandler, world, this)
+    environment = new Environment(40, 30, world, entityBatch)
 
     entityManager.makeEntity("player", 200, 200, 9, 6)
     entityManager.makeEntity("rat", 400, 400, 4, 4)
@@ -88,6 +94,35 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 
 
   /**********************
+    *      Camera       *
+    **********************/
+  private def updateCamera(): Unit = {
+    // Find camera upper left coordinates
+    minCamX = camera.position.x - (camera.viewportWidth / 2) * camera.zoom
+    minCamY = camera.position.y - (camera.viewportHeight / 2) * camera.zoom
+    // Find camera lower right coordinates
+    maxCamX = minCamX + camera.viewportWidth * camera.zoom
+    maxCamY = minCamY + camera.viewportHeight * camera.zoom
+    camera.update()
+  }
+
+  private def centerCameraOnPlayer(): Unit = {
+    // Camera will center onto player unless they are within a certain distance of the map bounds
+    lerpPos.set(0, 0, 0)
+    // Maybe want a slow, smooth camera movement?
+    camera.position.lerp(lerpPos, 0.1f)
+  }
+
+  def inCamera(x: Float, y: Float): Boolean = {
+    // Determines if a point falls within the camera (+/- some give to reduce chances of pop-in)
+    (x + Constants.CAMERA_GIVE) >= minCamX &&
+      (y + Constants.CAMERA_GIVE) >= minCamY &&
+      x <= maxCamX &&
+      y <= maxCamY
+  }
+
+
+  /**********************
     * Screen Operations *
     **********************/
   override def render(delta: Float): Unit = {
@@ -110,8 +145,8 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
       accumulator -= timestep
     }
 
-    camera.update()
-
+    updateCamera()
+    centerCameraOnPlayer()
     entityBatch.setProjectionMatrix(camera.combined)
     entityBatch.begin()
     environment.render()

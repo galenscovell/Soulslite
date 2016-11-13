@@ -9,16 +9,20 @@ import galenscovell.soulslite.util.{Constants, Resources}
 import scala.collection.mutable.ArrayBuffer
 
 
-class Tile(tx: Int, ty: Int, world: World, columns: Int, rows: Int) {
+class Tile(val tx: Int, val ty: Int, world: World, columns: Int, rows: Int) {
   private var tileType: TileType = TileType.EMPTY
   private val body: Body = createBody
   private val fixture: Fixture = createFixture
   private val neighborTilePoints: Array[Point] = findNeighborPoints
-  private var sprite: Sprite = Resources.spTest0
 
+  private var sprite: Sprite = Resources.spTest0
+  private var bitmask: Int = 0
   var floorNeighbors: Int = 0
 
 
+  /**********************
+    *      Physics      *
+    **********************/
   private def createBody: Body = {
     val bodyDef: BodyDef = new BodyDef
     bodyDef.`type` = BodyType.StaticBody
@@ -45,6 +49,32 @@ class Tile(tx: Int, ty: Int, world: World, columns: Int, rows: Int) {
     fixture
   }
 
+  private def updateCollision(): Unit = {
+    val filter: Filter = fixture.getFilterData
+
+    tileType match {
+      case TileType.EMPTY =>
+        filter.categoryBits = Constants.EMPTY_CATEGORY
+        filter.maskBits = Constants.NO_MASK
+      case TileType.FLOOR =>
+        filter.categoryBits = Constants.EMPTY_CATEGORY
+        filter.maskBits = Constants.NO_MASK
+      case TileType.WALL =>
+        filter.categoryBits = Constants.WALL_CATEGORY
+        filter.maskBits = Constants.WALL_MASK
+    }
+
+    fixture.setFilterData(filter)
+  }
+
+
+  /**********************
+    *     Neighbors     *
+    **********************/
+  def getNeighborPoints: Array[Point] = {
+    neighborTilePoints
+  }
+
   private def findNeighborPoints: Array[Point] = {
     // Compute neighboring tiles only once at object construction
     val points: ArrayBuffer[Point] = new ArrayBuffer[Point]()
@@ -68,11 +98,29 @@ class Tile(tx: Int, ty: Int, world: World, columns: Int, rows: Int) {
     (x < 0 || y < 0) || (x >= columns || y >= rows)
   }
 
-  def getNeighborPoints: Array[Point] = {
-    neighborTilePoints
+
+  /**********************
+    *    Sprite/Skin    *
+    **********************/
+  def setBitmask(v: Int): Unit = {
+    bitmask = v
+  }
+
+  def skin(): Unit = {
+    if (isWall) {
+      sprite = Resources.spTest1
+      // sprite = new Sprite(Resources.atlas.createSprite("tiles/wall" + bitmask))
+    } else if (isFloor) {
+      sprite = Resources.spTest2
+      // sprite = new Sprite(Resources.atlas.createSprite("tiles/floor" + bitmask))
+    }
+    sprite.flip(false, true)
   }
 
 
+  /**********************
+    *       State       *
+    **********************/
   def isEmpty: Boolean = {
     tileType == TileType.EMPTY
   }
@@ -85,38 +133,25 @@ class Tile(tx: Int, ty: Int, world: World, columns: Int, rows: Int) {
     tileType == TileType.WALL
   }
 
-
   def makeEmpty(): Unit = {
     tileType = TileType.EMPTY
-    sprite = Resources.spTest0
-
-    val filter: Filter = fixture.getFilterData
-    filter.categoryBits = Constants.EMPTY_CATEGORY
-    filter.maskBits = Constants.NO_MASK
-    fixture.setFilterData(filter)
+    updateCollision()
   }
 
   def makeFloor(): Unit = {
     tileType = TileType.FLOOR
-    sprite = Resources.spTest1
-
-    val filter: Filter = fixture.getFilterData
-    filter.categoryBits = Constants.EMPTY_CATEGORY
-    filter.maskBits = Constants.NO_MASK
-    fixture.setFilterData(filter)
+    updateCollision()
   }
 
   def makeWall(): Unit = {
     tileType = TileType.WALL
-    sprite = Resources.spTest2
-
-    val filter: Filter = fixture.getFilterData
-    filter.categoryBits = Constants.WALL_CATEGORY
-    filter.maskBits = Constants.WALL_MASK
-    fixture.setFilterData(filter)
+    updateCollision()
   }
 
 
+  /**********************
+    *      Render       *
+    **********************/
   def draw(spriteBatch: SpriteBatch): Unit = {
     spriteBatch.draw(
       sprite,
