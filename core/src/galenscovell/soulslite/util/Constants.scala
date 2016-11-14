@@ -13,21 +13,29 @@ object Constants {
   val ENTITY_MASK: Short = (WALL_CATEGORY | ENTITY_CATEGORY).toShort
   val NO_MASK: Short = -1  // Collides with nothing
 
+  // Box2D conversion factor
+  val PIXEL_PER_METER: Int = 16
+  val MAX_NORMAL_VELOCITY: Int = 5
+  val MAX_DASH_VELOCITY: Int = 800
+
   // Exact pixel dimensions
   val EXACT_X: Int = 1280
   val EXACT_Y: Int = 720
 
   // Custom screen dimension units
-  // Game runs at 360p (16:9, 640x360)
-  val SCREEN_X: Int = 640
-  val SCREEN_Y: Int = 360
+  // Game runs at 270p (16:9, 480x270)
+  val SCREEN_X: Int = 480 / PIXEL_PER_METER
+  val SCREEN_Y: Int = 270 / PIXEL_PER_METER
+
+  val UI_X: Int = 480
+  val UI_Y: Int = 270
 
   // Sprite sizes
-  val SMALL_ENTITY_SIZE: Int = 16
-  val MID_ENTITY_SIZE: Int = 32
-  val LARGE_ENTITY_SIZE: Int = 64
-  val TILE_SIZE: Int = 16
+  val SMALL_ENTITY_SIZE: Float = 16 / PIXEL_PER_METER
+  val MID_ENTITY_SIZE: Float = 32 / PIXEL_PER_METER
+  val LARGE_ENTITY_SIZE: Float = 64 / PIXEL_PER_METER
+  val TILE_SIZE: Float = 16 / PIXEL_PER_METER
 
   // Camera give, if player is within this distance of environment bounds, camera will stop following
-  val CAMERA_GIVE: Int = TILE_SIZE * 2 + (TILE_SIZE / 2)
+  val CAMERA_GIVE: Float = TILE_SIZE * 15
 }

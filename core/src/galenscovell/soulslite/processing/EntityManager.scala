@@ -8,35 +8,30 @@ import galenscovell.soulslite.actors.systems._
 import galenscovell.soulslite.ui.screens.GameScreen
 
 
-class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: InputHandler, world: World, gameScreen: GameScreen) {
+class EntityManager(engine: Engine, spriteBatch: SpriteBatch, controllerHandler: ControllerHandler, world: World, gameScreen: GameScreen) {
   setupSystems()
 
 
   private def setupSystems(): Unit = {
     val movementSystem: MovementSystem = new MovementSystem(
-      Family.all(
-        classOf[BodyComponent],
-        classOf[VelocityComponent]
-      ).get()
+      Family.all(classOf[BodyComponent], classOf[VelocityComponent]).get()
     )
     val renderSystem: RenderSystem = new RenderSystem(
       Family.all(
         classOf[RenderableComponent],
         classOf[AnimationComponent],
+        classOf[SpriteComponent],
         classOf[BodyComponent],
-        classOf[SizeComponent]
-      ).get(),
-      spriteBatch,
-      gameScreen
+        classOf[SizeComponent],
+        classOf[VelocityComponent]
+      ).get(), spriteBatch, gameScreen
     )
     val inputSystem: InputSystem = new InputSystem(
       Family.all(
         classOf[PlayerComponent],
-        classOf[BodyComponent],
         classOf[VelocityComponent],
-        classOf[AnimationComponent]
-      ).get(),
-      inputHandler
+        classOf[BodyComponent]
+      ).get(), controllerHandler
     )
 
     engine.addSystem(inputSystem)
@@ -44,12 +39,13 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, inputHandler: Inpu
     engine.addSystem(renderSystem)
   }
 
-  def makeEntity(etype: String, size: Int, posX: Float, posY: Float, idleFrames: Int, motionFrames: Int): Entity = {
+  def makeEntity(etype: String, size: Float, posX: Float, posY: Float): Entity = {
     val e: Entity = new Entity
-    e.add(new VelocityComponent(0, 0))
+    e.add(new VelocityComponent)
     e.add(new BodyComponent(world, posX, posY, size))
     e.add(new RenderableComponent)
-    e.add(new AnimationComponent(etype, idleFrames, motionFrames))
+    e.add(new AnimationComponent(etype))
+    e.add(new SpriteComponent(etype))
     e.add(new SizeComponent(size))
 
     if (etype == "player") {

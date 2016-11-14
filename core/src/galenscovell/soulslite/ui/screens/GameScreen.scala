@@ -1,12 +1,14 @@
 package galenscovell.soulslite.ui.screens
 
 import com.badlogic.ashley.core.{Engine, Entity}
+import com.badlogic.gdx.controllers.{Controller, Controllers}
 import com.badlogic.gdx.graphics._
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShaderProgram
 import com.badlogic.gdx.math.{Vector2, Vector3}
 import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.{Gdx, _}
 import galenscovell.soulslite.Main
 import galenscovell.soulslite.actors.components.BodyComponent
@@ -17,6 +19,7 @@ import galenscovell.soulslite.util.Constants
 
 class GameScreen(root: Main) extends AbstractScreen(root) {
   private val entityBatch: SpriteBatch = new SpriteBatch()
+  private val worldCamera: OrthographicCamera = new OrthographicCamera(Constants.SCREEN_X, Constants.SCREEN_Y)
 
   private val debugWorldRenderer: Box2DDebugRenderer = new Box2DDebugRenderer()
 
@@ -26,7 +29,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   private var shader: ShaderProgram = _
 
   private val inputMultiplexer: InputMultiplexer = new InputMultiplexer
-  private val inputHandler: InputHandler = new InputHandler
+  private val controllerHandler: ControllerHandler = new ControllerHandler
 
   // Box2d has a limit on velocity of 2.0 units per step
   // The max speed is 120m/s at 60fps
@@ -37,7 +40,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   private var time: Float = 0f
 
   // For camera smooth movement and bounds
-  private var lerpPos: Vector3 = new Vector3(0, 0, 0)
+  private val lerpPos: Vector3 = new Vector3(0, 0, 0)
   private var minCamX, minCamY, maxCamX, maxCamY: Float = 0f
   private var player: Entity = _
   private var playerBody: Body = _
@@ -52,15 +55,11 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     stage = new Stage(viewport, root.spriteBatch)
 
     world = new World(new Vector2(0, 0), true)  // Gravity, whether to sleep or not
-    entityManager = new EntityManager(new Engine, entityBatch, inputHandler, world, this)
+    entityManager = new EntityManager(new Engine, entityBatch, controllerHandler, world, this)
     environment = new Environment(60, 60, world, entityBatch)
 
-    player = entityManager.makeEntity("player", Constants.MID_ENTITY_SIZE, 800, 800, 1, 12)
+    player = entityManager.makeEntity("player", Constants.MID_ENTITY_SIZE, 20, 20)
     playerBody = player.getComponent(classOf[BodyComponent]).body
-
-//    entityManager.makeEntity("rat", 400, 400, 4, 4)
-//    entityManager.makeEntity("rat", 600, 600, 4, 4)
-//    entityManager.makeEntity("rat", 800, 800, 4, 4)
 
     enableInput()
     setupShader()
@@ -81,7 +80,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 
   private def enableInput(): Unit = {
     inputMultiplexer.addProcessor(stage)
-    inputMultiplexer.addProcessor(inputHandler)
+    Controllers.addListener(controllerHandler)
     Gdx.input.setInputProcessor(inputMultiplexer)
   }
 
@@ -103,28 +102,28 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     **********************/
   private def updateCamera(): Unit = {
     // Find camera upper left coordinates
-    minCamX = camera.position.x - (camera.viewportWidth / 2) * camera.zoom
-    minCamY = camera.position.y - (camera.viewportHeight / 2) * camera.zoom
+    minCamX = worldCamera.position.x - (worldCamera.viewportWidth / 2) * worldCamera.zoom
+    minCamY = worldCamera.position.y - (worldCamera.viewportHeight / 2) * worldCamera.zoom
     // Find camera lower right coordinates
-    maxCamX = minCamX + camera.viewportWidth * camera.zoom
-    maxCamY = minCamY + camera.viewportHeight * camera.zoom
-    camera.update()
+    maxCamX = minCamX + worldCamera.viewportWidth * worldCamera.zoom
+    maxCamY = minCamY + worldCamera.viewportHeight * worldCamera.zoom
+    worldCamera.update()
   }
 
   private def centerCameraOnPlayer(): Unit = {
     // Camera will center onto player unless they are within a certain distance of the map bounds
     val environmentDimensions: Vector2 = environment.getDimensions
 
-    if (playerBody.getPosition.x > Constants.CAMERA_GIVE &&
-      playerBody.getPosition.x < environmentDimensions.x - Constants.CAMERA_GIVE) {
+    if (playerBody.getPosition.x > Constants.CAMERA_GIVE + (Constants.TILE_SIZE / 2) &&
+      playerBody.getPosition.x < environmentDimensions.x - Constants.CAMERA_GIVE - (Constants.TILE_SIZE / 2)) {
       lerpPos.x = playerBody.getPosition.x
     }
-    if (playerBody.getPosition.y > Constants.CAMERA_GIVE &&
-      playerBody.getPosition.y < environmentDimensions.y - Constants.CAMERA_GIVE) {
+    if (playerBody.getPosition.y > Constants.CAMERA_GIVE + (Constants.TILE_SIZE / 2) &&
+      playerBody.getPosition.y < environmentDimensions.y - Constants.CAMERA_GIVE - (Constants.TILE_SIZE / 2)) {
       lerpPos.y = playerBody.getPosition.y
     }
 
-    camera.position.lerp(lerpPos, 0.05f)
+    worldCamera.position.lerp(lerpPos, 0.05f)
   }
 
   def inCamera(x: Float, y: Float): Boolean = {
@@ -155,19 +154,19 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     val frameTime: Float = Math.min(delta, 0.25f)
     accumulator += frameTime
     while (accumulator > timestep) {
-      world.step(timestep, 6, 2)
+      world.step(timestep, 8, 3)
       accumulator -= timestep
     }
 
     updateCamera()
     centerCameraOnPlayer()
-    entityBatch.setProjectionMatrix(camera.combined)
+    entityBatch.setProjectionMatrix(worldCamera.combined)
     entityBatch.begin()
     environment.render()
     entityManager.update(delta)
     entityBatch.end()
 
-     debugWorldRenderer.render(world, camera.combined)
+     debugWorldRenderer.render(world, worldCamera.combined)
 
     // stage.act()
     // stage.draw()

@@ -22,7 +22,7 @@ class LoadScreen(root: Main) extends AbstractScreen(root) {
     loadingMain.setFillParent(true)
     val barTable: Table = new Table
     loadingBar = createBar
-    barTable.add(loadingBar).width(Constants.SCREEN_X - 80).expand.fill
+    barTable.add(loadingBar).width(Constants.UI_X * 0.75f).expand.fill
     loadingMain.add(barTable).expand.fill
 
     stage.addActor(loadingMain)

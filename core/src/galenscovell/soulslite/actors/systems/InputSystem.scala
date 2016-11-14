@@ -2,60 +2,55 @@ package galenscovell.soulslite.actors.systems
 
 import com.badlogic.ashley.core._
 import com.badlogic.ashley.systems.IteratingSystem
+import com.badlogic.gdx.math._
 import galenscovell.soulslite.actors.components._
-import galenscovell.soulslite.processing.InputHandler
+import galenscovell.soulslite.processing.ControllerHandler
+import galenscovell.soulslite.util.Constants
 
 
-class InputSystem(family: Family, inputHandler: InputHandler) extends IteratingSystem(family) {
+class InputSystem(family: Family, controllerHandler: ControllerHandler) extends IteratingSystem(family) {
   private val velocityMapper: ComponentMapper[VelocityComponent] = ComponentMapper.getFor(classOf[VelocityComponent])
-  private val animationMapper: ComponentMapper[AnimationComponent] = ComponentMapper.getFor(classOf[AnimationComponent])
+  private val bodyMapper: ComponentMapper[BodyComponent] = ComponentMapper.getFor(classOf[BodyComponent])
+
+  private var dashFrames: Int = 0
+  private var waitFrames: Int = 0
+  private var dashing: Boolean = false
 
 
   override def processEntity(entity: Entity, deltaTime: Float): Unit = {
     val velocity: VelocityComponent = velocityMapper.get(entity)
-    val animationComponent: AnimationComponent = animationMapper.get(entity)
+    val bodyComponent: BodyComponent = bodyMapper.get(entity)
 
-    if (inputHandler.leftPressed && inputHandler.rightPressed) {
-      velocity.vx = 0
-    } else if (inputHandler.leftPressed) {
-      velocity.vx = -50
-    } else if (inputHandler.rightPressed) {
-      velocity.vx = 50
-    } else {
-      velocity.vx = 0
-    }
-
-    if (inputHandler.upPressed && inputHandler.downPressed) {
-      velocity.vy = 0
-    } else if (inputHandler.upPressed) {
-      velocity.vy = 40
-    } else if (inputHandler.downPressed) {
-      velocity.vy = -40
-    } else {
-      velocity.vy = 0
-    }
-
-    //    0
-    // 3     1
-    //    2
-    if (Math.abs(velocity.vx) > Math.abs(velocity.vy)) {
-      if (velocity.vx > 0) {
-        animationComponent.direction = 1
+    if (!dashing) {
+      if (controllerHandler.pressed) {
+        if (waitFrames == 0) {
+          dashing = true
+          waitFrames = 6
+        }
       } else {
-        animationComponent.direction = 3
-      }
-    } else if (Math.abs(velocity.vy) > Math.abs(velocity.vx)) {
-      if (velocity.vy > 0) {
-        animationComponent.direction = 0
-      } else {
-        animationComponent.direction = 2
-      }
-    }
+        if (waitFrames > 0) {
+          waitFrames -= 1
+        }
+        velocity.v.x = controllerHandler.leftAxis.x * 5
+        velocity.v.y = controllerHandler.leftAxis.y * 5
 
-    if (velocity.vx == 0 && velocity.vy == 0) {
-      animationComponent.inMotion = false
+        // Normalize diagonal movement
+        if (velocity.v.len() > Constants.MAX_NORMAL_VELOCITY) {
+          velocity.v.nor().scl(Constants.MAX_NORMAL_VELOCITY)
+        }
+      }
     } else {
-      animationComponent.inMotion = true
+      dashFrames += 1
+      if (dashFrames < 10) {
+        val normalizedVelocity: Vector2 = velocity.v.nor()
+        bodyComponent.body.applyForceToCenter(normalizedVelocity.x * 4000, normalizedVelocity.y * 4000, true)
+      } else if (dashFrames == 10) {
+        velocity.v.x = 0
+        velocity.v.y = 0
+      } else if (dashFrames == 14) {
+        dashFrames = 0
+        dashing = false
+      }
     }
   }
 }

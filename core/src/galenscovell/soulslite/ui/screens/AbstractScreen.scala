@@ -10,7 +10,7 @@ import galenscovell.soulslite.util.Constants
 
 class AbstractScreen(root: Main) extends Screen {
   protected val camera: OrthographicCamera = new OrthographicCamera(Gdx.graphics.getWidth, Gdx.graphics.getHeight)
-  protected val viewport: FitViewport = new FitViewport(Constants.SCREEN_X, Constants.SCREEN_Y, camera)
+  protected val viewport: FitViewport = new FitViewport(Constants.UI_X, Constants.UI_Y, camera)
   protected var stage: Stage = _
 
 

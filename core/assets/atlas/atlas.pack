@@ -336,42 +336,42 @@ atlas3.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-player/player-down0
+player/player-down-idle
   rotate: false
   xy: 8, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-player/player-down1
+player/player-down2
+  rotate: false
+  xy: 8, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+player/player-down0
   rotate: false
   xy: 48, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-player/player-down10
+player/player-down1
   rotate: false
   xy: 88, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-player/player-down11
+player/player-down10
   rotate: false
   xy: 128, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-player/player-down2
-  rotate: false
-  xy: 168, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-player/player-idle0
+player/player-down11
   rotate: false
   xy: 168, 2
   size: 32, 32
@@ -427,35 +427,42 @@ player/player-down9
   orig: 32, 32
   offset: 0, 0
   index: -1
-player/player-left0
+player/player-left-idle
   rotate: false
   xy: 488, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-player/player-left1
+player/player-left2
+  rotate: false
+  xy: 488, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+player/player-left0
   rotate: false
   xy: 528, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-player/player-left10
+player/player-left1
   rotate: false
   xy: 568, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-player/player-left11
+player/player-left10
   rotate: false
   xy: 608, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-player/player-left2
+player/player-left11
   rotate: false
   xy: 648, 2
   size: 32, 32
@@ -511,35 +518,42 @@ player/player-left9
   orig: 32, 32
   offset: 0, 0
   index: -1
-player/player-right0
+player/player-right-idle
   rotate: false
   xy: 968, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-player/player-right1
+player/player-right2
+  rotate: false
+  xy: 968, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+player/player-right0
   rotate: false
   xy: 1008, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-player/player-right10
+player/player-right1
   rotate: false
   xy: 1048, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-player/player-right11
+player/player-right10
   rotate: false
   xy: 1088, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-player/player-right2
+player/player-right11
   rotate: false
   xy: 1128, 2
   size: 32, 32
@@ -595,7 +609,7 @@ player/player-right9
   orig: 32, 32
   offset: 0, 0
   index: -1
-player/player-up0
+player/player-up-idle
   rotate: false
   xy: 1448, 2
   size: 32, 32
@@ -603,6 +617,13 @@ player/player-up0
   offset: 0, 0
   index: -1
 player/player-up1
+  rotate: false
+  xy: 1448, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+player/player-up0
   rotate: false
   xy: 1488, 2
   size: 32, 32

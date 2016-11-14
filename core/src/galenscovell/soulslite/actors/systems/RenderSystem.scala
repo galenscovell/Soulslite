@@ -12,26 +12,39 @@ class RenderSystem(family: Family, spriteBatch: SpriteBatch, gameScreen: GameScr
   private val bodyMapper: ComponentMapper[BodyComponent] = ComponentMapper.getFor(classOf[BodyComponent])
   private val animationMapper: ComponentMapper[AnimationComponent] = ComponentMapper.getFor(classOf[AnimationComponent])
   private val sizeMapper: ComponentMapper[SizeComponent] = ComponentMapper.getFor(classOf[SizeComponent])
+  private val velocityMapper: ComponentMapper[VelocityComponent] = ComponentMapper.getFor(classOf[VelocityComponent])
+  private val spriteMapper: ComponentMapper[SpriteComponent] = ComponentMapper.getFor(classOf[SpriteComponent])
 
 
   override def processEntity(entity: Entity, deltaTime: Float): Unit = {
+    val velocityComponent: VelocityComponent = velocityMapper.get(entity)
     val body: Body = bodyMapper.get(entity).body
-
     val currentX: Float = body.getPosition.x
     val currentY: Float = body.getPosition.y
 
     if (gameScreen.inCamera(currentX, currentY)) {
-      val size: Int = sizeMapper.get(entity).size
-      val animation: AnimationComponent = animationMapper.get(entity)
-      animation.stateTime += deltaTime
-      val currentFrame: TextureRegion = animation.getCurrentAnimation.getKeyFrame(animation.stateTime, true)
+      val size: Float = sizeMapper.get(entity).size
+      val motion: Boolean = velocityComponent.inMotion
+      val direction: Int = velocityComponent.direction
 
-      spriteBatch.draw(currentFrame,
-        currentX - size / 2,
-        currentY - size / 2,
-        size / 2, size / 2,
-        size, size,
-        1, 1, 0)
+      // Draw animation if in motion, otherwise static sprite
+      if (motion) {
+        val animationComponent: AnimationComponent = animationMapper.get(entity)
+        animationComponent.stateTime += deltaTime
+        val currentAnimation: Animation = animationComponent.getCurrentAnimation(direction)
+        val currentFrame: TextureRegion = currentAnimation.getKeyFrame(animationComponent.stateTime, true)
+
+        spriteBatch.draw(
+          currentFrame, currentX - size / 2, currentY - size / 2, size / 2, size / 2, size, size, 1, 1, 0
+        )
+      } else {
+        val spriteComponent: SpriteComponent = spriteMapper.get(entity)
+        val currentSprite: Sprite = spriteComponent.getCurrentSprite(direction)
+
+        spriteBatch.draw(
+          currentSprite, currentX - size / 2, currentY - size / 2, size / 2, size / 2, size, size, 1, 1, 0
+        )
+      }
     }
   }
 

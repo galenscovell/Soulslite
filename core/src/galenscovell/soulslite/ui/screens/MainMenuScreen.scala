@@ -21,7 +21,7 @@ class MainMenuScreen(root: Main) extends AbstractScreen(root) {
     val titleTable: Table = new Table
     val titleLabel: Label = new Label("Soulslite", Resources.labelXLargeStyle)
     titleLabel.setAlignment(Align.center, Align.left)
-    titleTable.add(titleLabel).width(Constants.SCREEN_X - 100).height(Constants.SCREEN_Y / 6)
+    titleTable.add(titleLabel).width(Constants.UI_X * 0.75f).height(Constants.UI_Y / 6)
 
     val buttonTable: Table = new Table
     val newGameTable: Table = new Table
@@ -71,25 +71,25 @@ class MainMenuScreen(root: Main) extends AbstractScreen(root) {
     val detailTable: Table = new Table
     val detailLabel: Label = new Label(s"v1a 2016 Galen Scovell", Resources.labelSmallStyle)
     detailLabel.setAlignment(Align.center, Align.right)
-    detailTable.add(detailLabel).width(Constants.SCREEN_X * 0.75f).height(Constants.SCREEN_Y * 0.15f)
+    detailTable.add(detailLabel).width(Constants.UI_X * 0.75f).height(Constants.UI_Y * 0.15f)
 
-    buttonTable.add(newGameButton).width(Constants.SCREEN_X * 0.75f).height(Constants.SCREEN_Y * 0.15f).pad(6).left
-    buttonTable.add(newGameTable).width(Constants.SCREEN_X * 0.22f).height(Constants.SCREEN_Y * 0.15f).expand.pad(6).right
+    buttonTable.add(newGameButton).width(Constants.UI_X * 0.75f).height(Constants.UI_Y * 0.15f).pad(6).left
+    buttonTable.add(newGameTable).width(Constants.UI_X * 0.22f).height(Constants.UI_Y * 0.15f).expand.pad(6).right
     buttonTable.row
-    buttonTable.add(continueGameTable).width(Constants.SCREEN_X * 0.22f).height(Constants.SCREEN_Y * 0.15f).expand.pad(6).left
-    buttonTable.add(continueGameButton).width(Constants.SCREEN_X * 0.75f).height(Constants.SCREEN_Y * 0.15f).pad(6).right
+    buttonTable.add(continueGameTable).width(Constants.UI_X * 0.22f).height(Constants.UI_Y * 0.15f).expand.pad(6).left
+    buttonTable.add(continueGameButton).width(Constants.UI_X * 0.75f).height(Constants.UI_Y * 0.15f).pad(6).right
     buttonTable.row
-    buttonTable.add(settingButton).width(Constants.SCREEN_X * 0.75f).height(Constants.SCREEN_Y * 0.15f).pad(6).left
-    buttonTable.add(settingTable).width(Constants.SCREEN_X * 0.22f).height(Constants.SCREEN_Y * 0.15f).expand.pad(6).right
+    buttonTable.add(settingButton).width(Constants.UI_X * 0.75f).height(Constants.UI_Y * 0.15f).pad(6).left
+    buttonTable.add(settingTable).width(Constants.UI_X * 0.22f).height(Constants.UI_Y * 0.15f).expand.pad(6).right
     buttonTable.row
-    buttonTable.add(quitTable).width(Constants.SCREEN_X * 0.22f).height(Constants.SCREEN_Y * 0.15f).expand.pad(6).left
-    buttonTable.add(quitButton).width(Constants.SCREEN_X * 0.75f).height(Constants.SCREEN_Y * 0.15f).pad(6).right
+    buttonTable.add(quitTable).width(Constants.UI_X * 0.22f).height(Constants.UI_Y * 0.15f).expand.pad(6).left
+    buttonTable.add(quitButton).width(Constants.UI_X * 0.75f).height(Constants.UI_Y * 0.15f).pad(6).right
 
-    mainTable.add(titleTable).width(Constants.SCREEN_X).height(Constants.SCREEN_Y * 0.1f).expand.center.pad(6)
+    mainTable.add(titleTable).width(Constants.UI_X).height(Constants.UI_Y * 0.1f).expand.center.pad(6)
     mainTable.row
-    mainTable.add(buttonTable).width(Constants.SCREEN_X).height(Constants.SCREEN_Y * 0.65f).expand.center.pad(6)
+    mainTable.add(buttonTable).width(Constants.UI_X).height(Constants.UI_Y * 0.65f).expand.center.pad(6)
     mainTable.row
-    mainTable.add(detailTable).width(Constants.SCREEN_X).height(Constants.SCREEN_Y * 0.1f).expand.center.pad(6)
+    mainTable.add(detailTable).width(Constants.UI_X).height(Constants.UI_Y * 0.1f).expand.center.pad(6)
 
     stage.addActor(mainTable)
     mainTable.addAction(Actions.sequence(
