@@ -1,5 +1,6 @@
 package galenscovell.soulslite.util
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.assets.loaders.FileHandleResolver
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver
@@ -18,8 +19,7 @@ object Resources {
   val assetManager: AssetManager = new AssetManager
   var atlas: TextureAtlas = _
 
-  var labelTinyStyle, labelSmallStyle, labelMediumStyle,
-  labelLargeStyle, labelXLargeStyle: LabelStyle = _
+  var labelSmallStyle, labelMediumStyle, labelLargeStyle, labelXLargeStyle: LabelStyle = _
 
   var npGreen, npDarkBlue, npGray, npBlue, npDarkGray,
   greenButtonNp0, greenButtonNp1, blueButtonNp0, blueButtonNp1,
@@ -35,14 +35,15 @@ object Resources {
   def load(): Unit = {
     assetManager.load("atlas/atlas.pack", classOf[TextureAtlas])
     val resolver: FileHandleResolver = new InternalFileHandleResolver
-    assetManager.setLoader(classOf[FreeTypeFontGenerator], new FreeTypeFontGeneratorLoader(resolver))
-    assetManager.setLoader(classOf[BitmapFont], ".ttf", new FreetypeFontLoader(resolver))
+    val fontGeneratorLoader: FreeTypeFontGeneratorLoader = new FreeTypeFontGeneratorLoader(resolver)
+    assetManager.setLoader(classOf[FreeTypeFontGenerator], fontGeneratorLoader)
+    val fontLoader: FreetypeFontLoader = new FreetypeFontLoader(resolver)
+    assetManager.setLoader(classOf[BitmapFont], ".ttf", fontLoader)
 
-    generateFont("ui/Terminus.ttf", 14, 0, Color.WHITE, Color.BLACK, "tinyFont.ttf")
-    generateFont("ui/Terminus.ttf", 16, 0, Color.WHITE, Color.BLACK, "smallFont.ttf")
-    generateFont("ui/Terminus.ttf", 18, 0, Color.WHITE, Color.BLACK, "mediumFont.ttf")
-    generateFont("ui/Terminus.ttf", 22, 0, Color.WHITE, Color.BLACK, "largeFont.ttf")
-    generateFont("ui/cubeOne.ttf", 48, 0, Color.TEAL, Color.BLACK, "xLargeFont.ttf")
+    generateFont("ui/BitCasual.ttf", 24, 0, Color.WHITE, Color.BLACK, "smallFont.ttf")
+    generateFont("ui/BitCasual.ttf", 32, 0, Color.WHITE, Color.BLACK, "mediumFont.ttf")
+    generateFont("ui/BitCasual.ttf", 48, 0, Color.WHITE, Color.BLACK, "largeFont.ttf")
+    generateFont("ui/cubeOne.ttf", 64, 0, Color.TEAL, Color.BLACK, "xLargeFont.ttf")
   }
 
   def done(): Unit = {
@@ -68,7 +69,7 @@ object Resources {
   private def generateFont(fontName: String, size: Int, borderWidth: Int, fontColor: Color, borderColor: Color, outName: String): Unit = {
     val params: FreetypeFontLoader.FreeTypeFontLoaderParameter = new FreetypeFontLoader.FreeTypeFontLoaderParameter
     params.fontFileName = fontName
-    params.fontParameters.size = size
+    params.fontParameters.size = Math.ceil(size).toInt
     params.fontParameters.borderWidth = borderWidth
     params.fontParameters.borderColor = borderColor
     params.fontParameters.color = fontColor
@@ -99,7 +100,6 @@ object Resources {
   }
 
   private def loadLabelStyles(): Unit = {
-    labelTinyStyle = new LabelStyle(assetManager.get("tinyFont.ttf", classOf[BitmapFont]), Color.WHITE)
     labelSmallStyle = new LabelStyle(assetManager.get("smallFont.ttf", classOf[BitmapFont]), Color.WHITE)
     labelMediumStyle = new LabelStyle(assetManager.get("mediumFont.ttf", classOf[BitmapFont]), Color.WHITE)
     labelLargeStyle = new LabelStyle(assetManager.get("largeFont.ttf", classOf[BitmapFont]), Color.WHITE)

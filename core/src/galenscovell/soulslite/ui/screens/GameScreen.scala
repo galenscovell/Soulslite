@@ -60,6 +60,8 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 
     player = entityManager.makeEntity("player", Constants.MID_ENTITY_SIZE, 20, 20)
     playerBody = player.getComponent(classOf[BodyComponent]).body
+    // Start camera centered on player with no lerp
+    worldCamera.position.set(playerBody.getPosition.x, playerBody.getPosition.y, 0)
 
     enableInput()
     setupShader()
