@@ -1,14 +1,13 @@
 package galenscovell.soulslite.ui.screens
 
 import com.badlogic.ashley.core.{Engine, Entity}
-import com.badlogic.gdx.controllers.{Controller, Controllers}
+import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics._
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShaderProgram
 import com.badlogic.gdx.math.{Vector2, Vector3}
 import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.{Gdx, _}
 import galenscovell.soulslite.Main
 import galenscovell.soulslite.actors.components.BodyComponent
@@ -38,6 +37,8 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 
   // For shader timing
   private var time: Float = 0f
+  private var steps: Int = 0
+  private var totalRunTimes: Double = 0f
 
   // For camera smooth movement and bounds
   private val lerpPos: Vector3 = new Vector3(0, 0, 0)
@@ -141,6 +142,8 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     * Screen Operations *
     **********************/
   override def render(delta: Float): Unit = {
+    val startTime: Double = System.nanoTime()
+
     Gdx.gl.glClearColor(0, 0, 0, 1)
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
@@ -168,10 +171,18 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     entityManager.update(delta)
     entityBatch.end()
 
-     debugWorldRenderer.render(world, worldCamera.combined)
+    debugWorldRenderer.render(world, worldCamera.combined)
 
     // stage.act()
     // stage.draw()
+
+    if (steps == 60) {
+      println("Average: " + (totalRunTimes / 60).toString + "ms")
+      steps = 0
+      totalRunTimes = 0f
+    }
+    totalRunTimes += (System.nanoTime() - startTime) / 1000000
+    steps += 1
   }
 
   override def show(): Unit = {

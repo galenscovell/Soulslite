@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.World
 import galenscovell.soulslite.util.Constants
 
+import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
 
@@ -13,12 +14,21 @@ class Environment(columns: Int, rows: Int, world: World, spriteBatch: SpriteBatc
   private val dimensions: Vector2 = new Vector2(columns * Constants.TILE_SIZE, rows * Constants.TILE_SIZE)
 
   build()
+  findNeighborPoints()
   smooth(3)
   skin()
 
 
   def getDimensions: Vector2 = {
     dimensions
+  }
+
+  def render(): Unit = {
+    for (column <- tiles) {
+      for (tile <- column) {
+        tile.draw(spriteBatch)
+      }
+    }
   }
 
   private def build(): Unit = {
@@ -37,11 +47,11 @@ class Environment(columns: Int, rows: Int, world: World, spriteBatch: SpriteBatc
     }
   }
 
-  def checkAdjacent(): Unit = {
+  private def checkAdjacent(): Unit = {
     for (column <- tiles) {
       for (tile <- column) {
         var floorNeighbors: Int = 0
-        val neighborPoints: Array[Point] = tile.getNeighborPoints
+        val neighborPoints: Array[Point] = tile.neighborTilePoints
         for (p: Point <- neighborPoints) {
           if (tiles(p.x)(p.y).isFloor) {
             floorNeighbors += 1
@@ -52,7 +62,7 @@ class Environment(columns: Int, rows: Int, world: World, spriteBatch: SpriteBatc
     }
   }
 
-  def smooth(n: Int): Unit = {
+  private def smooth(n: Int): Unit = {
     for (t <- 0 until n) {
       checkAdjacent()
       for (column <- tiles) {
@@ -67,21 +77,13 @@ class Environment(columns: Int, rows: Int, world: World, spriteBatch: SpriteBatc
     }
   }
 
-  def skin(): Unit = {
+  private def skin(): Unit = {
     val bitmasker: Bitmasker = new Bitmasker
     for (column <- tiles) {
       for (tile <- column) {
         val mask: Int = bitmasker.findBitmask(tile, tiles)
         tile.setBitmask(mask)
         tile.skin()
-      }
-    }
-  }
-
-  def render(): Unit = {
-    for (column <- tiles) {
-      for (tile <- column) {
-        tile.draw(spriteBatch)
       }
     }
   }
@@ -94,5 +96,32 @@ class Environment(columns: Int, rows: Int, world: World, spriteBatch: SpriteBatc
         print(tile.debugDraw)
       }
     }
+  }
+
+
+  private def findNeighborPoints(): Unit = {
+    for (column <- tiles) {
+      for (tile <- column) {
+        val points: ArrayBuffer[Point] = new ArrayBuffer[Point]()
+        var sumX, sumY: Int = 0
+
+        for (x <- -1 to 1) {
+          for (y <- -1 to 1) {
+            sumX = tile.tx + x
+            sumY = tile.ty + y
+
+            if (!(sumX == tile.tx && sumY == tile.ty) && !isOutOfBounds(sumX, sumY)) {
+              points.append(new Point(sumX, sumY))
+            }
+          }
+        }
+
+        tile.neighborTilePoints = points.toArray
+      }
+    }
+  }
+
+  private def isOutOfBounds(x: Int, y: Int): Boolean = {
+    (x < 0 || y < 0) || (x >= columns || y >= rows)
   }
 }

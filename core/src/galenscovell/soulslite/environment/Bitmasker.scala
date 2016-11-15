@@ -13,7 +13,7 @@ class Bitmasker {
 
   def findBitmask(tile: Tile, tiles: Array[Array[Tile]]): Int = {
     var result: Int = 0
-    val neighborPoints: Array[Point] = tile.getNeighborPoints
+    val neighborPoints: Array[Point] = tile.neighborTilePoints
 
     // If analyzed tile is wall, checks if neighbors are walls
     // If analyzed tile is floor, checks if neighbors are walls or water

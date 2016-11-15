@@ -6,14 +6,12 @@ import com.badlogic.gdx.physics.box2d._
 import galenscovell.soulslite.environment.TileType.TileType
 import galenscovell.soulslite.util.{Constants, Resources}
 
-import scala.collection.mutable.ArrayBuffer
-
 
 class Tile(val tx: Int, val ty: Int, world: World, columns: Int, rows: Int) {
   private var tileType: TileType = TileType.EMPTY
   private val body: Body = createBody
   private val fixture: Fixture = createFixture
-  private val neighborTilePoints: Array[Point] = findNeighborPoints
+  var neighborTilePoints: Array[Point] = _
 
   private var sprite: Sprite = Resources.spTest0
   private var bitmask: Int = 0
@@ -65,37 +63,6 @@ class Tile(val tx: Int, val ty: Int, world: World, columns: Int, rows: Int) {
     }
 
     fixture.setFilterData(filter)
-  }
-
-
-  /**********************
-    *     Neighbors     *
-    **********************/
-  def getNeighborPoints: Array[Point] = {
-    neighborTilePoints
-  }
-
-  private def findNeighborPoints: Array[Point] = {
-    // Compute neighboring tiles only once at object construction
-    val points: ArrayBuffer[Point] = new ArrayBuffer[Point]()
-    var sumX, sumY: Int = 0
-
-    for (x <- -1 to 1) {
-      for (y <- -1 to 1) {
-        sumX = tx + x
-        sumY = ty + y
-
-        if (!(sumX == tx && sumY == ty) && !isOutOfBounds(sumX, sumY)) {
-          points.append(new Point(sumX, sumY))
-        }
-      }
-    }
-
-    points.toArray
-  }
-
-  private def isOutOfBounds(x: Int, y: Int): Boolean = {
-    (x < 0 || y < 0) || (x >= columns || y >= rows)
   }
 
 

@@ -9,8 +9,13 @@ import galenscovell.soulslite.ui.screens.GameScreen
 
 
 class EntityManager(engine: Engine, spriteBatch: SpriteBatch, controllerHandler: ControllerHandler, world: World, gameScreen: GameScreen) {
+  setupEnvironment()
   setupSystems()
 
+
+  private def setupEnvironment(): Unit = {
+
+  }
 
   private def setupSystems(): Unit = {
     val movementSystem: MovementSystem = new MovementSystem(
