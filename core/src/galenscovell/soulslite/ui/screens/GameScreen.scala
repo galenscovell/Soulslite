@@ -5,6 +5,9 @@ import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics._
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShaderProgram
+import com.badlogic.gdx.maps.MapProperties
+import com.badlogic.gdx.maps.tiled.TmxMapLoader
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
 import com.badlogic.gdx.math.{Vector2, Vector3}
 import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -23,7 +26,9 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   private val debugWorldRenderer: Box2DDebugRenderer = new Box2DDebugRenderer()
 
   private var world: World = _
-  private var environment: Environment = _
+  private var tiledMapRenderer: OrthogonalTiledMapRenderer = _
+  private val mapBaseLayers: Array[Int] = Array(0)
+  private val mapOverLayers: Array[Int] = Array(1)
   private var entityManager: EntityManager = _
   private var shader: ShaderProgram = _
 
@@ -57,7 +62,15 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 
     world = new World(new Vector2(0, 0), true)  // Gravity, whether to sleep or not
     entityManager = new EntityManager(new Engine, entityBatch, controllerHandler, world, this)
-    environment = new Environment(60, 60, world, entityBatch)
+
+    val tileMap = new TmxMapLoader().load("maps/test.tmx")
+    val prop: MapProperties = tileMap.getProperties
+    val mapWidth: Int = prop.get("width", classOf[Integer])
+    val mapHeight: Int = prop.get("height", classOf[Integer])
+    val tileWidth: Int = prop.get("tilewidth", classOf[Integer])
+    val tileHeight: Int = prop.get("tileheight", classOf[Integer])
+    println(mapWidth, mapHeight, tileWidth, tileHeight)
+    tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap, Constants.TILE_SIZE / Constants.PIXEL_PER_METER)
 
     player = entityManager.makeEntity("player", Constants.MID_ENTITY_SIZE, 20, 20)
     playerBody = player.getComponent(classOf[BodyComponent]).body
@@ -115,16 +128,19 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 
   private def centerCameraOnPlayer(): Unit = {
     // Camera will center onto player unless they are within a certain distance of the map bounds
-    val environmentDimensions: Vector2 = environment.getDimensions
+//    val environmentDimensions: Vector2 = environment.getDimensions
+//
+//    if (playerBody.getPosition.x > Constants.CAMERA_GIVE + (Constants.TILE_SIZE / 2) &&
+//      playerBody.getPosition.x < environmentDimensions.x - Constants.CAMERA_GIVE - (Constants.TILE_SIZE / 2)) {
+//      lerpPos.x = playerBody.getPosition.x
+//    }
+//    if (playerBody.getPosition.y > Constants.CAMERA_GIVE + (Constants.TILE_SIZE / 2) &&
+//      playerBody.getPosition.y < environmentDimensions.y - Constants.CAMERA_GIVE - (Constants.TILE_SIZE / 2)) {
+//      lerpPos.y = playerBody.getPosition.y
+//    }
 
-    if (playerBody.getPosition.x > Constants.CAMERA_GIVE + (Constants.TILE_SIZE / 2) &&
-      playerBody.getPosition.x < environmentDimensions.x - Constants.CAMERA_GIVE - (Constants.TILE_SIZE / 2)) {
-      lerpPos.x = playerBody.getPosition.x
-    }
-    if (playerBody.getPosition.y > Constants.CAMERA_GIVE + (Constants.TILE_SIZE / 2) &&
-      playerBody.getPosition.y < environmentDimensions.y - Constants.CAMERA_GIVE - (Constants.TILE_SIZE / 2)) {
-      lerpPos.y = playerBody.getPosition.y
-    }
+    lerpPos.x = playerBody.getPosition.x
+    lerpPos.y = playerBody.getPosition.y
 
     worldCamera.position.lerp(lerpPos, 0.05f)
   }
@@ -166,10 +182,15 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     updateCamera()
     centerCameraOnPlayer()
     entityBatch.setProjectionMatrix(worldCamera.combined)
+
+    tiledMapRenderer.setView(worldCamera)
+    tiledMapRenderer.render(mapBaseLayers)
+
     entityBatch.begin()
-    environment.render()
     entityManager.update(delta)
     entityBatch.end()
+
+    tiledMapRenderer.render(mapOverLayers)
 
     debugWorldRenderer.render(world, worldCamera.combined)
 
