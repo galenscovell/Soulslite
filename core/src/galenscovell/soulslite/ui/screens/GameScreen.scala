@@ -5,10 +5,7 @@ import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics._
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShaderProgram
-import com.badlogic.gdx.maps.MapProperties
-import com.badlogic.gdx.maps.tiled.TmxMapLoader
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
-import com.badlogic.gdx.math.{Vector2, Vector3}
+import com.badlogic.gdx.math._
 import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.{Gdx, _}
@@ -23,14 +20,11 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   private val entityBatch: SpriteBatch = new SpriteBatch()
   private val worldCamera: OrthographicCamera = new OrthographicCamera(Constants.SCREEN_X, Constants.SCREEN_Y)
 
+  private var world: World = _
   private val debugWorldRenderer: Box2DDebugRenderer = new Box2DDebugRenderer()
 
-  private var world: World = _
-  private var tiledMapRenderer: OrthogonalTiledMapRenderer = _
-  private val mapBaseLayers: Array[Int] = Array(0)
-  private val mapOverLayers: Array[Int] = Array(1)
+  private var environment: Environment = _
   private var entityManager: EntityManager = _
-  private var shader: ShaderProgram = _
 
   private val inputMultiplexer: InputMultiplexer = new InputMultiplexer
   private val controllerHandler: ControllerHandler = new ControllerHandler
@@ -40,12 +34,13 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   private val timestep: Float = 1 / 120.0f
   private var accumulator: Float = 0
 
-  // For shader timing
+  // For shader
+  private var shader: ShaderProgram = _
   private var time: Float = 0f
   private var steps: Int = 0
   private var totalRunTimes: Double = 0f
 
-  // For camera smooth movement and bounds
+  // For camera
   private val lerpPos: Vector3 = new Vector3(0, 0, 0)
   private var minCamX, minCamY, maxCamX, maxCamY: Float = 0f
   private var player: Entity = _
@@ -62,19 +57,11 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 
     world = new World(new Vector2(0, 0), true)  // Gravity, whether to sleep or not
     entityManager = new EntityManager(new Engine, entityBatch, controllerHandler, world, this)
-
-    val tileMap = new TmxMapLoader().load("maps/test.tmx")
-    val prop: MapProperties = tileMap.getProperties
-    val mapWidth: Int = prop.get("width", classOf[Integer])
-    val mapHeight: Int = prop.get("height", classOf[Integer])
-    val tileWidth: Int = prop.get("tilewidth", classOf[Integer])
-    val tileHeight: Int = prop.get("tileheight", classOf[Integer])
-    println(mapWidth, mapHeight, tileWidth, tileHeight)
-    tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap, Constants.TILE_SIZE / Constants.PIXEL_PER_METER)
+    environment = new Environment(world)
 
     player = entityManager.makeEntity("player", Constants.MID_ENTITY_SIZE, 20, 20)
     playerBody = player.getComponent(classOf[BodyComponent]).body
-    // Start camera centered on player with no lerp
+    // Start camera immediately centered on player
     worldCamera.position.set(playerBody.getPosition.x, playerBody.getPosition.y, 0)
 
     enableInput()
@@ -127,18 +114,6 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   }
 
   private def centerCameraOnPlayer(): Unit = {
-    // Camera will center onto player unless they are within a certain distance of the map bounds
-//    val environmentDimensions: Vector2 = environment.getDimensions
-//
-//    if (playerBody.getPosition.x > Constants.CAMERA_GIVE + (Constants.TILE_SIZE / 2) &&
-//      playerBody.getPosition.x < environmentDimensions.x - Constants.CAMERA_GIVE - (Constants.TILE_SIZE / 2)) {
-//      lerpPos.x = playerBody.getPosition.x
-//    }
-//    if (playerBody.getPosition.y > Constants.CAMERA_GIVE + (Constants.TILE_SIZE / 2) &&
-//      playerBody.getPosition.y < environmentDimensions.y - Constants.CAMERA_GIVE - (Constants.TILE_SIZE / 2)) {
-//      lerpPos.y = playerBody.getPosition.y
-//    }
-
     lerpPos.x = playerBody.getPosition.x
     lerpPos.y = playerBody.getPosition.y
 
@@ -179,18 +154,18 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
       accumulator -= timestep
     }
 
+    // Camera operations
     updateCamera()
     centerCameraOnPlayer()
     entityBatch.setProjectionMatrix(worldCamera.combined)
+    environment.updateCamera(worldCamera)
 
-    tiledMapRenderer.setView(worldCamera)
-    tiledMapRenderer.render(mapBaseLayers)
-
+    // Main render operations
+    environment.renderBaseLayer()
     entityBatch.begin()
     entityManager.update(delta)
     entityBatch.end()
-
-    tiledMapRenderer.render(mapOverLayers)
+    environment.renderOverlapLayer()
 
     debugWorldRenderer.render(world, worldCamera.combined)
 
