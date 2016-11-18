@@ -1,6 +1,7 @@
 package galenscovell.soulslite.ui.screens
 
 import com.badlogic.ashley.core.{Engine, Entity}
+import com.badlogic.gdx._
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics._
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -8,7 +9,6 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram
 import com.badlogic.gdx.math._
 import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.{Gdx, _}
 import galenscovell.soulslite.Main
 import galenscovell.soulslite.actors.components.BodyComponent
 import galenscovell.soulslite.environment.Environment
@@ -59,8 +59,10 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     entityManager = new EntityManager(new Engine, entityBatch, controllerHandler, world, this)
     environment = new Environment(world)
 
-    player = entityManager.makeEntity("player", Constants.MID_ENTITY_SIZE, 20, 20)
+    player = entityManager.makeEntity(player=true, "player", Constants.MID_ENTITY_SIZE, 20, 20)
     playerBody = player.getComponent(classOf[BodyComponent]).body
+    val testDummy = entityManager.makeEntity(player=false, "player", Constants.MID_ENTITY_SIZE, 24, 20)
+
     // Start camera immediately centered on player
     worldCamera.position.set(playerBody.getPosition.x, playerBody.getPosition.y, 0)
 
@@ -167,7 +169,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     entityBatch.end()
     environment.renderOverlapLayer()
 
-    debugWorldRenderer.render(world, worldCamera.combined)
+    // debugWorldRenderer.render(world, worldCamera.combined)
 
     // stage.act()
     // stage.draw()

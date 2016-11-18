@@ -39,7 +39,7 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, controllerHandler:
     engine.addSystem(renderSystem)
   }
 
-  def makeEntity(etype: String, size: Float, posX: Float, posY: Float): Entity = {
+  def makeEntity(player: Boolean, etype: String, size: Float, posX: Float, posY: Float): Entity = {
     val e: Entity = new Entity
     e.add(new VelocityComponent)
     e.add(new BodyComponent(world, posX, posY, size))
@@ -48,7 +48,7 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, controllerHandler:
     e.add(new SpriteComponent(etype))
     e.add(new SizeComponent(size))
 
-    if (etype == "player") {
+    if (player) {
       e.add(new PlayerComponent)
     }
 

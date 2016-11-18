@@ -3,6 +3,7 @@ package galenscovell.soulslite.actors.systems
 import com.badlogic.ashley.core._
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.g2d._
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import galenscovell.soulslite.actors.components._
 import galenscovell.soulslite.ui.screens.GameScreen
@@ -25,17 +26,23 @@ class RenderSystem(family: Family, spriteBatch: SpriteBatch, gameScreen: GameScr
     if (gameScreen.inCamera(currentX, currentY)) {
       val size: Float = sizeMapper.get(entity).size
       val motion: Boolean = velocityComponent.inMotion
-      val direction: Int = velocityComponent.direction
+      var direction: Int = velocityComponent.direction
 
       // Draw animation if in motion, otherwise static sprite
       if (motion) {
+        var rotation = 0f
+        if (velocityComponent.dashing) {
+          direction = 4
+          rotation = velocityComponent.angle
+        }
         val animationComponent: AnimationComponent = animationMapper.get(entity)
         animationComponent.stateTime += deltaTime
+
         val currentAnimation: Animation = animationComponent.getCurrentAnimation(direction)
-        val currentFrame: TextureRegion = currentAnimation.getKeyFrame(animationComponent.stateTime, true)
+        val currentFrame = currentAnimation.getKeyFrame(animationComponent.stateTime, true)
 
         spriteBatch.draw(
-          currentFrame, currentX - size / 2, currentY - size / 2, size / 2, size / 2, size, size, 1, 1, 0
+          currentFrame, currentX - size / 2, currentY - size / 2, size / 2, size / 2, size, size, 1, 1, rotation
         )
       } else {
         val spriteComponent: SpriteComponent = spriteMapper.get(entity)

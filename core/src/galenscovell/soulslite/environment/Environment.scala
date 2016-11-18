@@ -58,7 +58,7 @@ class Environment(world: World) {
     val fixtureDef: FixtureDef = new FixtureDef
     fixtureDef.shape = shape
     fixtureDef.density = 1f
-    fixtureDef.friction = 1f
+    fixtureDef.friction = 0.1f
     fixtureDef.filter.categoryBits = Constants.WALL_CATEGORY
     fixtureDef.filter.maskBits = Constants.WALL_MASK
 

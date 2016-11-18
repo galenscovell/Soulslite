@@ -14,7 +14,7 @@ class BodyComponent(world: World, posX: Float, posY: Float, size: Float) extends
   private def createBody: Body = {
     val bodyDef: BodyDef = new BodyDef
     bodyDef.`type` = BodyType.DynamicBody
-    // bodyDef.fixedRotation = true
+//    bodyDef.fixedRotation = true
     bodyDef.angularDamping = 1f
     bodyDef.linearDamping = 0.1f
     bodyDef.position.set(posX, posY)
@@ -31,7 +31,7 @@ class BodyComponent(world: World, posX: Float, posY: Float, size: Float) extends
     val fixtureDef: FixtureDef = new FixtureDef
     fixtureDef.shape = shape
     fixtureDef.density = 1f
-    fixtureDef.friction = 1f
+    fixtureDef.friction = 0.1f
     fixtureDef.filter.categoryBits = Constants.ENTITY_CATEGORY
     fixtureDef.filter.maskBits = Constants.ENTITY_MASK
     val fixture: Fixture = body.createFixture(fixtureDef)

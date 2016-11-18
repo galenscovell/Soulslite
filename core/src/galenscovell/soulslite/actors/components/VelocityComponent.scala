@@ -6,9 +6,11 @@ import com.badlogic.gdx.math.Vector2
 
 class VelocityComponent extends Component {
   val v: Vector2 = new Vector2(0, 0)
+  var angle: Float = _
   var inMotion: Boolean = false
   var direction: Int = 0
   //    0
   // 3     1
   //    2
+  var dashing: Boolean = false
 }

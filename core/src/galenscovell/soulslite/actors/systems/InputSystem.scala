@@ -11,6 +11,7 @@ import galenscovell.soulslite.util.Constants
 class InputSystem(family: Family, controllerHandler: ControllerHandler) extends IteratingSystem(family) {
   private val velocityMapper: ComponentMapper[VelocityComponent] = ComponentMapper.getFor(classOf[VelocityComponent])
   private val bodyMapper: ComponentMapper[BodyComponent] = ComponentMapper.getFor(classOf[BodyComponent])
+  private val spriteMapper: ComponentMapper[SpriteComponent] = ComponentMapper.getFor(classOf[SpriteComponent])
 
   private var dashFrames: Int = 0
   private var waitFrames: Int = 0
@@ -40,6 +41,7 @@ class InputSystem(family: Family, controllerHandler: ControllerHandler) extends 
         }
       }
     } else {
+      velocity.dashing = true
       dashFrames += 1
       if (dashFrames < 10) {
         val normalizedVelocity: Vector2 = velocity.v.nor()
@@ -48,9 +50,12 @@ class InputSystem(family: Family, controllerHandler: ControllerHandler) extends 
         velocity.v.x = 0
         velocity.v.y = 0
       } else if (dashFrames == 14) {
+        velocity.dashing = false
         dashFrames = 0
         dashing = false
       }
     }
+
+    velocity.angle = velocity.v.angle()
   }
 }
