@@ -7,7 +7,8 @@ import com.badlogic.gdx.math.Vector2
 class ControllerHandler extends ControllerAdapter {
   val leftAxis: Vector2 = new Vector2(0, 0)
   val rightAxis: Vector2 = new Vector2(0, 0)
-  var pressed: Boolean = false
+  var dashPressed: Boolean = false
+  var attackPressed: Boolean = false
 
 
   override def connected(controller: Controller): Unit = {
@@ -32,13 +33,15 @@ class ControllerHandler extends ControllerAdapter {
 
   override def buttonUp(controller: Controller, buttonCode: Int): Boolean = {
     println("Button up %s".format(buttonCode))
-    pressed = false
+    dashPressed = false
+    attackPressed = false
     true
   }
 
   override def buttonDown(controller: Controller, buttonCode: Int): Boolean = {
     println("Button down %s".format(buttonCode))
-    pressed = true
+    dashPressed = true
+    attackPressed = true
     true
   }
 

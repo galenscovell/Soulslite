@@ -11,7 +11,7 @@ import galenscovell.soulslite.util.Constants
 class InputSystem(family: Family, controllerHandler: ControllerHandler) extends IteratingSystem(family) {
   private val velocityMapper: ComponentMapper[VelocityComponent] = ComponentMapper.getFor(classOf[VelocityComponent])
   private val bodyMapper: ComponentMapper[BodyComponent] = ComponentMapper.getFor(classOf[BodyComponent])
-  private val spriteMapper: ComponentMapper[SpriteComponent] = ComponentMapper.getFor(classOf[SpriteComponent])
+  private val weaponMapper: ComponentMapper[WeaponComponent] = ComponentMapper.getFor(classOf[WeaponComponent])
 
   private var dashFrames: Int = 0
   private var waitFrames: Int = 0
@@ -21,9 +21,16 @@ class InputSystem(family: Family, controllerHandler: ControllerHandler) extends 
   override def processEntity(entity: Entity, deltaTime: Float): Unit = {
     val velocity: VelocityComponent = velocityMapper.get(entity)
     val bodyComponent: BodyComponent = bodyMapper.get(entity)
+    val weaponComponent: WeaponComponent = weaponMapper.get(entity)
+
+    if (controllerHandler.attackPressed) {
+      weaponComponent.swing(0)
+    } else {
+      // weaponComponent.endSwing()
+    }
 
     if (!dashing) {
-      if (controllerHandler.pressed) {
+      if (controllerHandler.dashPressed) {
         if (waitFrames == 0) {
           dashing = true
           waitFrames = 6
