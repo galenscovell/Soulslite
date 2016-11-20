@@ -172,8 +172,8 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     // stage.act()
     // stage.draw()
 
-    if (steps == 60) {
-      println("Average: " + (totalRunTimes / 60).toString + "ms")
+    if (steps == 300) {
+      println("Average: " + (totalRunTimes / 300).toString + "ms")
       steps = 0
       totalRunTimes = 0f
     }

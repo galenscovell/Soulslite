@@ -36,7 +36,7 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, controllerHandler:
       Family.all(
         classOf[BodyComponent],
         classOf[WeaponComponent]
-      ).get()
+      ).get(), world
     )
 
     // Handles entity graphics

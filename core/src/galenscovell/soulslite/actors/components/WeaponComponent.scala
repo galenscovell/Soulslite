@@ -23,8 +23,8 @@ class WeaponComponent(world: World, entityBody: Body) extends Component {
     val shape: PolygonShape = new PolygonShape()
     val vertices = new Array[Vector2](4)
     vertices(0) = new Vector2(0.75f, 0.75f)
-    vertices(1) = new Vector2(0.5f, 0.25f)
-    vertices(2) = new Vector2(0.25f, 0.5f)
+    vertices(1) = new Vector2(0.5f, 0.3f)
+    vertices(2) = new Vector2(0.3f, 0.5f)
     vertices(3) = new Vector2(1.25f, 1.25f)
     shape.set(vertices)
 
@@ -36,6 +36,7 @@ class WeaponComponent(world: World, entityBody: Body) extends Component {
     fixtureDef.filter.categoryBits = Constants.ENTITY_CATEGORY
     fixtureDef.filter.maskBits = Constants.ENTITY_MASK
     val fixture: Fixture = entityBody.createFixture(fixtureDef)
+    fixture.setUserData(s"${entityBody.getUserData}-weapon")
 
     shape.dispose()
     fixture

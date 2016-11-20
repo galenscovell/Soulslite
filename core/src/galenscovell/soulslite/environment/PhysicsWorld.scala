@@ -15,9 +15,16 @@ class PhysicsWorld {
     world.setContactListener(
       new ContactListener {
         override def beginContact(contact: Contact): Unit = {
+          // Collision detected
           val fixtureA: Fixture = contact.getFixtureA
           val fixtureB: Fixture = contact.getFixtureB
-          println(fixtureA.toString + " colliding with " + fixtureB.toString)
+          println(s"${fixtureA.getUserData} collided with ${fixtureB.getUserData}")
+        }
+
+        override def preSolve(contact: Contact, oldManifold: Manifold): Unit = {
+          // Called after collision detection, but before collision resolution
+          // Can query impact velocities of two bodies that have collided here
+          // Can disable contacts here (needs to be set every update) contact.setEnabled(false)
         }
 
         override def endContact(contact: Contact): Unit = {
@@ -25,11 +32,8 @@ class PhysicsWorld {
         }
 
         override def postSolve(contact: Contact, impulse: ContactImpulse): Unit = {
-
-        }
-
-        override def preSolve(contact: Contact, oldManifold: Manifold): Unit = {
-
+          // Can find info about applied impulse here eg. to check if size of collision response
+          //  was over a given threshold (to check if object should break, etc.)
         }
       }
     )
