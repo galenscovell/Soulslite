@@ -7,8 +7,10 @@ import galenscovell.soulslite.actors.components._
 
 
 class MovementSystem(family: Family) extends IteratingSystem(family) {
-  private val bodyMapper: ComponentMapper[BodyComponent] = ComponentMapper.getFor(classOf[BodyComponent])
-  private val velocityMapper: ComponentMapper[VelocityComponent] = ComponentMapper.getFor(classOf[VelocityComponent])
+  private val bodyMapper: ComponentMapper[BodyComponent] =
+    ComponentMapper.getFor(classOf[BodyComponent])
+  private val velocityMapper: ComponentMapper[VelocityComponent] =
+    ComponentMapper.getFor(classOf[VelocityComponent])
 
 
   override def processEntity(entity: Entity, deltaTime: Float): Unit = {

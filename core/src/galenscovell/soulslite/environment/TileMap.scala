@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.Array
 import galenscovell.soulslite.util.Constants
 
 
-class Environment(world: World) {
+class TileMap(world: World) {
   private var tiledMapRenderer: OrthogonalTiledMapRenderer = _
   private val baseLayers: scala.Array[Int] = scala.Array(0, 1)
   private val overlapLayers: scala.Array[Int] = scala.Array(2)

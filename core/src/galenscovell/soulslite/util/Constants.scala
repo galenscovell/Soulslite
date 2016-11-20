@@ -7,7 +7,7 @@ object Constants {
   // fixture filter category = "This is what I am"
   val WALL_CATEGORY: Short = 0x0001
   val ENTITY_CATEGORY: Short = 0x0002
-  val EMPTY_CATEGORY: Short = 0x0004
+  val NO_CATEGORY: Short = 0x0004
   // fixture filter mask = "This is what I collide with"
   val WALL_MASK: Short = ENTITY_CATEGORY
   val ENTITY_MASK: Short = (WALL_CATEGORY | ENTITY_CATEGORY).toShort

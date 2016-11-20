@@ -13,30 +13,47 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, controllerHandler:
 
 
   private def setupSystems(): Unit = {
+    // Handles entity position and velocity
     val movementSystem: MovementSystem = new MovementSystem(
-      Family.all(classOf[BodyComponent], classOf[VelocityComponent]).get()
-    )
-    val renderSystem: RenderSystem = new RenderSystem(
       Family.all(
-        classOf[RenderableComponent],
-        classOf[AnimationComponent],
-        classOf[SpriteComponent],
         classOf[BodyComponent],
-        classOf[SizeComponent],
         classOf[VelocityComponent]
-      ).get(), spriteBatch, gameScreen
+      ).get()
     )
-    val inputSystem: InputSystem = new InputSystem(
+
+    // Handles player input
+    val inputSystem: PlayerControlSystem = new PlayerControlSystem(
       Family.all(
+        classOf[BodyComponent],
         classOf[PlayerComponent],
         classOf[VelocityComponent],
-        classOf[BodyComponent],
         classOf[WeaponComponent]
       ).get(), controllerHandler
     )
 
-    engine.addSystem(inputSystem)
+    // Handles combat collisions and effects
+    val combatSystem: CombatSystem = new CombatSystem(
+      Family.all(
+        classOf[BodyComponent],
+        classOf[WeaponComponent]
+      ).get()
+    )
+
+    // Handles entity graphics
+    val renderSystem: RenderSystem = new RenderSystem(
+      Family.all(
+        classOf[AnimationComponent],
+        classOf[BodyComponent],
+        classOf[RenderableComponent],
+        classOf[SizeComponent],
+        classOf[SpriteComponent],
+        classOf[VelocityComponent]
+      ).get(), spriteBatch, gameScreen
+    )
+
     engine.addSystem(movementSystem)
+    engine.addSystem(inputSystem)
+    engine.addSystem(combatSystem)
     engine.addSystem(renderSystem)
   }
 

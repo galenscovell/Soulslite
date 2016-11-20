@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.scenes.scene2d.Stage
 import galenscovell.soulslite.Main
 import galenscovell.soulslite.actors.components.BodyComponent
-import galenscovell.soulslite.environment.Environment
+import galenscovell.soulslite.environment.{PhysicsWorld, TileMap}
 import galenscovell.soulslite.processing._
 import galenscovell.soulslite.util.Constants
 
@@ -20,10 +20,8 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   private val entityBatch: SpriteBatch = new SpriteBatch()
   private val worldCamera: OrthographicCamera = new OrthographicCamera(Constants.SCREEN_X, Constants.SCREEN_Y)
 
-  private var world: World = _
-  private val debugWorldRenderer: Box2DDebugRenderer = new Box2DDebugRenderer()
-
-  private var environment: Environment = _
+  private var physicsWorld: PhysicsWorld = _
+  private var tileMap: TileMap = _
   private var entityManager: EntityManager = _
 
   private val inputMultiplexer: InputMultiplexer = new InputMultiplexer
@@ -55,9 +53,9 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   override def create(): Unit = {
     stage = new Stage(viewport, root.spriteBatch)
 
-    world = new World(new Vector2(0, 0), true)  // Gravity, whether to sleep or not
-    entityManager = new EntityManager(new Engine, entityBatch, controllerHandler, world, this)
-    environment = new Environment(world)
+    physicsWorld = new PhysicsWorld
+    entityManager = new EntityManager(new Engine, entityBatch, controllerHandler, physicsWorld.getWorld, this)
+    tileMap = new TileMap(physicsWorld.getWorld)
 
     player = entityManager.makeEntity(player=true, "player", Constants.MID_ENTITY_SIZE, 20, 20)
     playerBody = player.getComponent(classOf[BodyComponent]).body
@@ -152,7 +150,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     val frameTime: Float = Math.min(delta, 0.25f)
     accumulator += frameTime
     while (accumulator > timestep) {
-      world.step(timestep, 8, 3)
+      physicsWorld.update(timestep)
       accumulator -= timestep
     }
 
@@ -160,16 +158,16 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     updateCamera()
     centerCameraOnPlayer()
     entityBatch.setProjectionMatrix(worldCamera.combined)
-    environment.updateCamera(worldCamera)
+    tileMap.updateCamera(worldCamera)
 
     // Main render operations
-    environment.renderBaseLayer()
+    tileMap.renderBaseLayer()
     entityBatch.begin()
     entityManager.update(delta)
     entityBatch.end()
-    environment.renderOverlapLayer()
+    tileMap.renderOverlapLayer()
 
-    // debugWorldRenderer.render(world, worldCamera.combined)
+    physicsWorld.debugRender(worldCamera.combined)
 
     // stage.act()
     // stage.draw()

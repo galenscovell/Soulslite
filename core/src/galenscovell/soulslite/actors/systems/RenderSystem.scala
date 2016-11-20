@@ -9,11 +9,16 @@ import galenscovell.soulslite.ui.screens.GameScreen
 
 
 class RenderSystem(family: Family, spriteBatch: SpriteBatch, gameScreen: GameScreen) extends SortedIteratingSystem(family, new ZComparator) {
-  private val bodyMapper: ComponentMapper[BodyComponent] = ComponentMapper.getFor(classOf[BodyComponent])
-  private val animationMapper: ComponentMapper[AnimationComponent] = ComponentMapper.getFor(classOf[AnimationComponent])
-  private val sizeMapper: ComponentMapper[SizeComponent] = ComponentMapper.getFor(classOf[SizeComponent])
-  private val velocityMapper: ComponentMapper[VelocityComponent] = ComponentMapper.getFor(classOf[VelocityComponent])
-  private val spriteMapper: ComponentMapper[SpriteComponent] = ComponentMapper.getFor(classOf[SpriteComponent])
+  private val animationMapper: ComponentMapper[AnimationComponent] =
+    ComponentMapper.getFor(classOf[AnimationComponent])
+  private val bodyMapper: ComponentMapper[BodyComponent] =
+    ComponentMapper.getFor(classOf[BodyComponent])
+  private val sizeMapper: ComponentMapper[SizeComponent] =
+    ComponentMapper.getFor(classOf[SizeComponent])
+  private val spriteMapper: ComponentMapper[SpriteComponent] =
+    ComponentMapper.getFor(classOf[SpriteComponent])
+  private val velocityMapper: ComponentMapper[VelocityComponent] =
+    ComponentMapper.getFor(classOf[VelocityComponent])
 
 
   override def processEntity(entity: Entity, deltaTime: Float): Unit = {

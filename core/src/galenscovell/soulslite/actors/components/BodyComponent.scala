@@ -40,21 +40,10 @@ class BodyComponent(world: World, posX: Float, posY: Float, size: Float) extends
     fixture
   }
 
-  private def updateCollision(): Unit = {
+  def updateCollision(newCategory: Short, newMask: Short): Unit = {
     val filter: Filter = fixture.getFilterData
-
-    //    tileType match {
-    //      case TileType.EMPTY =>
-    //        filter.categoryBits = Constants.EMPTY_CATEGORY
-    //        filter.maskBits = Constants.NO_MASK
-    //      case TileType.FLOOR =>
-    //        filter.categoryBits = Constants.EMPTY_CATEGORY
-    //        filter.maskBits = Constants.NO_MASK
-    //      case TileType.WALL =>
-    //        filter.categoryBits = Constants.WALL_CATEGORY
-    //        filter.maskBits = Constants.WALL_MASK
-    //    }
-
+    filter.categoryBits = newCategory
+    filter.maskBits = newMask
     fixture.setFilterData(filter)
   }
 }
