@@ -3,7 +3,6 @@ package galenscovell.soulslite.actors.systems
 import com.badlogic.ashley.core._
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.g2d._
-import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import galenscovell.soulslite.actors.components._
 import galenscovell.soulslite.ui.screens.GameScreen
@@ -25,11 +24,10 @@ class RenderSystem(family: Family, spriteBatch: SpriteBatch, gameScreen: GameScr
 
     if (gameScreen.inCamera(currentX, currentY)) {
       val size: Float = sizeMapper.get(entity).size
-      val motion: Boolean = velocityComponent.inMotion
       var direction: Int = velocityComponent.direction
 
       // Draw animation if in motion, otherwise static sprite
-      if (motion) {
+      if (velocityComponent.inMotion) {
         var rotation = 0f
         if (velocityComponent.dashing) {
           direction = 4

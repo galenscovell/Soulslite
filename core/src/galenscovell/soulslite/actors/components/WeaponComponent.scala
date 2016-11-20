@@ -2,29 +2,15 @@ package galenscovell.soulslite.actors.components
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d._
 import galenscovell.soulslite.util.Constants
 
 
 class WeaponComponent(world: World, entityBody: Body) extends Component {
-  val weaponBody: Body = createBody
   val weaponFixture: Fixture = createFixture
+  var attacking: Boolean = false
+  var frames: Int = 0
 
-
-  private def createBody: Body = {
-    val bodyDef: BodyDef = new BodyDef
-    bodyDef.`type` = BodyType.DynamicBody
-    //    bodyDef.fixedRotation = true
-    bodyDef.angularDamping = 1f
-    bodyDef.linearDamping = 0.1f
-//    bodyDef.position.set(
-//      entityBody.getPosition.x / Constants.PIXEL_PER_METER,
-//      entityBody.getPosition.y / Constants.PIXEL_PER_METER
-//    )
-
-    world.createBody(bodyDef)
-  }
 
   private def createFixture: Fixture = {
 //    val shape: CircleShape = new CircleShape()
@@ -39,7 +25,7 @@ class WeaponComponent(world: World, entityBody: Body) extends Component {
 
     val fixtureDef: FixtureDef = new FixtureDef
     fixtureDef.shape = shape
-    fixtureDef.density = 0.05f
+    fixtureDef.density = 0.01f
     fixtureDef.friction = 0f
     fixtureDef.isSensor = false
     fixtureDef.filter.categoryBits = Constants.ENTITY_CATEGORY
@@ -50,12 +36,19 @@ class WeaponComponent(world: World, entityBody: Body) extends Component {
     fixture
   }
 
-  def swing(angle: Float): Unit = {
-    entityBody.setTransform(entityBody.getPosition, 10f)
-    entityBody.applyAngularImpulse(2f, true)
+  def startAttack(direction: Int): Unit = {
+    attacking = true
+    frames = 16
+
+    val angle: Float = Math.toRadians(direction * 90).toFloat
+    entityBody.setTransform(entityBody.getPosition, angle)
+    // entityBody.setAngularVelocity(-12f)
+    entityBody.applyAngularImpulse(-4f, true)
   }
 
-  def endSwing(): Unit = {
+  def endAttack(): Unit = {
+    attacking = false
+
     entityBody.setAngularVelocity(0)
   }
 }

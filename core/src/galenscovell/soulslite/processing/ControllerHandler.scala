@@ -32,22 +32,23 @@ class ControllerHandler extends ControllerAdapter {
   }
 
   override def buttonUp(controller: Controller, buttonCode: Int): Boolean = {
-    println("Button up %s".format(buttonCode))
-    dashPressed = false
-    attackPressed = false
     true
   }
 
   override def buttonDown(controller: Controller, buttonCode: Int): Boolean = {
-    println("Button down %s".format(buttonCode))
-    dashPressed = true
-    attackPressed = true
+    buttonCode match {
+      case 0 => dashPressed = true
+      case 1 => attackPressed = true
+      case 2 =>
+      case 3 =>
+      case _ =>
+    }
     true
   }
 
   override def axisMoved(controller: Controller, axisCode: Int, value: Float): Boolean = {
     // 1, 1 is bottom right, -1, -1 is upper left
-    if (Math.abs(value) > 0.05) {
+    if (Math.abs(value) > 0.1) {
       axisCode match {
         case 0 => rightAxis.y = -value // right-vertical    Ranged aiming
         case 1 => rightAxis.x = value  // right-horizontal

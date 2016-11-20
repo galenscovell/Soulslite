@@ -14,10 +14,10 @@ class SpriteComponent(etype: String) extends Component {
 
   def getCurrentSprite(direction: Int): Sprite = {
     direction match {
-      case 0 => up
-      case 1 => right
-      case 2 => down
-      case 3 => left
+      case 0 => right
+      case 1 => up
+      case 2 => left
+      case 3 => down
     }
   }
 }

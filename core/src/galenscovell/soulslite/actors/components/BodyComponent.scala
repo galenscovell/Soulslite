@@ -30,7 +30,7 @@ class BodyComponent(world: World, posX: Float, posY: Float, size: Float) extends
 
     val fixtureDef: FixtureDef = new FixtureDef
     fixtureDef.shape = shape
-    fixtureDef.density = 0.75f
+    fixtureDef.density = 1f
     fixtureDef.friction = 0.1f
     fixtureDef.filter.categoryBits = Constants.ENTITY_CATEGORY
     fixtureDef.filter.maskBits = Constants.ENTITY_MASK

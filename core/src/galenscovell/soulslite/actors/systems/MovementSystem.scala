@@ -15,27 +15,18 @@ class MovementSystem(family: Family) extends IteratingSystem(family) {
     val body: Body = bodyMapper.get(entity).body
     val velocity: VelocityComponent = velocityMapper.get(entity)
 
-    //    0
-    // 3     1
-    //    2
     if (Math.abs(velocity.v.x) > Math.abs(velocity.v.y)) {
       if (velocity.v.x > 0) {
-        velocity.direction = 1
-      } else {
-        velocity.direction = 3
-      }
-    } else if (Math.abs(velocity.v.y) > Math.abs(velocity.v.x)) {
-      if (velocity.v.y > 0) {
         velocity.direction = 0
       } else {
         velocity.direction = 2
       }
-    }
-
-    if (velocity.v.x == 0 && velocity.v.y == 0) {
-      velocity.inMotion = false
-    } else {
-      velocity.inMotion = true
+    } else if (Math.abs(velocity.v.y) > Math.abs(velocity.v.x)) {
+      if (velocity.v.y > 0) {
+        velocity.direction = 1
+      } else {
+        velocity.direction = 3
+      }
     }
 
     body.setLinearVelocity(velocity.v.x, velocity.v.y)
