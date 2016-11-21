@@ -40,9 +40,9 @@ object Resources {
     val fontLoader: FreetypeFontLoader = new FreetypeFontLoader(resolver)
     assetManager.setLoader(classOf[BitmapFont], ".ttf", fontLoader)
 
-    generateFont("ui/BitCasual.ttf", 24, 0, Color.WHITE, Color.BLACK, "smallFont.ttf")
-    generateFont("ui/BitCasual.ttf", 32, 0, Color.WHITE, Color.BLACK, "mediumFont.ttf")
-    generateFont("ui/BitCasual.ttf", 48, 0, Color.WHITE, Color.BLACK, "largeFont.ttf")
+    generateFont("ui/Verdana.ttf", 18, 0, Color.WHITE, Color.BLACK, "smallFont.ttf")
+    generateFont("ui/Verdana.ttf", 24, 0, Color.WHITE, Color.BLACK, "mediumFont.ttf")
+    generateFont("ui/Verdana.ttf", 36, 0, Color.WHITE, Color.BLACK, "largeFont.ttf")
     generateFont("ui/cubeOne.ttf", 64, 0, Color.TEAL, Color.BLACK, "xLargeFont.ttf")
   }
 

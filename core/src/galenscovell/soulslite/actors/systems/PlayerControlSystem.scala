@@ -4,11 +4,11 @@ import com.badlogic.ashley.core._
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math._
 import galenscovell.soulslite.actors.components._
-import galenscovell.soulslite.processing.ControllerHandler
+import galenscovell.soulslite.processing.GameController
 import galenscovell.soulslite.util.Constants
 
 
-class PlayerControlSystem(family: Family, controllerHandler: ControllerHandler) extends IteratingSystem(family) {
+class PlayerControlSystem(family: Family, controllerHandler: GameController) extends IteratingSystem(family) {
   private val bodyMapper: ComponentMapper[BodyComponent] =
     ComponentMapper.getFor(classOf[BodyComponent])
   private val velocityMapper: ComponentMapper[VelocityComponent] =

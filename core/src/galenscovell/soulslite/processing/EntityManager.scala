@@ -8,7 +8,7 @@ import galenscovell.soulslite.actors.systems._
 import galenscovell.soulslite.ui.screens.GameScreen
 
 
-class EntityManager(engine: Engine, spriteBatch: SpriteBatch, controllerHandler: ControllerHandler, world: World, gameScreen: GameScreen) {
+class EntityManager(engine: Engine, spriteBatch: SpriteBatch, controllerHandler: GameController, world: World, gameScreen: GameScreen) {
   setupSystems()
 
 
@@ -32,7 +32,7 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, controllerHandler:
     )
 
     // Handles combat collisions and effects
-    val combatSystem: CombatSystem = new CombatSystem(
+    val combatSystem: CollisionSystem = new CollisionSystem(
       Family.all(
         classOf[BodyComponent],
         classOf[WeaponComponent]

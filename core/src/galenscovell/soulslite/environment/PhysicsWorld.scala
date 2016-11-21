@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d._
 class PhysicsWorld {
   private val world: World = new World(new Vector2(0, 0), true)  // Gravity, whether to sleep or not
   private val debugWorldRenderer: Box2DDebugRenderer = new Box2DDebugRenderer()
+  debugWorldRenderer.setDrawVelocities(true)
 
   establishContactListener()
 
@@ -15,7 +16,6 @@ class PhysicsWorld {
     world.setContactListener(
       new ContactListener {
         override def beginContact(contact: Contact): Unit = {
-          // Collision detected
           val fixtureA: Fixture = contact.getFixtureA
           val fixtureB: Fixture = contact.getFixtureB
           println(s"${fixtureA.getUserData} collided with ${fixtureB.getUserData}")
@@ -34,6 +34,16 @@ class PhysicsWorld {
         override def postSolve(contact: Contact, impulse: ContactImpulse): Unit = {
           // Can find info about applied impulse here eg. to check if size of collision response
           //  was over a given threshold (to check if object should break, etc.)
+//          val contactNormal: Vector2 = contact.getWorldManifold.getNormal
+//          val impulseAmplitude: Float = impulse.getNormalImpulses.array(0) * 100
+//
+//          val fixtureA: Fixture = contact.getFixtureA
+//          val fixtureB: Fixture = contact.getFixtureB
+//
+//          val velocityA: Vector2 = fixtureA.getBody.getLinearVelocity
+//          val velocityB: Vector2 = fixtureB.getBody.getLinearVelocity
+//
+//          fixtureB.getBody.setLinearVelocity(contactNormal.scl(impulseAmplitude))
         }
       }
     )

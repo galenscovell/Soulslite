@@ -15,8 +15,8 @@ class Main extends Game {
 
   def create(): Unit =  {
     spriteBatch = new SpriteBatch
-    loadScreen = new LoadScreen(this)
     mainMenuScreen = new MainMenuScreen(this)
+    loadScreen = new LoadScreen(this, mainMenuScreen)
     setScreen(loadScreen)
   }
 

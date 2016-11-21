@@ -7,13 +7,15 @@ object Constants {
   // fixture filter category = "This is what I am"
   val WALL_CATEGORY: Short = 0x0001
   val ENTITY_CATEGORY: Short = 0x0002
-  val NO_CATEGORY: Short = 0x0004
+  val ATTACK_CATEGORY: Short = 0x0004
+  val NO_CATEGORY: Short = 0x0008
   // fixture filter mask = "This is what I collide with"
   val WALL_MASK: Short = ENTITY_CATEGORY
-  val ENTITY_MASK: Short = (WALL_CATEGORY | ENTITY_CATEGORY).toShort
+  val ENTITY_MASK: Short = (WALL_CATEGORY | ENTITY_CATEGORY | ATTACK_CATEGORY).toShort
+  val ATTACK_MASK: Short = ENTITY_CATEGORY
   val NO_MASK: Short = -1  // Collides with nothing
 
-  // Box2D conversion factor
+  // Box2D dimensions conversion factor
   val PIXEL_PER_METER: Int = 16
   val MAX_NORMAL_VELOCITY: Int = 5
   val MAX_DASH_VELOCITY: Int = 800
@@ -32,7 +34,4 @@ object Constants {
   val MID_ENTITY_SIZE: Float = 32 / PIXEL_PER_METER
   val LARGE_ENTITY_SIZE: Float = 64 / PIXEL_PER_METER
   val TILE_SIZE: Float = 16 / PIXEL_PER_METER
-
-  // Camera give, if player is within this distance of environment bounds, camera will stop following
-  val CAMERA_GIVE: Float = TILE_SIZE * 15
 }

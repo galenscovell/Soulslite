@@ -25,7 +25,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   private var entityManager: EntityManager = _
 
   private val inputMultiplexer: InputMultiplexer = new InputMultiplexer
-  private val controllerHandler: ControllerHandler = new ControllerHandler
+  private val gameController: GameController = new GameController
 
   // Box2d has a limit on velocity of 2.0 units per step
   // The max speed is 120m/s at 60fps
@@ -54,17 +54,19 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     stage = new Stage(viewport, root.spriteBatch)
 
     physicsWorld = new PhysicsWorld
-    entityManager = new EntityManager(new Engine, entityBatch, controllerHandler, physicsWorld.getWorld, this)
+    entityManager = new EntityManager(new Engine, entityBatch, gameController, physicsWorld.getWorld, this)
     tileMap = new TileMap(physicsWorld.getWorld)
 
     player = entityManager.makeEntity(player=true, "player", Constants.MID_ENTITY_SIZE, 20, 20)
     playerBody = player.getComponent(classOf[BodyComponent]).body
-    val testDummy = entityManager.makeEntity(player=false, "player", Constants.MID_ENTITY_SIZE, 24, 20)
+    val testDummy = entityManager.makeEntity(player=false, "player", Constants.MID_ENTITY_SIZE, 20, 24)
 
     // Start camera immediately centered on player
     worldCamera.position.set(playerBody.getPosition.x, playerBody.getPosition.y, 0)
 
-    enableInput()
+    inputMultiplexer.addProcessor(stage)
+    Controllers.addListener(gameController)
+
     setupShader()
   }
 
@@ -78,13 +80,8 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     if (!shader.isCompiled) {
       println(shader.getLog)
     }
-    // entityStage.getBatch.setShader(shader)
-  }
 
-  private def enableInput(): Unit = {
-    inputMultiplexer.addProcessor(stage)
-    Controllers.addListener(controllerHandler)
-    Gdx.input.setInputProcessor(inputMultiplexer)
+    // entityBatch.setShader(shader)
   }
 
 
@@ -122,10 +119,10 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 
   def inCamera(x: Float, y: Float): Boolean = {
     // Determines if a point falls within the camera (+/- some give to reduce chances of pop-in)
-    (x + Constants.TILE_SIZE) >= minCamX &&
-      (y + Constants.TILE_SIZE) >= minCamY &&
-      (x - Constants.TILE_SIZE) <= maxCamX &&
-      (y - Constants.TILE_SIZE) <= maxCamY
+    (x + Constants.MID_ENTITY_SIZE) >= minCamX &&
+      (y + Constants.MID_ENTITY_SIZE) >= minCamY &&
+      (x - Constants.MID_ENTITY_SIZE) <= maxCamX &&
+      (y - Constants.MID_ENTITY_SIZE) <= maxCamY
   }
 
 
@@ -173,7 +170,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     // stage.draw()
 
     if (steps == 300) {
-      println("Average: " + (totalRunTimes / 300).toString + "ms")
+      println(f"Average: ${totalRunTimes / 300}%1.3f ms")
       steps = 0
       totalRunTimes = 0f
     }
@@ -182,7 +179,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   }
 
   override def show(): Unit = {
-    enableInput()
+    Gdx.input.setInputProcessor(inputMultiplexer)
   }
 
   override def resize(width: Int, height: Int): Unit = {

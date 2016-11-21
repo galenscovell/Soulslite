@@ -1,9 +1,9 @@
 package galenscovell.soulslite.ui.screens
 
+import com.badlogic.gdx._
 import com.badlogic.gdx.graphics.{GL20, OrthographicCamera}
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
-import com.badlogic.gdx.{Gdx, Screen}
 import galenscovell.soulslite.Main
 import galenscovell.soulslite.util.Constants
 

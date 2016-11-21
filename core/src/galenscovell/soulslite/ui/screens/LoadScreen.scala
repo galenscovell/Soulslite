@@ -1,18 +1,17 @@
 package galenscovell.soulslite.ui.screens
 
-import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.{Gdx, Screen}
 import com.badlogic.gdx.graphics._
-import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d._
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui._
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
+import com.badlogic.gdx.utils.Scaling
 import galenscovell.soulslite.Main
 import galenscovell.soulslite.util._
 
 
-class LoadScreen(root: Main) extends AbstractScreen(root) {
-  private var loadingBar: ProgressBar = _
+class LoadScreen(root: Main, nextScreen: Screen) extends AbstractScreen(root) {
+  private var loadingImage: Image = _
 
 
   override def create(): Unit = {
@@ -20,23 +19,15 @@ class LoadScreen(root: Main) extends AbstractScreen(root) {
 
     val loadingMain: Table = new Table
     loadingMain.setFillParent(true)
-    val barTable: Table = new Table
-    loadingBar = createBar
-    barTable.add(loadingBar).width(Constants.UI_X * 0.75f).expand.fill
-    loadingMain.add(barTable).expand.fill
+
+    val loadingTable: Table = new Table
+    loadingImage = new Image(new Texture(Gdx.files.internal("clouds_1.png")))
+    loadingImage.setScaling(Scaling.fillY)
+    loadingTable.add(loadingImage).width(Constants.UI_X).height(Constants.UI_Y).expand.fill
+
+    loadingMain.add(loadingTable).width(Constants.UI_X).height(Constants.UI_Y).expand.fill
 
     stage.addActor(loadingMain)
-  }
-
-  private def createBar: ProgressBar = {
-    val fill: TextureRegionDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("loadingFill.png"))))
-    val empty: TextureRegionDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("loadingEmpty.png"))))
-    val barStyle: ProgressBar.ProgressBarStyle = new ProgressBar.ProgressBarStyle(empty, fill)
-    val bar: ProgressBar = new ProgressBar(0, 10, 1, false, barStyle)
-    barStyle.knobBefore = fill
-    bar.setValue(0)
-    bar.setAnimateDuration(0.1f)
-    bar
   }
 
 
@@ -48,24 +39,41 @@ class LoadScreen(root: Main) extends AbstractScreen(root) {
 
     if (Resources.assetManager.update) {
       Resources.done()
-      stage.getRoot.addAction(Actions.sequence(Actions.fadeOut(0.4f), toMainMenuScreen))
+      stage.getRoot.addAction(
+        Actions.sequence(
+          Actions.delay(0.5f),
+          Actions.parallel(
+            Actions.moveTo(Constants.UI_X * 1.4f, 0, 0.75f),
+            Actions.fadeOut(0.75f)
+          ),
+          Actions.delay(0.25f),
+          toNextScreen
+        )
+      )
     }
-    loadingBar.setValue(Resources.assetManager.getLoadedAssets)
   }
 
   override def show(): Unit = {
     Resources.load()
     create()
     stage.getRoot.getColor.a = 0
-    stage.getRoot.addAction(Actions.sequence(Actions.fadeIn(0.4f)))
+    stage.getRoot.addAction(
+      Actions.sequence(
+        Actions.moveTo(-Constants.UI_X * 1.4f, 0),
+        Actions.parallel(
+          Actions.moveTo(0, 0, 0.75f),
+          Actions.fadeIn(0.75f)
+        )
+      )
+    )
   }
 
 
   /***************************
     * Custom Scene2D Actions *
     ***************************/
-  private[screens] var toMainMenuScreen: Action = (delta: Float) => {
-    root.setScreen(root.mainMenuScreen)
+  private[screens] var toNextScreen: Action = (delta: Float) => {
+    root.setScreen(nextScreen)
     true
   }
 }
