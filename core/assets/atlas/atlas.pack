@@ -26,7 +26,7 @@ blue_button1_np
   orig: 36, 36
   offset: 0, 0
   index: -1
-green_button0_np
+blue_button_bars0_np
   rotate: false
   xy: 52, 7
   size: 36, 36
@@ -34,7 +34,7 @@ green_button0_np
   orig: 36, 36
   offset: 0, 0
   index: -1
-green_button1_np
+blue_button_bars1_np
   rotate: false
   xy: 96, 51
   size: 36, 36
@@ -42,44 +42,68 @@ green_button1_np
   orig: 36, 36
   offset: 0, 0
   index: -1
+empty_button0_np
+  rotate: false
+  xy: 140, 89
+  size: 36, 36
+  split: 4, 4, 4, 4
+  orig: 36, 36
+  offset: 0, 0
+  index: -1
+green_button0_np
+  rotate: false
+  xy: 96, 13
+  size: 36, 36
+  split: 4, 4, 4, 4
+  orig: 36, 36
+  offset: 0, 0
+  index: -1
+green_button1_np
+  rotate: false
+  xy: 140, 51
+  size: 36, 36
+  split: 4, 4, 4, 4
+  orig: 36, 36
+  offset: 0, 0
+  index: -1
 test-box-0
   rotate: false
-  xy: 140, 93
+  xy: 184, 93
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 test-box-1
   rotate: false
-  xy: 96, 17
+  xy: 140, 17
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 test-box-2
   rotate: false
-  xy: 140, 59
+  xy: 184, 59
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 test-box-3
   rotate: false
-  xy: 180, 93
+  xy: 224, 93
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 test-box-4
   rotate: false
-  xy: 180, 59
+  xy: 224, 59
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 test-np-0
   rotate: false
-  xy: 220, 101
+  xy: 264, 101
   size: 24, 24
   split: 0, 0, 0, 0
   orig: 24, 24
@@ -87,7 +111,7 @@ test-np-0
   index: -1
 test-np-1
   rotate: false
-  xy: 220, 75
+  xy: 264, 75
   size: 24, 24
   split: 0, 0, 0, 0
   orig: 24, 24
@@ -95,7 +119,7 @@ test-np-1
   index: -1
 test-np-2
   rotate: false
-  xy: 220, 49
+  xy: 296, 101
   size: 24, 24
   split: 0, 0, 0, 0
   orig: 24, 24
@@ -103,7 +127,7 @@ test-np-2
   index: -1
 test-np-3
   rotate: false
-  xy: 140, 33
+  xy: 296, 75
   size: 24, 24
   split: 0, 0, 0, 0
   orig: 24, 24
@@ -111,7 +135,7 @@ test-np-3
   index: -1
 test-np-4
   rotate: false
-  xy: 172, 33
+  xy: 328, 101
   size: 24, 24
   split: 0, 0, 0, 0
   orig: 24, 24
@@ -119,7 +143,7 @@ test-np-4
   index: -1
 text-field-bg-np
   rotate: false
-  xy: 172, 33
+  xy: 328, 101
   size: 24, 24
   split: 0, 0, 0, 0
   orig: 24, 24
@@ -127,7 +151,7 @@ text-field-bg-np
   index: -1
 font-cursor-np
   rotate: false
-  xy: 204, 33
+  xy: 328, 75
   size: 3, 24
   split: 0, 0, 0, 0
   orig: 3, 24
@@ -143,7 +167,7 @@ vertical-bar-empty-np
   index: -1
 vertical-bar-fill-np
   rotate: false
-  xy: 96, 12
+  xy: 96, 8
   size: 14, 3
   split: 0, 0, 0, 0
   orig: 14, 3
@@ -151,7 +175,7 @@ vertical-bar-fill-np
   index: -1
 horizontal-bar-empty-np
   rotate: false
-  xy: 96, 4
+  xy: 184, 51
   size: 3, 6
   split: 0, 0, 0, 0
   orig: 3, 6
@@ -159,7 +183,7 @@ horizontal-bar-empty-np
   index: -1
 horizontal-bar-fill-np
   rotate: false
-  xy: 107, 4
+  xy: 180, 43
   size: 3, 6
   split: 0, 0, 0, 0
   orig: 3, 6

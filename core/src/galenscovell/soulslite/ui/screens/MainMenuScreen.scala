@@ -9,10 +9,15 @@ import com.badlogic.gdx.utils.Align
 import galenscovell.soulslite.Main
 import galenscovell.soulslite.util._
 
+import scala.collection.immutable.List
+
 
 class MainMenuScreen(root: Main) extends AbstractScreen(root) {
+  private val buttonTable: Table = new Table
+  private var startPressed: Boolean = false
   private val buttonArray: Array[TextButton] = new Array(4)
   private var selection: Int = 0
+
   setupControllerInput()
 
 
@@ -20,8 +25,17 @@ class MainMenuScreen(root: Main) extends AbstractScreen(root) {
     Controllers.addListener(
       new ControllerAdapter {
         override def buttonDown(controller: Controller, buttonCode: Int): Boolean = {
-          if (buttonCode == 9) {
+          if (startPressed && List(9, 1).contains(buttonCode)) {
+            // Start has been pressed and selections are displayed
             virtualClick(buttonArray(selection))
+          } else if (!startPressed && buttonCode == 9) {
+            // Start has not been pressed
+            buttonTable.addAction(
+              Actions.sequence(
+                Actions.fadeOut(0.25f),
+                showButtons
+              )
+            )
           }
           true
         }
@@ -51,7 +65,7 @@ class MainMenuScreen(root: Main) extends AbstractScreen(root) {
   }
 
   private def updateSelection(povDirection: PovDirection): Unit = {
-    buttonArray(selection).setStyle(Resources.blueButtonStyle)
+    buttonArray(selection).setStyle(Resources.emptyButtonStyle)
     povDirection match {
       case PovDirection.north => selection -= 1
       case PovDirection.south => selection += 1
@@ -63,8 +77,9 @@ class MainMenuScreen(root: Main) extends AbstractScreen(root) {
       selection = 3
     }
 
-    buttonArray(selection).setStyle(Resources.greenButtonStyle)
+    buttonArray(selection).setStyle(Resources.blueButtonBarsStyle)
   }
+
 
   override def create(): Unit = {
     super.create()
@@ -77,10 +92,47 @@ class MainMenuScreen(root: Main) extends AbstractScreen(root) {
     titleLabel.setAlignment(Align.center, Align.center)
     titleTable.add(titleLabel).width(Constants.UI_X * 0.95f).height(Constants.UI_Y * 0.5f)
 
-    val buttonTable: Table = new Table
+    val pressStartLabel: Label = new Label("Press Start", Resources.labelLargeStyle)
+    pressStartLabel.setAlignment(Align.center, Align.center)
+    buttonTable.add(pressStartLabel).expand.fill
+    buttonTable.addAction(
+      Actions.forever(
+        Actions.sequence(
+          Actions.fadeOut(1.5f),
+          Actions.fadeIn(1.5f)
+        )
+      )
+    )
 
-    val startButton = new TextButton("Start", Resources.greenButtonStyle)
+    val detailTable: Table = new Table
+    val detailLabel: Label = new Label(s"v1a 2016 Studio", Resources.labelSmallStyle)
+    detailLabel.setAlignment(Align.center, Align.right)
+    detailTable.add(detailLabel).width(Constants.UI_X * 0.95f).height(Constants.UI_Y * 0.1f)
+
+
+    mainTable.add(titleTable).width(Constants.UI_X).height(Constants.UI_Y * 0.5f).expand.center.pad(2)
+    mainTable.row
+    mainTable.add(buttonTable).width(Constants.UI_X).height(Constants.UI_Y * 0.3f).expand.center.pad(2)
+    mainTable.row
+    mainTable.add(detailTable).width(Constants.UI_X).height(Constants.UI_Y * 0.1f).expand.center.bottom.pad(2)
+
+    stage.addActor(mainTable)
+    mainTable.addAction(
+      Actions.sequence(
+        Actions.fadeOut(0),
+        Actions.fadeIn(0.25f)
+      )
+    )
+  }
+
+  private def showMenu(): Unit = {
+    startPressed = true
+    buttonTable.clearActions()
+    buttonTable.clear()
+
+    val startButton = new TextButton("Start", Resources.blueButtonBarsStyle)
     startButton.getLabel.setAlignment(Align.center, Align.center)
+    startButton.getLabelCell.pad(24)
     startButton.addListener(new ClickListener() {
       override def clicked(event: InputEvent, x: Float, y: Float): Unit = {
         root.createGameScreen()
@@ -91,28 +143,31 @@ class MainMenuScreen(root: Main) extends AbstractScreen(root) {
       }
     })
 
-    val continueButton = new TextButton("Continue", Resources.blueButtonStyle)
+    val continueButton = new TextButton("Continue", Resources.emptyButtonStyle)
     continueButton.getLabel.setAlignment(Align.center, Align.center)
+    continueButton.getLabelCell.pad(24)
     continueButton.addListener(new ClickListener() {
       override def clicked(event: InputEvent, x: Float, y: Float): Unit = {
 
       }
     })
 
-    val settingsButton = new TextButton("Settings", Resources.blueButtonStyle)
+    val settingsButton = new TextButton("Settings", Resources.emptyButtonStyle)
     settingsButton.getLabel.setAlignment(Align.center, Align.center)
+    settingsButton.getLabelCell.pad(24)
     settingsButton.addListener(new ClickListener() {
       override def clicked(event: InputEvent, x: Float, y: Float): Unit = {
 
       }
     })
 
-    val quitButton = new TextButton("Quit", Resources.blueButtonStyle)
+    val quitButton = new TextButton("Quit", Resources.emptyButtonStyle)
     quitButton.getLabel.setAlignment(Align.center, Align.center)
+    quitButton.getLabelCell.pad(24)
     quitButton.addListener(new ClickListener() {
       override def clicked(event: InputEvent, x: Float, y: Float): Unit = {
         stage.getRoot.addAction(Actions.sequence(
-          Actions.fadeOut(0.5f),
+          Actions.fadeOut(0.25f),
           quitGameAction)
         )
       }
@@ -123,30 +178,18 @@ class MainMenuScreen(root: Main) extends AbstractScreen(root) {
     buttonArray(2) = settingsButton
     buttonArray(3) = quitButton
 
-    val detailTable: Table = new Table
-    val detailLabel: Label = new Label(s"v1a 2016 Studio", Resources.labelSmallStyle)
-    detailLabel.setAlignment(Align.center, Align.right)
-    detailTable.add(detailLabel).width(Constants.UI_X * 0.95f).height(Constants.UI_Y * 0.1f)
-
-
-    buttonTable.add(startButton).width(Constants.UI_X * 0.5f).height(Constants.UI_Y * 0.075f).pad(2).center
+    buttonTable.add(startButton).height(Constants.UI_Y * 0.05f).pad(12).center
     buttonTable.row
-    buttonTable.add(continueButton).width(Constants.UI_X * 0.5f).height(Constants.UI_Y * 0.075f).pad(2).center
+    buttonTable.add(continueButton).height(Constants.UI_Y * 0.05f).pad(12).center
     buttonTable.row
-    buttonTable.add(settingsButton).width(Constants.UI_X * 0.5f).height(Constants.UI_Y * 0.075f).pad(2).center
+    buttonTable.add(settingsButton).height(Constants.UI_Y * 0.05f).pad(12).center
     buttonTable.row
-    buttonTable.add(quitButton).width(Constants.UI_X * 0.5f).height(Constants.UI_Y * 0.075f).pad(2).center
+    buttonTable.add(quitButton).height(Constants.UI_Y * 0.05f).pad(12).center
 
-    mainTable.add(titleTable).width(Constants.UI_X).height(Constants.UI_Y * 0.5f).expand.center.pad(2)
-    mainTable.row
-    mainTable.add(buttonTable).width(Constants.UI_X).height(Constants.UI_Y * 0.3f).expand.center.pad(2)
-    mainTable.row
-    mainTable.add(detailTable).width(Constants.UI_X).height(Constants.UI_Y * 0.1f).expand.center.bottom.pad(2)
-
-    stage.addActor(mainTable)
-    mainTable.addAction(Actions.sequence(
-      Actions.fadeOut(0),
-      Actions.fadeIn(0.5f))
+    buttonTable.addAction(
+      Actions.sequence(
+        Actions.fadeIn(0.25f)
+      )
     )
   }
 
@@ -154,6 +197,10 @@ class MainMenuScreen(root: Main) extends AbstractScreen(root) {
   /***************************
     * Custom Scene2D Actions *
     ***************************/
+  private[screens] var showButtons: Action = (delta: Float) => {
+    showMenu()
+    true
+  }
   private[screens] var toStartScreenAction: Action = (delta: Float) => {
     root.setScreen(root.gameScreen)
     true

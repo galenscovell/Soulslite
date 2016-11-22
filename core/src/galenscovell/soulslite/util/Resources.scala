@@ -23,13 +23,15 @@ object Resources {
 
   var npGreen, npDarkBlue, npGray, npBlue, npDarkGray,
   greenButtonNp0, greenButtonNp1, blueButtonNp0, blueButtonNp1,
+  blueButtonBarsNp0, blueButtonBarsNp1, emptyButtonNp,
   npFontCursor, npTextFieldBg, npHorizontalBarFill, npHorizontalBarEmpty,
   npVerticalBarFill, npVerticalBarEmpty: NinePatchDrawable = _
 
   var spTest0, spTest1, spTest2, spTest3, spTest4: Sprite = _
 
   var buttonMenuStyle, buttonMapStyle0, buttonMapStyle1, buttonMapStyle2,
-  buttonEventStyle, toggleButtonStyle, greenButtonStyle, blueButtonStyle: TextButtonStyle = _
+  buttonEventStyle, toggleButtonStyle, greenButtonStyle, blueButtonStyle,
+  blueButtonBarsStyle, emptyButtonStyle: TextButtonStyle = _
 
 
   def load(): Unit = {
@@ -89,6 +91,9 @@ object Resources {
     greenButtonNp1 = new NinePatchDrawable(atlas.createPatch("green_button1_np"))
     blueButtonNp0 = new NinePatchDrawable(atlas.createPatch("blue_button0_np"))
     blueButtonNp1 = new NinePatchDrawable(atlas.createPatch("blue_button1_np"))
+    blueButtonBarsNp0 = new NinePatchDrawable(atlas.createPatch("blue_button_bars0_np"))
+    blueButtonBarsNp1 = new NinePatchDrawable(atlas.createPatch("blue_button_bars1_np"))
+    emptyButtonNp = new NinePatchDrawable(atlas.createPatch("empty_button0_np"))
 
     npFontCursor = new NinePatchDrawable(atlas.createPatch("font-cursor-np"))
     npTextFieldBg = new NinePatchDrawable(atlas.createPatch("text-field-bg-np"))
@@ -127,6 +132,8 @@ object Resources {
     //    blueButtonStyle.downFontColor = new Color(0.0f, 0.7f, 0.41f, 1.0f)
     //    blueButtonStyle.checkedFontColor = Color.WHITE
     blueButtonStyle.pressedOffsetY = -1
+    blueButtonBarsStyle = new TextButtonStyle(blueButtonBarsNp0, blueButtonBarsNp1, blueButtonBarsNp0, assetManager.get("mediumFont.ttf", classOf[BitmapFont]))
+    emptyButtonStyle = new TextButtonStyle(emptyButtonNp, emptyButtonNp, emptyButtonNp, assetManager.get("mediumFont.ttf", classOf[BitmapFont]))
   }
 
   private def loadSprites(): Unit = {
