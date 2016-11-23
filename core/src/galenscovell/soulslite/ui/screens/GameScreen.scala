@@ -19,13 +19,10 @@ import galenscovell.soulslite.util.Constants
 class GameScreen(root: Main) extends AbstractScreen(root) {
   private val entityBatch: SpriteBatch = new SpriteBatch()
   private val worldCamera: OrthographicCamera = new OrthographicCamera(Constants.SCREEN_X, Constants.SCREEN_Y)
-
-  private var physicsWorld: PhysicsWorld = _
-  private var tileMap: TileMap = _
-  private var entityManager: EntityManager = _
-
-  private val inputMultiplexer: InputMultiplexer = new InputMultiplexer
   private val gameController: GameController = new GameController
+  private val physicsWorld: PhysicsWorld = new PhysicsWorld
+  private val entityManager: EntityManager = new EntityManager(new Engine, entityBatch, gameController, physicsWorld.getWorld, this)
+  private val tileMap: TileMap = new TileMap(physicsWorld.getWorld)
 
   // Box2d has a limit on velocity of 2.0 units per step
   // The max speed is 120m/s at 60fps
@@ -53,19 +50,12 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   override def create(): Unit = {
     stage = new Stage(viewport, root.spriteBatch)
 
-    physicsWorld = new PhysicsWorld
-    entityManager = new EntityManager(new Engine, entityBatch, gameController, physicsWorld.getWorld, this)
-    tileMap = new TileMap(physicsWorld.getWorld)
-
     player = entityManager.makeEntity(player=true, "player", Constants.MID_ENTITY_SIZE, 20, 20)
     playerBody = player.getComponent(classOf[BodyComponent]).body
     val testDummy = entityManager.makeEntity(player=false, "player", Constants.MID_ENTITY_SIZE, 20, 24)
 
     // Start camera immediately centered on player
     worldCamera.position.set(playerBody.getPosition.x, playerBody.getPosition.y, 0)
-
-    inputMultiplexer.addProcessor(stage)
-    Controllers.addListener(gameController)
 
     setupShader()
   }
@@ -179,7 +169,9 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   }
 
   override def show(): Unit = {
-    Gdx.input.setInputProcessor(inputMultiplexer)
+    Gdx.input.setInputProcessor(stage)
+    Controllers.clearListeners()
+    Controllers.addListener(gameController)
   }
 
   override def resize(width: Int, height: Int): Unit = {

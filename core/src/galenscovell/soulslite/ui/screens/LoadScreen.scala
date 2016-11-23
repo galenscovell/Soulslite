@@ -1,6 +1,6 @@
 package galenscovell.soulslite.ui.screens
 
-import com.badlogic.gdx.{Gdx, Screen}
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics._
 import com.badlogic.gdx.scenes.scene2d._
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
@@ -10,7 +10,7 @@ import galenscovell.soulslite.Main
 import galenscovell.soulslite.util._
 
 
-class LoadScreen(root: Main, nextScreen: Screen) extends AbstractScreen(root) {
+class LoadScreen(root: Main) extends AbstractScreen(root) {
   private var loadingImage: Image = _
 
 
@@ -47,7 +47,7 @@ class LoadScreen(root: Main, nextScreen: Screen) extends AbstractScreen(root) {
             Actions.fadeOut(0.75f)
           ),
           Actions.delay(0.25f),
-          toNextScreen
+          toMainMenuScreen
         )
       )
     }
@@ -72,8 +72,8 @@ class LoadScreen(root: Main, nextScreen: Screen) extends AbstractScreen(root) {
   /***************************
     * Custom Scene2D Actions *
     ***************************/
-  private[screens] var toNextScreen: Action = (delta: Float) => {
-    root.setScreen(nextScreen)
+  private[screens] var toMainMenuScreen: Action = (delta: Float) => {
+    root.setMainMenuScreen()
     true
   }
 }

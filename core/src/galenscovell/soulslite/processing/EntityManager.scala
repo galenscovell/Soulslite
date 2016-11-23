@@ -32,9 +32,10 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, controllerHandler:
     )
 
     // Handles combat collisions and effects
-    val combatSystem: CollisionSystem = new CollisionSystem(
+    val collisionSystem: CollisionSystem = new CollisionSystem(
       Family.all(
         classOf[BodyComponent],
+        classOf[ColorComponent],
         classOf[WeaponComponent]
       ).get(), world
     )
@@ -53,27 +54,27 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, controllerHandler:
 
     engine.addSystem(movementSystem)
     engine.addSystem(inputSystem)
-    engine.addSystem(combatSystem)
+    engine.addSystem(collisionSystem)
     engine.addSystem(renderSystem)
   }
 
   def makeEntity(player: Boolean, etype: String, size: Float, posX: Float, posY: Float): Entity = {
     val e: Entity = new Entity
-    val entityBodyComponent: BodyComponent = new BodyComponent(world, posX, posY, size)
-    e.add(new VelocityComponent)
-    e.add(entityBodyComponent)
-    e.add(new RenderableComponent)
+    val bodyComponent: BodyComponent = new BodyComponent(e, world, posX, posY, size)
     e.add(new AnimationComponent(etype))
-    e.add(new SpriteComponent(etype))
+    e.add(bodyComponent)
+    e.add(new ColorComponent)
+    e.add(new RenderableComponent)
     e.add(new SizeComponent(size))
-    e.add(new WeaponComponent(world, entityBodyComponent.body))
+    e.add(new SpriteComponent(etype))
+    e.add(new VelocityComponent)
+    e.add(new WeaponComponent(world, bodyComponent.body))
 
     if (player) {
       e.add(new PlayerComponent)
     }
 
     engine.addEntity(e)
-
     e
   }
 

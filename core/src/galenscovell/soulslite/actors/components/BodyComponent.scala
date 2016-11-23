@@ -1,19 +1,16 @@
 package galenscovell.soulslite.actors.components
 
-import java.util.UUID
-
-import com.badlogic.ashley.core.Component
+import com.badlogic.ashley.core.{Component, Entity}
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d._
 import galenscovell.soulslite.util.Constants
 
 
-class BodyComponent(world: World, posX: Float, posY: Float, size: Float) extends Component {
-  val uuid: String = UUID.randomUUID().toString
+class BodyComponent(entity: Entity, world: World, posX: Float, posY: Float, size: Float) extends Component {
   val body: Body = createBody
   val fixture: Fixture = createFixture
-  body.setUserData(s"$uuid-body")
-  fixture.setUserData(s"$uuid-fixture")
+  body.setUserData(entity)
+  fixture.setUserData(this)
 
 
   private def createBody: Body = {

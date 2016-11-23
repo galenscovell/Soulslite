@@ -135,10 +135,9 @@ class MainMenuScreen(root: Main) extends AbstractScreen(root) {
     startButton.getLabelCell.pad(24)
     startButton.addListener(new ClickListener() {
       override def clicked(event: InputEvent, x: Float, y: Float): Unit = {
-        root.createGameScreen()
         stage.getRoot.addAction(Actions.sequence(
           Actions.fadeOut(0.5f),
-          toStartScreenAction)
+          toGameScreenAction)
         )
       }
     })
@@ -201,8 +200,8 @@ class MainMenuScreen(root: Main) extends AbstractScreen(root) {
     showMenu()
     true
   }
-  private[screens] var toStartScreenAction: Action = (delta: Float) => {
-    root.setScreen(root.gameScreen)
+  private[screens] var toGameScreenAction: Action = (delta: Float) => {
+    root.setGameScreen()
     true
   }
   private[screens] var quitGameAction: Action = (delta: Float) => {

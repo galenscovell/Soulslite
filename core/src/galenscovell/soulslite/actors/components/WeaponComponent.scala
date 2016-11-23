@@ -34,7 +34,7 @@ class WeaponComponent(world: World, entityBody: Body) extends Component {
     fixtureDef.filter.categoryBits = Constants.NO_CATEGORY
     fixtureDef.filter.maskBits = Constants.NO_MASK
     val fixture: Fixture = entityBody.createFixture(fixtureDef)
-    fixture.setUserData(s"${entityBody.getUserData}-weapon")
+    fixture.setUserData(this)
 
     shape.dispose()
     fixture

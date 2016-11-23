@@ -1,7 +1,7 @@
 package galenscovell.soulslite
 
-import com.badlogic.gdx.{Game, Gdx}
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.{Game, Gdx}
 import galenscovell.soulslite.ui.screens._
 import galenscovell.soulslite.util._
 
@@ -16,7 +16,7 @@ class Main extends Game {
   def create(): Unit =  {
     spriteBatch = new SpriteBatch
     mainMenuScreen = new MainMenuScreen(this)
-    loadScreen = new LoadScreen(this, mainMenuScreen)
+    loadScreen = new LoadScreen(this)
     setScreen(loadScreen)
   }
 
@@ -29,11 +29,13 @@ class Main extends Game {
     Resources.dispose()
   }
 
-  def createGameScreen(): Unit =  {
-    if (gameScreen != null) {
-      gameScreen.dispose()
-    }
+  def setMainMenuScreen(): Unit = {
+    setScreen(mainMenuScreen)
+  }
+
+  def setGameScreen(): Unit = {
     gameScreen = new GameScreen(this)
+    setScreen(gameScreen)
   }
 
   def loadGame(): Unit = {
