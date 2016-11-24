@@ -30,8 +30,8 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   private var accumulator: Float = 0
 
   // For shader
-  private var shader: ShaderProgram = _
-  private var time: Float = 0f
+  private var environmentShader: ShaderProgram = _
+  private var environmentShaderTime: Float = 0f
   private var steps: Int = 0
   private var totalRunTimes: Double = 0f
 
@@ -50,28 +50,33 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   override def create(): Unit = {
     stage = new Stage(viewport, root.spriteBatch)
 
+    // Establish player entity
     player = entityManager.makeEntity(player=true, "player", Constants.MID_ENTITY_SIZE, 20, 20)
     playerBody = player.getComponent(classOf[BodyComponent]).body
+
+    // Temp entity for testing purposes with same graphics as player
     val testDummy = entityManager.makeEntity(player=false, "player", Constants.MID_ENTITY_SIZE, 20, 24)
 
     // Start camera immediately centered on player
     worldCamera.position.set(playerBody.getPosition.x, playerBody.getPosition.y, 0)
 
-    setupShader()
+    setupEnvironmentShader()
   }
 
-  private def setupShader(): Unit = {
+  private def setupEnvironmentShader(): Unit = {
     ShaderProgram.pedantic = false
 
-    shader = new ShaderProgram(
+    environmentShader = new ShaderProgram(
       Gdx.files.internal("shaders/water_ripple.vert").readString(),
       Gdx.files.internal("shaders/water_ripple.frag").readString()
     )
-    if (!shader.isCompiled) {
-      println(shader.getLog)
+    if (!environmentShader.isCompiled) {
+      println(environmentShader.getLog)
     }
 
-    // entityBatch.setShader(shader)
+    // Environment shader can only overlap entities if we have a tilemap layer above them
+    // Maybe make a transparent layer covering every map for effects like rain/snow?
+    tileMap.updateShader(environmentShader)
   }
 
 
@@ -125,14 +130,14 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     Gdx.gl.glClearColor(0, 0, 0, 1)
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
-    // Shader
-//    time += delta
-//    if (time > 1200) {
-//      time = 0f
-//    }
-//    shader.begin()
-//    shader.setUniformf("u_time", time)
-//    shader.end()
+    // Environment shader
+    environmentShaderTime += delta
+    if (environmentShaderTime > 1200) {
+      environmentShaderTime = 0f
+    }
+    environmentShader.begin()
+    environmentShader.setUniformf("u_time", environmentShaderTime)
+    environmentShader.end()
 
     val frameTime: Float = Math.min(delta, 0.25f)
     accumulator += frameTime
@@ -176,13 +181,13 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 
   override def resize(width: Int, height: Int): Unit = {
     super.resize(width, height)
-//    shader.begin()
-//    shader.setUniformf("u_resolution", width, height)
-//    shader.end()
+    environmentShader.begin()
+    environmentShader.setUniformf("u_resolution", width, height)
+    environmentShader.end()
   }
 
   override def dispose(): Unit = {
     super.dispose()
-    shader.dispose()
+    environmentShader.dispose()
   }
 }

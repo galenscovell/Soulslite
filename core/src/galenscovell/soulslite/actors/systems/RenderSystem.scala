@@ -2,7 +2,6 @@ package galenscovell.soulslite.actors.systems
 
 import com.badlogic.ashley.core._
 import com.badlogic.ashley.systems.SortedIteratingSystem
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d._
 import com.badlogic.gdx.physics.box2d.Body
 import galenscovell.soulslite.actors.components._

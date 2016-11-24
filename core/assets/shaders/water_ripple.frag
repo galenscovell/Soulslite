@@ -16,7 +16,7 @@ uniform float u_time;
 varying vec4 v_color;
 varying vec2 v_texCoords;
 
-const int speed = 2, frequency = 25, amplitude = 1;
+const int speed = 3, frequency = 15, amplitude = 4;
 
 
 void main() {
@@ -25,7 +25,7 @@ void main() {
     vec2 ripple = vec2(
         sin((length(uv) * frequency) + (u_time * speed)),
         cos((length(uv) * frequency) + (u_time * speed))
-    ) * (amplitude / 1400.0);
+    ) * (amplitude / 80.0);
 
     gl_FragColor = v_color * vec4(texture2D(u_texture, v_texCoords + ripple));
 }
