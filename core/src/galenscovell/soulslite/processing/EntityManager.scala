@@ -4,6 +4,7 @@ import com.badlogic.ashley.core._
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.physics.box2d._
 import galenscovell.soulslite.actors.components._
+import galenscovell.soulslite.actors.components.dynamic.ColorComponent
 import galenscovell.soulslite.actors.systems._
 import galenscovell.soulslite.ui.screens.GameScreen
 
@@ -35,7 +36,6 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, controllerHandler:
     val collisionSystem: CollisionSystem = new CollisionSystem(
       Family.all(
         classOf[BodyComponent],
-        classOf[ColorComponent],
         classOf[WeaponComponent]
       ).get(), world
     )
@@ -63,7 +63,6 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, controllerHandler:
     val bodyComponent: BodyComponent = new BodyComponent(e, world, posX, posY, size)
     e.add(new AnimationComponent(etype))
     e.add(bodyComponent)
-    e.add(new ColorComponent)
     e.add(new RenderableComponent)
     e.add(new SizeComponent(size))
     e.add(new SpriteComponent(etype))

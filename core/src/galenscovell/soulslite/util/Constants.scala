@@ -9,11 +9,13 @@ object Constants {
   val ENTITY_CATEGORY: Short = 0x0002
   val ATTACK_CATEGORY: Short = 0x0004
   val NO_CATEGORY: Short = 0x0008
+
   // fixture filter mask = "This is what I collide with"
   val WALL_MASK: Short = ENTITY_CATEGORY
   val ENTITY_MASK: Short = (WALL_CATEGORY | ENTITY_CATEGORY | ATTACK_CATEGORY).toShort
-  val ATTACK_MASK: Short = ENTITY_CATEGORY
-  val NO_MASK: Short = -1  // Collides with nothing
+  val ATTACK_ON_MASK: Short = ENTITY_CATEGORY
+  val ATTACK_OFF_MASK: Short = -1
+  val NO_MASK: Short = -2
 
   // Box2D dimensions conversion factor
   val PIXEL_PER_METER: Int = 16

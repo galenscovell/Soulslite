@@ -2,15 +2,15 @@ package galenscovell.soulslite.actors.systems
 
 import com.badlogic.ashley.core._
 import com.badlogic.ashley.systems.IteratingSystem
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.physics.box2d._
 import galenscovell.soulslite.actors.components._
+import galenscovell.soulslite.actors.components.dynamic.ColorComponent
 
 
 class CollisionSystem(family: Family, world: World) extends IteratingSystem(family) with ContactListener {
   private val bodyMapper: ComponentMapper[BodyComponent] =
     ComponentMapper.getFor(classOf[BodyComponent])
-  private val colorMapper: ComponentMapper[ColorComponent] =
-    ComponentMapper.getFor(classOf[ColorComponent])
   private val weaponMapper: ComponentMapper[WeaponComponent] =
     ComponentMapper.getFor(classOf[WeaponComponent])
 
@@ -23,13 +23,10 @@ class CollisionSystem(family: Family, world: World) extends IteratingSystem(fami
 
   override def processEntity(entity: Entity, deltaTime: Float): Unit = {
     if (collisionEntityB != null && entity == collisionEntityB) {
-      println("Collided entity processing")
-
       val bodyComponent: BodyComponent = bodyMapper.get(entity)
-      val colorComponent: ColorComponent = colorMapper.get(entity)
       val weaponComponent: WeaponComponent = weaponMapper.get(entity)
 
-      colorComponent.color.r = 0
+      entity.add(new ColorComponent("white", 5))
 
       collisionEntityB = null
     }
@@ -43,13 +40,15 @@ class CollisionSystem(family: Family, world: World) extends IteratingSystem(fami
     val fixtureA: Fixture = contact.getFixtureA
     val fixtureB: Fixture = contact.getFixtureB
 
+    // Check that instigator of contact is a weapon
     val userData = fixtureA.getUserData
     if (userData.isInstanceOf[WeaponComponent]) {
-      println("Weapon contact")
-      val collided = fixtureB.getBody.getUserData
-      if (collided.isInstanceOf[Entity]) {
-        println("adding collided")
-        collisionEntityB = collided.asInstanceOf[Entity]
+      // Check that collided fixture is not a weapon
+      if (!fixtureB.getUserData.isInstanceOf[WeaponComponent]) {
+        val collided = fixtureB.getBody.getUserData
+        if (collided.isInstanceOf[Entity]) {
+          collisionEntityB = collided.asInstanceOf[Entity]
+        }
       }
     }
   }
@@ -63,16 +62,16 @@ class CollisionSystem(family: Family, world: World) extends IteratingSystem(fami
   override def postSolve(contact: Contact, impulse: ContactImpulse): Unit = {
     // Can find info about applied impulse here eg. to check if size of collision response
     //  was over a given threshold (to check if object should break, etc.)
-    //          val contactNormal: Vector2 = contact.getWorldManifold.getNormal
-    //          val impulseAmplitude: Float = impulse.getNormalImpulses.array(0) * 100
-    //
-    //          val fixtureA: Fixture = contact.getFixtureA
-    //          val fixtureB: Fixture = contact.getFixtureB
-    //
-    //          val velocityA: Vector2 = fixtureA.getBody.getLinearVelocity
-    //          val velocityB: Vector2 = fixtureB.getBody.getLinearVelocity
-    //
-    //          fixtureB.getBody.setLinearVelocity(contactNormal.scl(impulseAmplitude))
+//        val contactNormal: Vector2 = contact.getWorldManifold.getNormal
+//        val impulseAmplitude: Float = impulse.getNormalImpulses.array(0) * 100
+//
+//        val fixtureA: Fixture = contact.getFixtureA
+//        val fixtureB: Fixture = contact.getFixtureB
+//
+//        val velocityA: Vector2 = fixtureA.getBody.getLinearVelocity
+//        val velocityB: Vector2 = fixtureB.getBody.getLinearVelocity
+//
+//        fixtureB.getBody.setLinearVelocity(contactNormal.scl(impulseAmplitude))
   }
 
   override def endContact(contact: Contact): Unit = {

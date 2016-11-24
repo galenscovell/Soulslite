@@ -2,10 +2,11 @@ package galenscovell.soulslite.actors.systems
 
 import com.badlogic.ashley.core._
 import com.badlogic.ashley.systems.SortedIteratingSystem
-import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d._
 import com.badlogic.gdx.physics.box2d.Body
 import galenscovell.soulslite.actors.components._
+import galenscovell.soulslite.actors.components.dynamic.ColorComponent
 import galenscovell.soulslite.ui.screens.GameScreen
 
 
@@ -31,8 +32,16 @@ class RenderSystem(family: Family, spriteBatch: SpriteBatch, gameScreen: GameScr
     val currentY: Float = body.getPosition.y
 
     if (gameScreen.inCamera(currentX, currentY)) {
-      val color: Color = colorMapper.get(entity).color
-      spriteBatch.setColor(color)
+      // Handle dynamic entity color effects
+      if (colorMapper.has(entity)) {
+        val colorComponent: ColorComponent = colorMapper.get(entity)
+        spriteBatch.setShader(colorComponent.shader)
+
+        if (colorComponent.step()) {
+          colorComponent.dispose()
+          entity.remove(classOf[ColorComponent])
+        }
+      }
 
       val size: Float = sizeMapper.get(entity).size
       var direction: Int = velocityComponent.direction
@@ -61,7 +70,7 @@ class RenderSystem(family: Family, spriteBatch: SpriteBatch, gameScreen: GameScr
           currentSprite, currentX - size / 2, currentY - size / 2, size / 2, size / 2, size, size, 1, 1, 0
         )
       }
-      spriteBatch.setColor(1, 1, 1, 1)
+      spriteBatch.setShader(null)
     }
   }
 

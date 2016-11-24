@@ -32,7 +32,7 @@ class WeaponComponent(world: World, entityBody: Body) extends Component {
     fixtureDef.friction = 0f
     fixtureDef.isSensor = true
     fixtureDef.filter.categoryBits = Constants.NO_CATEGORY
-    fixtureDef.filter.maskBits = Constants.NO_MASK
+    fixtureDef.filter.maskBits = Constants.ATTACK_OFF_MASK
     val fixture: Fixture = entityBody.createFixture(fixtureDef)
     fixture.setUserData(this)
 
@@ -43,14 +43,14 @@ class WeaponComponent(world: World, entityBody: Body) extends Component {
   def enable(): Unit = {
     val filter: Filter = weaponFixture.getFilterData
     filter.categoryBits = Constants.ATTACK_CATEGORY
-    filter.maskBits = Constants.ATTACK_MASK
+    filter.maskBits = Constants.ATTACK_ON_MASK
     weaponFixture.setFilterData(filter)
   }
 
   def disable(): Unit = {
     val filter: Filter = weaponFixture.getFilterData
     filter.categoryBits = Constants.NO_CATEGORY
-    filter.maskBits = Constants.NO_MASK
+    filter.maskBits = Constants.ATTACK_OFF_MASK
     weaponFixture.setFilterData(filter)
   }
 
