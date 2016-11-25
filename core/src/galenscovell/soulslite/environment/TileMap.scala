@@ -33,8 +33,8 @@ class TileMap(world: World) {
     // Find collision rectangle objects
     val objectLayer: MapLayer = tileMap.getLayers.get("Collision")
     val objects: Array[RectangleMapObject] = objectLayer.getObjects.getByType(classOf[RectangleMapObject])
-    for (o: RectangleMapObject <- objects.toArray) {
-      val rect: Rectangle = o.getRectangle
+    for (rmo: RectangleMapObject <- objects.toArray) {
+      val rect: Rectangle = rmo.getRectangle
       createCollisionBody(
         rect.x / Constants.PIXEL_PER_METER, rect.y / Constants.PIXEL_PER_METER,
         rect.width / Constants.PIXEL_PER_METER, rect.height / Constants.PIXEL_PER_METER)

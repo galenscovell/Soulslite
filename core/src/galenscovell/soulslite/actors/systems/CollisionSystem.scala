@@ -2,7 +2,6 @@ package galenscovell.soulslite.actors.systems
 
 import com.badlogic.ashley.core._
 import com.badlogic.ashley.systems.IteratingSystem
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.physics.box2d._
 import galenscovell.soulslite.actors.components._
 import galenscovell.soulslite.actors.components.dynamic.ColorComponent

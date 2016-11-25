@@ -4,7 +4,7 @@ import com.badlogic.ashley.core._
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.physics.box2d._
 import galenscovell.soulslite.actors.components._
-import galenscovell.soulslite.actors.components.dynamic.ColorComponent
+import galenscovell.soulslite.actors.components.ai.ArrivalComponent
 import galenscovell.soulslite.actors.systems._
 import galenscovell.soulslite.ui.screens.GameScreen
 
@@ -23,13 +23,20 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, controllerHandler:
     )
 
     // Handles player input
-    val inputSystem: PlayerControlSystem = new PlayerControlSystem(
+    val playerSystem: PlayerSystem = new PlayerSystem(
       Family.all(
         classOf[BodyComponent],
         classOf[PlayerComponent],
         classOf[VelocityComponent],
         classOf[WeaponComponent]
       ).get(), controllerHandler
+    )
+
+    // Handles AI control
+    val aiSystem: AISystem = new AISystem(
+      Family.all(
+        classOf[ArrivalComponent]
+      ).get()
     )
 
     // Handles combat collisions and effects
@@ -53,7 +60,8 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, controllerHandler:
     )
 
     engine.addSystem(movementSystem)
-    engine.addSystem(inputSystem)
+    engine.addSystem(playerSystem)
+    engine.addSystem(aiSystem)
     engine.addSystem(collisionSystem)
     engine.addSystem(renderSystem)
   }

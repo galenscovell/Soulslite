@@ -31,6 +31,13 @@ class MovementSystem(family: Family) extends IteratingSystem(family) {
       }
     }
 
+    if (Math.abs(velocity.v.x) < 0.2f) {
+      velocity.v.x = 0
+    }
+    if (Math.abs(velocity.v.y) < 0.2f) {
+      velocity.v.y = 0
+    }
+
     body.setLinearVelocity(velocity.v.x, velocity.v.y)
   }
 }

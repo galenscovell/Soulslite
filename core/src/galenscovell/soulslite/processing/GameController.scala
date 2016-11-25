@@ -17,8 +17,8 @@ class GameController extends ControllerAdapter {
 
   override def buttonDown(controller: Controller, buttonCode: Int): Boolean = {
     buttonCode match {
-      case 0 => dashPressed = true
-      case 1 => attackPressed = true
+      case 0 => attackPressed = true
+      case 1 => dashPressed = true
       case 2 =>
       case 3 =>
       case _ =>

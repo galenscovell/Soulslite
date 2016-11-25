@@ -3,10 +3,11 @@ package galenscovell.soulslite.actors.components
 import com.badlogic.ashley.core.{Component, Entity}
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d._
-import galenscovell.soulslite.util.Constants
+import galenscovell.soulslite.util._
 
 
-class BodyComponent(entity: Entity, world: World, posX: Float, posY: Float, size: Float) extends Component {
+class BodyComponent(entity: Entity, world: World, posX: Float, posY: Float,
+                    size: Float) extends Component{
   val body: Body = createBody
   val fixture: Fixture = createFixture
   body.setUserData(entity)

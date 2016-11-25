@@ -2,6 +2,7 @@ package galenscovell.soulslite.ui.screens
 
 import com.badlogic.ashley.core.{Engine, Entity}
 import com.badlogic.gdx._
+import com.badlogic.gdx.ai.steer.behaviors.{Arrive, Wander}
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics._
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -11,9 +12,11 @@ import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.scenes.scene2d.Stage
 import galenscovell.soulslite.Main
 import galenscovell.soulslite.actors.components.BodyComponent
+import galenscovell.soulslite.actors.components.ai.ArrivalComponent
 import galenscovell.soulslite.environment.{PhysicsWorld, TileMap}
 import galenscovell.soulslite.processing._
-import galenscovell.soulslite.util.Constants
+import galenscovell.soulslite.processing.ai.SteeringAI
+import galenscovell.soulslite.util.{Box2DLocation, Constants}
 
 
 class GameScreen(root: Main) extends AbstractScreen(root) {
@@ -56,6 +59,18 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 
     // Temp entity for testing purposes with same graphics as player
     val testDummy = entityManager.makeEntity(player=false, "player", Constants.MID_ENTITY_SIZE, 20, 24)
+    val arrivalComponent: ArrivalComponent = new ArrivalComponent(
+      testDummy.getComponent(classOf[BodyComponent]).body, 1, 40, 40, 40, 40
+    )
+    testDummy.add(arrivalComponent)
+
+    val arriveBehavior: Arrive[Vector2] = new Arrive[Vector2](arrivalComponent.steeringAI)
+    arriveBehavior.setEnabled(true)
+    arriveBehavior.setTimeToTarget(0.5f)
+    arriveBehavior.setDecelerationRadius(4f)
+    arriveBehavior.setTarget(new Box2DLocation(playerBody.getPosition))
+
+    arrivalComponent.setBehavior(arriveBehavior)
 
     // Start camera immediately centered on player
     worldCamera.position.set(playerBody.getPosition.x, playerBody.getPosition.y, 0)

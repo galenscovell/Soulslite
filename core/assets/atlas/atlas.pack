@@ -570,569 +570,128 @@ atlas3.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-tiles/floor0
-  rotate: false
-  xy: 8, 236
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/floor1
-  rotate: false
-  xy: 8, 218
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/floor10
-  rotate: false
-  xy: 32, 236
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/floor11
-  rotate: false
-  xy: 8, 200
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/floor12
-  rotate: false
-  xy: 32, 218
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/floor13
-  rotate: false
-  xy: 56, 236
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/floor14
-  rotate: false
-  xy: 8, 182
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/floor15
-  rotate: false
-  xy: 32, 200
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/floor2
-  rotate: false
-  xy: 56, 218
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/floor3
-  rotate: false
-  xy: 80, 236
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/floor4
-  rotate: false
-  xy: 104, 236
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/floor5
+tiles/test-cliffside-top
   rotate: false
   xy: 8, 164
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-tiles/floor6
-  rotate: false
-  xy: 32, 182
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/floor7
-  rotate: false
-  xy: 56, 200
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/floor8
-  rotate: false
-  xy: 80, 218
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/floor9
-  rotate: false
-  xy: 104, 218
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/test-cliffside-top
+tiles/test-cliffside-topleft
   rotate: false
   xy: 8, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-tiles/test-cliffside-topleft
+tiles/test-cliffside-topright
   rotate: false
   xy: 32, 164
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-tiles/test-cliffside-topright
-  rotate: false
-  xy: 56, 182
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
 tiles/test-cliffside
-  rotate: false
-  xy: 80, 200
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/test-floor-0
-  rotate: false
-  xy: 104, 200
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/test-floor-1
   rotate: false
   xy: 8, 128
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-tiles/test-floor-2
+tiles/test-empty
   rotate: false
   xy: 32, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-tiles/test-floor-3
-  rotate: false
-  xy: 56, 164
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/test-floor-left
-  rotate: false
-  xy: 80, 182
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/test-floor-right
-  rotate: false
-  xy: 104, 182
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/test-floor-top
+tiles/test-floor-0
   rotate: false
   xy: 8, 110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-tiles/test-floor-topleft
+tiles/test-floor-1
   rotate: false
   xy: 32, 128
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-tiles/test-floor-topright
-  rotate: false
-  xy: 56, 146
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/test-pillar-bottom-0
-  rotate: false
-  xy: 80, 164
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/test-pillar-middle
-  rotate: false
-  xy: 104, 164
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/test-pillar-surface-0
+tiles/test-floor-2
   rotate: false
   xy: 8, 92
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-tiles/test-pillar-top-0
+tiles/test-floor-3
   rotate: false
   xy: 32, 110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-tiles/wall0
-  rotate: false
-  xy: 56, 128
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/wall15
-  rotate: false
-  xy: 56, 128
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/wall1
-  rotate: false
-  xy: 80, 146
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/wall4
-  rotate: false
-  xy: 80, 146
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/wall5
-  rotate: false
-  xy: 80, 146
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/wall10
-  rotate: false
-  xy: 104, 146
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/wall2
-  rotate: false
-  xy: 104, 146
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/wall8
-  rotate: false
-  xy: 104, 146
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/wall11
+tiles/test-floor-left
   rotate: false
   xy: 8, 74
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-tiles/wall12
+tiles/test-floor-right
   rotate: false
   xy: 32, 92
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-tiles/wall13
-  rotate: false
-  xy: 56, 110
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/wall14
-  rotate: false
-  xy: 80, 128
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/wall3
-  rotate: false
-  xy: 104, 128
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/wall6
+tiles/test-floor-top
   rotate: false
   xy: 8, 56
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-tiles/wall7
+tiles/test-floor-topleft
   rotate: false
   xy: 32, 74
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-tiles/wall9
-  rotate: false
-  xy: 56, 92
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterA0
-  rotate: false
-  xy: 80, 110
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterA4
-  rotate: false
-  xy: 80, 110
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterA1
-  rotate: false
-  xy: 104, 110
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterA5
-  rotate: false
-  xy: 104, 110
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterA10
+tiles/test-floor-topright
   rotate: false
   xy: 8, 38
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-tiles/waterA14
-  rotate: false
-  xy: 8, 38
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterA11
+tiles/test-pillar-bottom-0
   rotate: false
   xy: 32, 56
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-tiles/waterA15
-  rotate: false
-  xy: 32, 56
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterA12
-  rotate: false
-  xy: 56, 74
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterA8
-  rotate: false
-  xy: 56, 74
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterA13
-  rotate: false
-  xy: 80, 92
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterA9
-  rotate: false
-  xy: 80, 92
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterA2
-  rotate: false
-  xy: 104, 92
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterA6
-  rotate: false
-  xy: 104, 92
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterA3
+tiles/test-pillar-middle
   rotate: false
   xy: 8, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-tiles/waterA7
-  rotate: false
-  xy: 8, 20
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterB0
+tiles/test-pillar-surface-0
   rotate: false
   xy: 32, 38
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-tiles/waterB4
-  rotate: false
-  xy: 32, 38
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterB1
-  rotate: false
-  xy: 56, 56
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterB5
-  rotate: false
-  xy: 56, 56
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterB10
-  rotate: false
-  xy: 80, 74
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterB14
-  rotate: false
-  xy: 80, 74
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterB11
-  rotate: false
-  xy: 104, 74
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterB15
-  rotate: false
-  xy: 104, 74
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterB12
+tiles/test-pillar-top-0
   rotate: false
   xy: 8, 2
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterB8
-  rotate: false
-  xy: 8, 2
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterB13
-  rotate: false
-  xy: 32, 20
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterB9
-  rotate: false
-  xy: 32, 20
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterB2
-  rotate: false
-  xy: 56, 38
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterB6
-  rotate: false
-  xy: 56, 38
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterB3
-  rotate: false
-  xy: 80, 56
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-tiles/waterB7
-  rotate: false
-  xy: 80, 56
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
