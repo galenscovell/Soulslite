@@ -7,62 +7,18 @@ import com.badlogic.gdx.physics.box2d.Body
 import galenscovell.soulslite.util.{Box2DLocation, SteeringUtil}
 
 
-class SteeringAI(body: Body, boundingRadius: Float, var maxLinearSpeed: Float, var maxLinearAcceleration: Float,
-                 var maxAngularSpeed: Float, var maxAngularAcceleration: Float) extends Steerable[Vector2] {
-  private var zeroLinearSpeedThreshold: Float = 0f
-  private var tagged = false
-  private var behavior: SteeringBehavior[Vector2] = _
-  private val steerOutput: SteeringAcceleration[Vector2] =
+class BaseSteerable(body: Body, boundingRadius: Float, var maxLinearSpeed: Float, var maxLinearAcceleration: Float,
+var maxAngularSpeed: Float, var maxAngularAcceleration: Float) extends Steerable[Vector2] {
+  protected var zeroLinearSpeedThreshold: Float = 0.005f
+  protected var tagged = false
+  protected var behavior: SteeringBehavior[Vector2] = _
+  protected val steerOutput: SteeringAcceleration[Vector2] =
     new SteeringAcceleration[Vector2](new Vector2())
-
-
-
-  /********************
-    *      Update     *
-    ********************/
-  def update(delta: Float): Unit = {
-    if (behavior != null) {
-      behavior.calculateSteering(steerOutput)
-      applySteering(delta)
-    }
-  }
-
-  def applySteering(delta: Float): Unit = {
-    var anyAccelerations: Boolean = false
-
-    if (!steerOutput.linear.isZero) {
-      body.applyForceToCenter(steerOutput.linear, true)
-      anyAccelerations = true
-    }
-
-    if (steerOutput.angular != 0) {
-      body.applyTorque(steerOutput.angular, true)
-      anyAccelerations = true
-    }
-
-    if (anyAccelerations) {
-      // Linear speed capping
-      val velocity: Vector2 = body.getLinearVelocity
-      val currentSpeedSquare: Float = velocity.len2()
-      if (currentSpeedSquare > maxLinearSpeed * maxLinearSpeed) {
-        body.setLinearVelocity(velocity.scl(maxLinearSpeed / Math.sqrt(currentSpeedSquare).toFloat))
-      }
-
-      // Angular speed capping
-      if (body.getAngularVelocity > maxAngularSpeed) {
-        body.setAngularVelocity(maxAngularSpeed)
-      }
-    }
-  }
 
 
   /********************
     *       Get       *
     ********************/
-  def getBehavior: SteeringBehavior[Vector2] = behavior
-  def getSteerOutput: SteeringAcceleration[Vector2] = steerOutput
-  def getBody: Body = body
-
   override def isTagged: Boolean = tagged
 
   override def getPosition: Vector2 = body.getPosition
@@ -82,10 +38,6 @@ class SteeringAI(body: Body, boundingRadius: Float, var maxLinearSpeed: Float, v
   /********************
     *       Set       *
     ********************/
-  def setBehavior(b: SteeringBehavior[Vector2]): Unit = {
-    behavior = b
-  }
-
   override def setTagged(tagged: Boolean): Unit = {
     this.tagged = tagged
   }

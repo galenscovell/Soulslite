@@ -11,21 +11,34 @@ import galenscovell.soulslite.util.Constants
 class PlayerSystem(family: Family, controllerHandler: GameController) extends IteratingSystem(family) {
   private val bodyMapper: ComponentMapper[BodyComponent] =
     ComponentMapper.getFor(classOf[BodyComponent])
-  private val velocityMapper: ComponentMapper[VelocityComponent] =
-    ComponentMapper.getFor(classOf[VelocityComponent])
+  private val directionMapper: ComponentMapper[DirectionComponent] =
+    ComponentMapper.getFor(classOf[DirectionComponent])
   private val weaponMapper: ComponentMapper[WeaponComponent] =
     ComponentMapper.getFor(classOf[WeaponComponent])
 
 
+  val totalDashFrames: Float = 16f
+  var dashing: Boolean = false
+  var currentDashFrame: Float = 0f
+
+
+  def dashFrameRatio: Float = {
+    currentDashFrame / totalDashFrames
+  }
+
+
   override def processEntity(entity: Entity, deltaTime: Float): Unit = {
     val bodyComponent: BodyComponent = bodyMapper.get(entity)
-    val velocityComponent: VelocityComponent = velocityMapper.get(entity)
+    val directionComponent: DirectionComponent = directionMapper.get(entity)
     val weaponComponent: WeaponComponent = weaponMapper.get(entity)
+
+    val startVelocity: Vector2 = bodyComponent.body.getLinearVelocity
+
 
     // Attack handling - attack is 8 frames with 8 waitframes (16 frames total)
     if (!weaponComponent.attacking && weaponComponent.frames == 0) {
       if (controllerHandler.attackPressed) {
-        weaponComponent.startAttack(velocityComponent.direction)
+        weaponComponent.startAttack(directionComponent.direction)
       }
     } else {
       controllerHandler.attackPressed = false
@@ -35,60 +48,73 @@ class PlayerSystem(family: Family, controllerHandler: GameController) extends It
       }
     }
 
-    // Dash handling - dash is 16 frames with 8 waitframes (30 frames total)
-    if (!velocityComponent.dashing) {
+
+    // Dash handling - dash is 16 frames with 8 waitframes (24 frames total)
+    if (!dashing) {
       if (controllerHandler.dashPressed) {
-        velocityComponent.startDash()
+        dashing = true
+        currentDashFrame = totalDashFrames
       }
     } else {
       controllerHandler.dashPressed = false
-      val normalizedVelocity: Vector2 = velocityComponent.v.nor()
-      velocityComponent.dashDecrement()
+      currentDashFrame -= 1
 
-      if (velocityComponent.isSpeeding) {
-        // If player is stationary, start dash in facing direction
-        if (!velocityComponent.inMotion) {
-          velocityComponent.direction match {
-            case 0 => velocityComponent.v.x += 0.5f
-            case 1 => velocityComponent.v.y += 0.5f
-            case 2 => velocityComponent.v.x -= 0.5f
-            case 3 => velocityComponent.v.y -= 0.5f
-          }
+      // If player is stationary, start dash in facing direction
+      if (!bodyComponent.inMotion) {
+        directionComponent.direction match {
+          case 0 => startVelocity.x += 0.5f
+          case 1 => startVelocity.y += 0.5f
+          case 2 => startVelocity.x -= 0.5f
+          case 3 => startVelocity.y -= 0.5f
         }
+      }
 
+      val normalizedVelocity: Vector2 = startVelocity.nor()
+
+      if (currentDashFrame > (totalDashFrames / 5)) {
         bodyComponent.body.applyForceToCenter(
-          normalizedVelocity.x * (7500 * velocityComponent.dashFrameRatio),
-          normalizedVelocity.y * (7500 * velocityComponent.dashFrameRatio),
+          normalizedVelocity.x * (7500 * dashFrameRatio),
+          normalizedVelocity.y * (7500 * dashFrameRatio),
           true
         )
-      } else if (velocityComponent.isSlowing) {
+      } else if (currentDashFrame > 0) {
         bodyComponent.body.applyForceToCenter(
-          normalizedVelocity.x * (-1000 * velocityComponent.dashFrameRatio),
-          normalizedVelocity.y * (-1000 * velocityComponent.dashFrameRatio),
+          normalizedVelocity.x * (-1000 * dashFrameRatio),
+          normalizedVelocity.y * (-1000 * dashFrameRatio),
           true
         )
       } else {
-        velocityComponent.endDash()
+        dashing = false
       }
     }
 
+
     // Regular movement if not attacking or dashing
-    if (!weaponComponent.attacking && !velocityComponent.dashing) {
-      velocityComponent.v.x = controllerHandler.leftAxis.x * 5
-      velocityComponent.v.y = controllerHandler.leftAxis.y * 5
+    if (!weaponComponent.attacking && !dashing) {
+      bodyComponent.body.setLinearVelocity(
+        controllerHandler.leftAxis.x * 5,
+        controllerHandler.leftAxis.y * 5
+      )
     }
 
-    // Allow player slight control during speedup portion of dash
-    if (velocityComponent.dashing && velocityComponent.isSpeeding) {
-      velocityComponent.v.x += controllerHandler.leftAxis.x / 6
-      velocityComponent.v.y += controllerHandler.leftAxis.y / 6
+    // Allow player slight control during dash
+    if (dashing) {
+      bodyComponent.body.applyForceToCenter(
+        controllerHandler.leftAxis.x * 500,
+        controllerHandler.leftAxis.y * 500,
+        true
+      )
     }
+
+
+    val endVelocity: Vector2 = bodyComponent.body.getLinearVelocity
 
     // Normalize diagonal movement
-    if (velocityComponent.v.len() > Constants.MAX_NORMAL_VELOCITY) {
-      velocityComponent.v.nor().scl(Constants.MAX_NORMAL_VELOCITY)
+    if (endVelocity.len() > Constants.MAX_NORMAL_VELOCITY) {
+      bodyComponent.body.setLinearVelocity(endVelocity.nor().scl(Constants.MAX_NORMAL_VELOCITY))
     }
 
-    velocityComponent.angle = velocityComponent.v.angle()
+    // Set body angle to final velocity angle
+    bodyComponent.body.setTransform(bodyComponent.body.getPosition, endVelocity.angle())
   }
 }

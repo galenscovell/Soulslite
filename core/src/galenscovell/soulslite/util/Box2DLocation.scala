@@ -12,14 +12,17 @@ class Box2DLocation(position: Vector2) extends Location[Vector2] {
   }
 
 
-  override def getPosition: Vector2 = position
-  override def getOrientation: Float = orientation
+  override def getPosition: Vector2 = {
+    position
+  }
 
+  override def getOrientation: Float = {
+    orientation
+  }
 
   override def setOrientation(orientation: Float): Unit = {
     this.orientation = orientation
   }
-
 
   override def vectorToAngle(vector: Vector2): Float = {
     SteeringUtil.vectorToAngle(vector)
@@ -27,7 +30,6 @@ class Box2DLocation(position: Vector2) extends Location[Vector2] {
   override def angleToVector(outVector: Vector2, angle: Float): Vector2 = {
     SteeringUtil.angleToVector(outVector, angle)
   }
-
 
   override def newLocation(): Location[Vector2] = {
     new Box2DLocation

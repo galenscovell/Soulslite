@@ -3,7 +3,6 @@ package galenscovell.soulslite.actors.systems
 import com.badlogic.ashley.core._
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.g2d._
-import com.badlogic.gdx.physics.box2d.Body
 import galenscovell.soulslite.actors.components._
 import galenscovell.soulslite.actors.components.dynamic.ColorComponent
 import galenscovell.soulslite.ui.screens.GameScreen
@@ -16,19 +15,18 @@ class RenderSystem(family: Family, spriteBatch: SpriteBatch, gameScreen: GameScr
     ComponentMapper.getFor(classOf[BodyComponent])
   private val colorMapper: ComponentMapper[ColorComponent] =
     ComponentMapper.getFor(classOf[ColorComponent])
+  private val directionMapper: ComponentMapper[DirectionComponent] =
+    ComponentMapper.getFor(classOf[DirectionComponent])
   private val sizeMapper: ComponentMapper[SizeComponent] =
     ComponentMapper.getFor(classOf[SizeComponent])
   private val spriteMapper: ComponentMapper[SpriteComponent] =
     ComponentMapper.getFor(classOf[SpriteComponent])
-  private val velocityMapper: ComponentMapper[VelocityComponent] =
-    ComponentMapper.getFor(classOf[VelocityComponent])
 
 
   override def processEntity(entity: Entity, deltaTime: Float): Unit = {
-    val velocityComponent: VelocityComponent = velocityMapper.get(entity)
-    val body: Body = bodyMapper.get(entity).body
-    val currentX: Float = body.getPosition.x
-    val currentY: Float = body.getPosition.y
+    val bodyComponent: BodyComponent = bodyMapper.get(entity)
+    val currentX: Float = bodyComponent.body.getPosition.x
+    val currentY: Float = bodyComponent.body.getPosition.y
 
     if (gameScreen.inCamera(currentX, currentY)) {
       // Handle dynamic entity color effects
@@ -43,14 +41,14 @@ class RenderSystem(family: Family, spriteBatch: SpriteBatch, gameScreen: GameScr
       }
 
       val size: Float = sizeMapper.get(entity).size
-      var direction: Int = velocityComponent.direction
+      var direction: Int = directionMapper.get(entity).direction
 
       // Draw animation if in motion, otherwise static sprite
-      if (velocityComponent.inMotion) {
+      if (bodyComponent.inMotion) {
         var rotation = 0f
-        if (velocityComponent.dashing) {
+        if (false) {
           direction = 4
-          rotation = velocityComponent.angle
+          rotation = bodyComponent.body.getAngle
         }
         val animationComponent: AnimationComponent = animationMapper.get(entity)
         animationComponent.stateTime += deltaTime
@@ -59,14 +57,20 @@ class RenderSystem(family: Family, spriteBatch: SpriteBatch, gameScreen: GameScr
         val currentFrame = currentAnimation.getKeyFrame(animationComponent.stateTime, true)
 
         spriteBatch.draw(
-          currentFrame, currentX - size / 2, currentY - size / 2, size / 2, size / 2, size, size, 1, 1, rotation
+          currentFrame,
+          currentX - size / 2, currentY - size / 2,
+          size / 2, size / 2,
+          size, size, 1, 1, rotation
         )
       } else {
         val spriteComponent: SpriteComponent = spriteMapper.get(entity)
         val currentSprite: Sprite = spriteComponent.getCurrentSprite(direction)
 
         spriteBatch.draw(
-          currentSprite, currentX - size / 2, currentY - size / 2, size / 2, size / 2, size, size, 1, 1, 0
+          currentSprite,
+          currentX - size / 2, currentY - size / 2,
+          size / 2, size / 2,
+          size, size, 1, 1, 0
         )
       }
       spriteBatch.setShader(null)

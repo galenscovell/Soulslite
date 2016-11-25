@@ -2,42 +2,34 @@ package galenscovell.soulslite.actors.systems
 
 import com.badlogic.ashley.core._
 import com.badlogic.ashley.systems.IteratingSystem
-import com.badlogic.gdx.physics.box2d.Body
+import com.badlogic.gdx.math.Vector2
 import galenscovell.soulslite.actors.components._
 
 
 class MovementSystem(family: Family) extends IteratingSystem(family) {
   private val bodyMapper: ComponentMapper[BodyComponent] =
     ComponentMapper.getFor(classOf[BodyComponent])
-  private val velocityMapper: ComponentMapper[VelocityComponent] =
-    ComponentMapper.getFor(classOf[VelocityComponent])
+  private val directionMapper: ComponentMapper[DirectionComponent] =
+    ComponentMapper.getFor(classOf[DirectionComponent])
 
 
   override def processEntity(entity: Entity, deltaTime: Float): Unit = {
-    val body: Body = bodyMapper.get(entity).body
-    val velocity: VelocityComponent = velocityMapper.get(entity)
+    val bodyComponent: BodyComponent = bodyMapper.get(entity)
+    val bodyVelocity: Vector2 = bodyComponent.body.getLinearVelocity
+    val directionComponent: DirectionComponent = directionMapper.get(entity)
 
-    if (Math.abs(velocity.v.x) > Math.abs(velocity.v.y)) {
-      if (velocity.v.x > 0) {
-        velocity.direction = 0
+    if (Math.abs(bodyVelocity.x) > Math.abs(bodyVelocity.y)) {
+      if (bodyVelocity.x > 0) {
+        directionComponent.direction = 0
       } else {
-        velocity.direction = 2
+        directionComponent.direction = 2
       }
-    } else if (Math.abs(velocity.v.y) > Math.abs(velocity.v.x)) {
-      if (velocity.v.y > 0) {
-        velocity.direction = 1
+    } else if (Math.abs(bodyVelocity.y) > Math.abs(bodyVelocity.x)) {
+      if (bodyVelocity.y > 0) {
+        directionComponent.direction = 1
       } else {
-        velocity.direction = 3
+        directionComponent.direction = 3
       }
     }
-
-    if (Math.abs(velocity.v.x) < 0.2f) {
-      velocity.v.x = 0
-    }
-    if (Math.abs(velocity.v.y) < 0.2f) {
-      velocity.v.y = 0
-    }
-
-    body.setLinearVelocity(velocity.v.x, velocity.v.y)
   }
 }

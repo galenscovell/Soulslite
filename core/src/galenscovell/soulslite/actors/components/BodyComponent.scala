@@ -49,4 +49,8 @@ class BodyComponent(entity: Entity, world: World, posX: Float, posY: Float,
     filter.maskBits = newMask
     fixture.setFilterData(filter)
   }
+
+  def inMotion: Boolean = {
+    !body.getLinearVelocity.isZero(0.001f)
+  }
 }
