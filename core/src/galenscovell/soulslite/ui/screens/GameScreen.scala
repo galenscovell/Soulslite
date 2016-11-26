@@ -3,6 +3,7 @@ package galenscovell.soulslite.ui.screens
 import com.badlogic.ashley.core.{Engine, Entity}
 import com.badlogic.gdx._
 import com.badlogic.gdx.ai.steer.behaviors._
+import com.badlogic.gdx.ai.steer.utils.RayConfiguration
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics._
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -77,6 +78,9 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 
     val evadeBehavior: Evade[Vector2] = new Evade[Vector2](
       steeringComponent.steering, playerSteering.steering, 4f).setEnabled(true)
+
+    val raycastObstacleAvoidance: RaycastObstacleAvoidance[Vector2] =
+      new RaycastObstacleAvoidance[Vector2](steeringComponent.steering)
 
     steeringComponent.steering.behavior = arriveBehavior
 
@@ -213,5 +217,6 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   override def dispose(): Unit = {
     super.dispose()
     environmentShader.dispose()
+    physicsWorld.dispose()
   }
 }

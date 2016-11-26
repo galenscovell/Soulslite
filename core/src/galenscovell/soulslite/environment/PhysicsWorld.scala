@@ -22,4 +22,9 @@ class PhysicsWorld {
   def debugRender(cameraMatrix: Matrix4): Unit = {
     debugWorldRenderer.render(world, cameraMatrix)
   }
+
+  def dispose(): Unit = {
+    debugWorldRenderer.dispose()
+    world.dispose()
+  }
 }
