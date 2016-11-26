@@ -3,7 +3,7 @@ package galenscovell.soulslite.util
 import com.badlogic.gdx.math.Vector2
 
 
-object SteeringUtil {
+object Box2DSteeringUtils {
   def vectorToAngle(vector: Vector2): Float = {
     Math.atan2(-vector.x, vector.y).toFloat
   }

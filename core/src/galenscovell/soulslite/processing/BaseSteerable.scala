@@ -1,19 +1,21 @@
-package galenscovell.soulslite.processing.ai
+package galenscovell.soulslite.processing
 
 import com.badlogic.gdx.ai.steer._
 import com.badlogic.gdx.ai.utils.Location
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
-import galenscovell.soulslite.util.{Box2DLocation, SteeringUtil}
+import galenscovell.soulslite.util.{Box2DLocation, Box2DSteeringUtils}
 
 
-class BaseSteerable(body: Body, boundingRadius: Float, var maxLinearSpeed: Float, var maxLinearAcceleration: Float,
-var maxAngularSpeed: Float, var maxAngularAcceleration: Float) extends Steerable[Vector2] {
-  protected var zeroLinearSpeedThreshold: Float = 0.005f
-  protected var tagged = false
-  protected var behavior: SteeringBehavior[Vector2] = _
-  protected val steerOutput: SteeringAcceleration[Vector2] =
-    new SteeringAcceleration[Vector2](new Vector2())
+class BaseSteerable(body: Body,
+                    boundingRadius: Float,
+                    var maxLinearSpeed: Float,
+                    var maxLinearAcceleration: Float,
+                    var maxAngularSpeed: Float,
+                    var maxAngularAcceleration: Float) extends Steerable[Vector2] {
+  var zeroLinearSpeedThreshold: Float = 0.005f
+  var tagged = false
+  var behavior: SteeringBehavior[Vector2] = _
 
 
   /********************
@@ -23,6 +25,7 @@ var maxAngularSpeed: Float, var maxAngularAcceleration: Float) extends Steerable
 
   override def getPosition: Vector2 = body.getPosition
   override def getOrientation: Float = body.getAngle
+  override def getBoundingRadius: Float = boundingRadius
 
   override def getLinearVelocity: Vector2 = body.getLinearVelocity
   override def getMaxLinearSpeed: Float = maxLinearSpeed
@@ -31,8 +34,6 @@ var maxAngularSpeed: Float, var maxAngularAcceleration: Float) extends Steerable
   override def getAngularVelocity: Float = body.getAngularVelocity
   override def getMaxAngularSpeed: Float = maxAngularSpeed
   override def getMaxAngularAcceleration: Float = maxAngularAcceleration
-
-  override def getBoundingRadius: Float = boundingRadius
 
 
   /********************
@@ -43,11 +44,11 @@ var maxAngularSpeed: Float, var maxAngularAcceleration: Float) extends Steerable
   }
 
   override def vectorToAngle(vector: Vector2): Float = {
-    SteeringUtil.vectorToAngle(vector)
+    Box2DSteeringUtils.vectorToAngle(vector)
   }
 
   override def angleToVector(outVector: Vector2, angle: Float): Vector2 = {
-    SteeringUtil.angleToVector(outVector, angle)
+    Box2DSteeringUtils.angleToVector(outVector, angle)
   }
 
   override def setMaxLinearSpeed(maxLinearSpeed: Float): Unit = {

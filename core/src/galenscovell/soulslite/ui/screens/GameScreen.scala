@@ -14,7 +14,7 @@ import galenscovell.soulslite.Main
 import galenscovell.soulslite.actors.components._
 import galenscovell.soulslite.environment.{PhysicsWorld, TileMap}
 import galenscovell.soulslite.processing._
-import galenscovell.soulslite.util.{Box2DLocation, Constants}
+import galenscovell.soulslite.util.Constants
 
 
 class GameScreen(root: Main) extends AbstractScreen(root) {
@@ -54,31 +54,31 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     // Establish player entity
     player = entityManager.makeEntity("player", Constants.MID_ENTITY_SIZE, 20, 20)
     playerBody = player.getComponent(classOf[BodyComponent]).body
-    val playerComponent: PlayerComponent = new PlayerComponent(playerBody)
-    player.add(playerComponent)
+    val playerComponent: PlayerComponent = new PlayerComponent
+    player.add(new PlayerComponent)
+    val playerSteering: SteeringComponent = new SteeringComponent(playerBody, 1, 5, 20, 5, 20)
 
 
     // Temp entities for testing purposes with same graphics as player
     val testDummy = entityManager.makeEntity("player", Constants.MID_ENTITY_SIZE, 20, 24)
-    val aiComponent: AIComponent = new AIComponent(
-      testDummy.getComponent(classOf[BodyComponent]).body, 1, 4, 30, 4, 30
+    val steeringComponent: SteeringComponent = new SteeringComponent(
+      testDummy.getComponent(classOf[BodyComponent]).body, 1, 4, 20, 4, 20
     )
-    testDummy.add(aiComponent)
+    testDummy.add(steeringComponent)
 
     val arriveBehavior: Arrive[Vector2] = new Arrive[Vector2](
-      aiComponent.steering)
-      .setEnabled(true)
-      .setTimeToTarget(0.1f)      // Time over which to achieve target speed
-      .setArrivalTolerance(3f)     // Distance at which entity has 'arrived'
-      .setDecelerationRadius(4f)   // Distance at which deceleration begins
-      .setTarget(new Box2DLocation(playerBody.getPosition))
+      steeringComponent.steering, playerSteering.steering).setEnabled(true)
+      .setTimeToTarget(0.05f)       // Time over which to achieve target speed
+      .setArrivalTolerance(3f)      // Distance at which entity has 'arrived'
+      .setDecelerationRadius(4f)    // Distance at which deceleration begins
 
     val pursueBehavior: Pursue[Vector2] = new Pursue[Vector2](
-      aiComponent.steering, playerComponent.steering)
-        .setEnabled(true)
-        .setMaxPredictionTime(6f)
+      steeringComponent.steering, playerSteering.steering, 4f).setEnabled(true)
 
-    aiComponent.setBehavior(pursueBehavior)
+    val evadeBehavior: Evade[Vector2] = new Evade[Vector2](
+      steeringComponent.steering, playerSteering.steering, 4f).setEnabled(true)
+
+    steeringComponent.steering.behavior = arriveBehavior
 
 
     // Start camera immediately centered on player

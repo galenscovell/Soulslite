@@ -25,10 +25,10 @@ class Box2DLocation(position: Vector2) extends Location[Vector2] {
   }
 
   override def vectorToAngle(vector: Vector2): Float = {
-    SteeringUtil.vectorToAngle(vector)
+    Box2DSteeringUtils.vectorToAngle(vector)
   }
   override def angleToVector(outVector: Vector2, angle: Float): Vector2 = {
-    SteeringUtil.angleToVector(outVector, angle)
+    Box2DSteeringUtils.angleToVector(outVector, angle)
   }
 
   override def newLocation(): Location[Vector2] = {

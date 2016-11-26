@@ -19,7 +19,7 @@ class BodyComponent(entity: Entity, world: World, posX: Float, posY: Float,
     bodyDef.`type` = BodyType.DynamicBody
 //    bodyDef.fixedRotation = true
     bodyDef.angularDamping = 1f
-    bodyDef.linearDamping = 0.1f
+    bodyDef.linearDamping = 0.5f
     bodyDef.position.set(posX, posY)
 
     world.createBody(bodyDef)

@@ -3,13 +3,16 @@ package galenscovell.soulslite.processing
 import com.badlogic.ashley.core._
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.physics.box2d._
-import galenscovell.soulslite.actors.components.{AIComponent, _}
+import galenscovell.soulslite.actors.components.{SteeringComponent, _}
 import galenscovell.soulslite.actors.systems._
 import galenscovell.soulslite.ui.screens.GameScreen
 
 
-class EntityManager(engine: Engine, spriteBatch: SpriteBatch, controllerHandler: GameController,
-                    world: World, gameScreen: GameScreen) {
+class EntityManager(engine: Engine,
+                    spriteBatch: SpriteBatch,
+                    controllerHandler: GameController,
+                    world: World,
+                    gameScreen: GameScreen) {
   setupSystems()
 
 
@@ -32,9 +35,9 @@ class EntityManager(engine: Engine, spriteBatch: SpriteBatch, controllerHandler:
     )
 
     // Handles AI control
-    val aiSystem: AISystem = new AISystem(
+    val aiSystem: SteeringSystem = new SteeringSystem(
       Family.all(
-        classOf[AIComponent]
+        classOf[SteeringComponent]
       ).get()
     )
 

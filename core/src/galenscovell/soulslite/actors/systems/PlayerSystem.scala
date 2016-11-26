@@ -17,7 +17,7 @@ class PlayerSystem(family: Family, controllerHandler: GameController) extends It
     ComponentMapper.getFor(classOf[WeaponComponent])
 
 
-  val totalDashFrames: Float = 16f
+  val totalDashFrames: Float = 14f
   var dashing: Boolean = false
   var currentDashFrame: Float = 0f
 
@@ -35,7 +35,7 @@ class PlayerSystem(family: Family, controllerHandler: GameController) extends It
     val startVelocity: Vector2 = bodyComponent.body.getLinearVelocity
 
 
-    // Attack handling - attack is 8 frames with 8 waitframes (16 frames total)
+    // Attack handling
     if (!weaponComponent.attacking && weaponComponent.frames == 0) {
       if (controllerHandler.attackPressed) {
         weaponComponent.startAttack(directionComponent.direction)
@@ -49,7 +49,7 @@ class PlayerSystem(family: Family, controllerHandler: GameController) extends It
     }
 
 
-    // Dash handling - dash is 16 frames with 8 waitframes (24 frames total)
+    // Dash handling
     if (!dashing) {
       if (controllerHandler.dashPressed) {
         dashing = true
@@ -106,15 +106,10 @@ class PlayerSystem(family: Family, controllerHandler: GameController) extends It
       )
     }
 
-
-    val endVelocity: Vector2 = bodyComponent.body.getLinearVelocity
-
     // Normalize diagonal movement
+    val endVelocity: Vector2 = bodyComponent.body.getLinearVelocity
     if (endVelocity.len() > Constants.MAX_NORMAL_VELOCITY) {
       bodyComponent.body.setLinearVelocity(endVelocity.nor().scl(Constants.MAX_NORMAL_VELOCITY))
     }
-
-    // Set body angle to final velocity angle
-    bodyComponent.body.setTransform(bodyComponent.body.getPosition, endVelocity.angle())
   }
 }
