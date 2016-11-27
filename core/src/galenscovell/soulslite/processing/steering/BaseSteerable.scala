@@ -1,4 +1,4 @@
-package galenscovell.soulslite.processing
+package galenscovell.soulslite.processing.steering
 
 import com.badlogic.gdx.ai.steer._
 import com.badlogic.gdx.ai.utils.Location
@@ -13,9 +13,13 @@ class BaseSteerable(body: Body,
                     var maxLinearAcceleration: Float,
                     var maxAngularSpeed: Float,
                     var maxAngularAcceleration: Float) extends Steerable[Vector2] {
-  var zeroLinearSpeedThreshold: Float = 0.005f
+  var zeroLinearSpeedThreshold: Float = 0.001f
   var tagged = false
   var behavior: SteeringBehavior[Vector2] = _
+
+  def this(body: Body, boundingRadius: Float) {
+    this(body, boundingRadius, 0, 0, 0, 0)
+  }
 
 
   /********************

@@ -1,6 +1,7 @@
 package galenscovell.soulslite.processing
 
 import com.badlogic.ashley.core._
+import com.badlogic.gdx.ai.GdxAI
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.physics.box2d._
 import galenscovell.soulslite.actors.components.{SteeringComponent, _}
@@ -84,6 +85,7 @@ class EntityManager(engine: Engine,
   }
 
   def update(delta: Float): Unit = {
+    GdxAI.getTimepiece.update(delta)
     engine.update(delta)
   }
 }

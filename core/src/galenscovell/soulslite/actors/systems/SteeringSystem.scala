@@ -6,7 +6,7 @@ import com.badlogic.gdx.ai.steer._
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import galenscovell.soulslite.actors.components.{BodyComponent, SteeringComponent}
-import galenscovell.soulslite.processing.BaseSteerable
+import galenscovell.soulslite.processing.steering.BaseSteerable
 
 
 class SteeringSystem(family: Family) extends IteratingSystem(family) {

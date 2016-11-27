@@ -1,20 +1,23 @@
 package galenscovell.soulslite.environment
 
+import com.badlogic.gdx.ai.steer.Steerable
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.glutils.ShaderProgram
 import com.badlogic.gdx.maps.objects.RectangleMapObject
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
 import com.badlogic.gdx.maps.{MapLayer, MapProperties}
-import com.badlogic.gdx.math.Rectangle
+import com.badlogic.gdx.math.{Rectangle, Vector2}
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.utils.Array
+import galenscovell.soulslite.processing.steering.BaseSteerable
 import galenscovell.soulslite.util.Constants
 
 
 class TileMap(world: World) {
   private var tiledMapRenderer: OrthogonalTiledMapRenderer = _
+  private val propSteerables: Array[Steerable[Vector2]] = new Array[Steerable[Vector2]]()
   private val baseLayers: scala.Array[Int] = scala.Array(0, 1)
   private val overlapLayers: scala.Array[Int] = scala.Array(2)
 
@@ -30,21 +33,32 @@ class TileMap(world: World) {
     val tileHeight: Int = prop.get("tileheight", classOf[Integer])
     println(mapWidth, mapHeight, tileWidth, tileHeight)
 
-    // Find collision rectangle objects
-    val objectLayer: MapLayer = tileMap.getLayers.get("Collision")
-    val objects: Array[RectangleMapObject] = objectLayer.getObjects.getByType(classOf[RectangleMapObject])
-    for (rmo: RectangleMapObject <- objects.toArray) {
+    // Find boundary collision objects
+    val boundaryObjectLayer: MapLayer = tileMap.getLayers.get("BoundaryObjects")
+    val boundaryObjects: Array[RectangleMapObject] = boundaryObjectLayer.getObjects.getByType(classOf[RectangleMapObject])
+    for (rmo: RectangleMapObject <- boundaryObjects.toArray) {
       val rect: Rectangle = rmo.getRectangle
       createCollisionBody(
         rect.x / Constants.PIXEL_PER_METER, rect.y / Constants.PIXEL_PER_METER,
         rect.width / Constants.PIXEL_PER_METER, rect.height / Constants.PIXEL_PER_METER)
     }
 
+    // Find prop collision objects
+    val propObjectLayer: MapLayer = tileMap.getLayers.get("PropObjects")
+    val propObjects: Array[RectangleMapObject] = propObjectLayer.getObjects.getByType(classOf[RectangleMapObject])
+    for (rmo: RectangleMapObject <- propObjects.toArray) {
+      val rect: Rectangle = rmo.getRectangle
+      val rmoBody: Body = createCollisionBody(
+        rect.x / Constants.PIXEL_PER_METER, rect.y / Constants.PIXEL_PER_METER,
+        rect.width / Constants.PIXEL_PER_METER, rect.height / Constants.PIXEL_PER_METER)
+      propSteerables.add(new BaseSteerable(rmoBody, rect.width / Constants.PIXEL_PER_METER))
+    }
+
     tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap, Constants.TILE_SIZE / Constants.PIXEL_PER_METER)
   }
 
 
-  private def createCollisionBody(rx: Float, ry: Float, width: Float, height: Float): Unit = {
+  private def createCollisionBody(rx: Float, ry: Float, width: Float, height: Float): Body = {
     val bodyDef: BodyDef = new BodyDef
     bodyDef.`type` = BodyType.StaticBody
     bodyDef.fixedRotation = true
@@ -65,6 +79,12 @@ class TileMap(world: World) {
 
     val fixture: Fixture = body.createFixture(fixtureDef)
     shape.dispose()
+
+    body
+  }
+
+  def getPropSteerables: Array[Steerable[Vector2]] = {
+    propSteerables
   }
 
   def updateShader(shaderProgram: ShaderProgram): Unit = {
