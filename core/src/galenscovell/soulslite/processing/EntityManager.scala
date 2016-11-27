@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.physics.box2d._
 import galenscovell.soulslite.actors.components.{SteeringComponent, _}
 import galenscovell.soulslite.actors.systems._
+import galenscovell.soulslite.processing.fsm.PlayerState
 import galenscovell.soulslite.ui.screens.GameScreen
 
 
@@ -18,6 +19,13 @@ class EntityManager(engine: Engine,
 
 
   private def setupSystems(): Unit = {
+    // Handles states of entities
+    val stateSystem: StateSystem = new StateSystem(
+      Family.all(
+        classOf[StateComponent]
+      ).get()
+    )
+
     // Handles entity position and velocity
     val movementSystem: MovementSystem = new MovementSystem(
       Family.all(
@@ -31,6 +39,7 @@ class EntityManager(engine: Engine,
       Family.all(
         classOf[BodyComponent],
         classOf[PlayerComponent],
+        classOf[StateComponent],
         classOf[WeaponComponent]
       ).get(), controllerHandler
     )
@@ -39,6 +48,7 @@ class EntityManager(engine: Engine,
     val aiSystem: SteeringSystem = new SteeringSystem(
       Family.all(
         classOf[SteeringComponent]
+        // classOf[StateComponent]
       ).get()
     )
 
@@ -59,9 +69,11 @@ class EntityManager(engine: Engine,
         classOf[RenderableComponent],
         classOf[SizeComponent],
         classOf[SpriteComponent]
+        // classOf[StateComponent]
       ).get(), spriteBatch, gameScreen
     )
 
+    engine.addSystem(stateSystem)
     engine.addSystem(movementSystem)
     engine.addSystem(playerSystem)
     engine.addSystem(aiSystem)
@@ -69,7 +81,7 @@ class EntityManager(engine: Engine,
     engine.addSystem(renderSystem)
   }
 
-  def makeEntity(etype: String, size: Float, posX: Float, posY: Float): Entity = {
+  def makeEntity(etype: String, size: Float, posX: Float, posY: Float, isPlayer: Boolean = false): Entity = {
     val e: Entity = new Entity
     val bodyComponent: BodyComponent = new BodyComponent(e, world, posX, posY, size)
     e.add(new AnimationComponent(etype))
@@ -79,6 +91,11 @@ class EntityManager(engine: Engine,
     e.add(new SpriteComponent(etype))
     e.add(new SizeComponent(size))
     e.add(new WeaponComponent(world, bodyComponent.body))
+
+    if (isPlayer) {
+      e.add(new PlayerComponent)
+      e.add(new StateComponent(PlayerState.NORMAL))
+    }
 
     engine.addEntity(e)
     e

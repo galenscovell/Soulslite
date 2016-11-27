@@ -1,38 +1,81 @@
 package galenscovell.soulslite.processing.fsm;
 
-import com.badlogic.gdx.ai.fsm.State;
-import com.badlogic.gdx.ai.msg.Telegram;
 
-
-public enum PlayerState implements State<PlayerAgent> {
+public enum PlayerState implements State {
 
     NORMAL() {
         @Override
-        public void update(PlayerAgent entity) {
+        public void enter() {
+            System.out.println("Enter NORMAL");
+        }
 
+        @Override
+        public void exit() {
+            System.out.println("Exit NORMAL");
+        }
+
+        @Override
+        public void update(float deltaTime) {
+
+        }
+
+        @Override
+        public float getFrameRatio() {
+            return 0;
         }
     },
 
-    DASHING {
+    DASH() {
+        Float frames;
+        Float currentFrame;
+
         @Override
-        public void update(PlayerAgent entity) {
-
+        public void enter() {
+            System.out.println("Enter DASH");
+            frames = 14f;
+            currentFrame = frames;
         }
-    };
 
+        @Override
+        public void exit() {
+            System.out.println("Exit DASH");
+        }
 
-    @Override
-    public void enter(PlayerAgent entity) {
+        @Override
+        public void update(float deltaTime) {
+            currentFrame--;
+        }
 
-    }
+        @Override
+        public float getFrameRatio() {
+            return currentFrame / frames;
+        }
+    },
 
-    @Override
-    public void exit(PlayerAgent entity) {
+    ATTACK() {
+        Float frames;
+        Float currentFrame;
 
-    }
+        @Override
+        public void enter() {
+            System.out.println("Enter ATTACK");
+            frames = 16f;
+            currentFrame = frames;
+        }
 
-    @Override
-    public boolean onMessage(PlayerAgent entity, Telegram telegram) {
-        return false;
+        @Override
+        public void exit() {
+            System.out.println("Exit ATTACK");
+        }
+
+        @Override
+        public void update(float deltaTime) {
+            currentFrame--;
+        }
+
+        @Override
+        public float getFrameRatio() {
+            return currentFrame / frames;
+        }
     }
 }

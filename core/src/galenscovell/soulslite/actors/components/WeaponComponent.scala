@@ -8,8 +8,6 @@ import galenscovell.soulslite.util.Constants
 
 class WeaponComponent(world: World, entityBody: Body) extends Component {
   val weaponFixture: Fixture = createFixture
-  var attacking: Boolean = false
-  var frames: Int = 0
 
 
   private def createFixture: Fixture = {
@@ -58,9 +56,6 @@ class WeaponComponent(world: World, entityBody: Body) extends Component {
     // Direction is ordinal - will need to be played with to change where
     //  attack angle starts and ends
     enable()
-    attacking = true
-    frames = 16
-
     // This angle will be 45deg in relation to ordinal direction
     val angle: Float = Math.toRadians(direction * 90).toFloat
     entityBody.setTransform(entityBody.getPosition, angle)
@@ -69,8 +64,6 @@ class WeaponComponent(world: World, entityBody: Body) extends Component {
 
   def endAttack(): Unit = {
     disable()
-    attacking = false
-
     entityBody.setAngularVelocity(0)
   }
 }

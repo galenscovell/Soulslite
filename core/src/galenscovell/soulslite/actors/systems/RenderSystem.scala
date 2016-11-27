@@ -21,9 +21,14 @@ class RenderSystem(family: Family, spriteBatch: SpriteBatch, gameScreen: GameScr
     ComponentMapper.getFor(classOf[SizeComponent])
   private val spriteMapper: ComponentMapper[SpriteComponent] =
     ComponentMapper.getFor(classOf[SpriteComponent])
+//  private val stateMapper: ComponentMapper[StateComponent] =
+//    ComponentMapper.getFor(classOf[StateComponent])
 
 
   override def processEntity(entity: Entity, deltaTime: Float): Unit = {
+    // TODO: Check player state, graphics depends on it
+    // val stateComponent: StateComponent = stateMapper.get(entity)
+
     val bodyComponent: BodyComponent = bodyMapper.get(entity)
     val currentX: Float = bodyComponent.body.getPosition.x
     val currentY: Float = bodyComponent.body.getPosition.y

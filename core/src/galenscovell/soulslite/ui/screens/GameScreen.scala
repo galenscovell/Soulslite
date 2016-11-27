@@ -53,10 +53,8 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     stage = new Stage(viewport, root.spriteBatch)
 
     // Establish player entity
-    player = entityManager.makeEntity("player", Constants.MID_ENTITY_SIZE, 20, 20)
+    player = entityManager.makeEntity("player", Constants.MID_ENTITY_SIZE, 20, 20, isPlayer=true)
     playerBody = player.getComponent(classOf[BodyComponent]).body
-    val playerComponent: PlayerComponent = new PlayerComponent
-    player.add(new PlayerComponent)
     val playerSteering: SteeringComponent = new SteeringComponent(
       playerBody, Constants.MID_ENTITY_SIZE, 5, 20, 5, 20
     )
@@ -76,10 +74,10 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
         steeringComponent.steering,
         List[SteeringBehavior[Vector2]](
           steeringCreator.makeRaycastAvoidBehavior(steeringComponent.steering),
-          steeringCreator.makeWanderBehavior(steeringComponent.steering),
+          // steeringCreator.makePursueBehavior(steeringComponent.steering, playerSteering.steering)
           steeringCreator.makeHideBehavior(steeringComponent.steering, playerSteering.steering, tileMap.getPropSteerables)
         ),
-        List[Float](1f, 0.5f, 1f)
+        List[Float](1f, 1f)
       )
     }
 
