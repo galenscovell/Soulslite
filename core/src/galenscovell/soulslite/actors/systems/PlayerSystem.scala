@@ -27,34 +27,34 @@ class PlayerSystem(family: Family, controllerHandler: GameController) extends It
     val weaponComponent: WeaponComponent = weaponMapper.get(entity)
 
     val startVelocity: Vector2 = bodyComponent.body.getLinearVelocity
-    val stateFrameRatio: Float = stateComponent.currentState.getFrameRatio
+    val stateFrameRatio: Float = stateComponent.getCurrentState.getFrameRatio
 
 
     /********************
       *     Normal      *
       ********************/
-    if (stateComponent.currentState == PlayerState.NORMAL) {
+    if (stateComponent.isInState(PlayerState.NORMAL)) {
       // Regular movement if not attacking or dashing
       bodyComponent.body.setLinearVelocity(
         controllerHandler.leftAxis.x * 5,
         controllerHandler.leftAxis.y * 5
       )
 
-      // Dash handling
+      // Dash input handling
       if (controllerHandler.dashPressed) {
-        stateComponent.newState = PlayerState.DASH
+        stateComponent.setState(PlayerState.DASH)
       }
 
-      // Attack handling
+      // Attack input handling
       if (controllerHandler.attackPressed) {
-        stateComponent.newState = PlayerState.ATTACK
+        stateComponent.setState(PlayerState.ATTACK)
         weaponComponent.startAttack(directionComponent.direction)
       }
 
     /********************
       *      Dash       *
       ********************/
-    } else if (stateComponent.currentState == PlayerState.DASH) {
+    } else if (stateComponent.isInState(PlayerState.DASH)) {
       controllerHandler.dashPressed = false
 
       // If player is stationary, start dash in facing direction
@@ -76,8 +76,6 @@ class PlayerSystem(family: Family, controllerHandler: GameController) extends It
         bodyComponent.body.applyForceToCenter(
           normalizedVelocity.x * (-1000 * stateFrameRatio), normalizedVelocity.y * (-1000 * stateFrameRatio), true
         )
-      } else {
-        stateComponent.newState = PlayerState.NORMAL
       }
 
       // Allow player slight control during dash
@@ -88,15 +86,13 @@ class PlayerSystem(family: Family, controllerHandler: GameController) extends It
     /********************
       *     Attack      *
       ********************/
-    } else if (stateComponent.currentState == PlayerState.ATTACK) {
+    } else if (stateComponent.isInState(PlayerState.ATTACK)) {
       controllerHandler.attackPressed = false
+      bodyComponent.body.setLinearVelocity(0, 0)
 
       if (stateFrameRatio <= 0.5f && stateFrameRatio > 0.4f) {
         weaponComponent.endAttack()
-      } else if (stateFrameRatio <= 0) {
-        stateComponent.newState = PlayerState.NORMAL
       }
-
     }
 
 

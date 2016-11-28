@@ -5,6 +5,7 @@ import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.g2d._
 import galenscovell.soulslite.actors.components._
 import galenscovell.soulslite.actors.components.dynamic.ColorComponent
+import galenscovell.soulslite.processing.fsm.PlayerState
 import galenscovell.soulslite.ui.screens.GameScreen
 
 
@@ -21,14 +22,12 @@ class RenderSystem(family: Family, spriteBatch: SpriteBatch, gameScreen: GameScr
     ComponentMapper.getFor(classOf[SizeComponent])
   private val spriteMapper: ComponentMapper[SpriteComponent] =
     ComponentMapper.getFor(classOf[SpriteComponent])
-//  private val stateMapper: ComponentMapper[StateComponent] =
-//    ComponentMapper.getFor(classOf[StateComponent])
+  private val stateMapper: ComponentMapper[StateComponent] =
+    ComponentMapper.getFor(classOf[StateComponent])
 
 
   override def processEntity(entity: Entity, deltaTime: Float): Unit = {
-    // TODO: Check player state, graphics depends on it
-    // val stateComponent: StateComponent = stateMapper.get(entity)
-
+    val stateComponent: StateComponent = stateMapper.get(entity)
     val bodyComponent: BodyComponent = bodyMapper.get(entity)
     val currentX: Float = bodyComponent.body.getPosition.x
     val currentY: Float = bodyComponent.body.getPosition.y
@@ -51,9 +50,9 @@ class RenderSystem(family: Family, spriteBatch: SpriteBatch, gameScreen: GameScr
       // Draw animation if in motion, otherwise static sprite
       if (bodyComponent.inMotion) {
         var rotation = 0f
-        if (false) {
+        if (stateComponent.isInState(PlayerState.DASH)) {
           direction = 4
-          rotation = bodyComponent.body.getAngle
+          rotation = bodyComponent.body.getLinearVelocity.angle()
         }
         val animationComponent: AnimationComponent = animationMapper.get(entity)
         animationComponent.stateTime += deltaTime

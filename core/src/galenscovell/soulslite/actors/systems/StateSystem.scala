@@ -12,14 +12,6 @@ class StateSystem(family: Family) extends IteratingSystem(family) {
 
   override def processEntity(entity: Entity, deltaTime: Float): Unit = {
     val stateComponent: StateComponent = stateMapper.get(entity)
-
-    stateComponent.currentState.update(deltaTime)
-
-    if (stateComponent.newState != null) {
-      stateComponent.currentState.exit()
-      stateComponent.currentState = stateComponent.newState
-      stateComponent.currentState.enter()
-      stateComponent.newState = null
-    }
+    stateComponent.update()
   }
 }

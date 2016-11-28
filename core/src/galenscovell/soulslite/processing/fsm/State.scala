@@ -1,9 +1,9 @@
 package galenscovell.soulslite.processing.fsm
 
 
-trait State {
-  def enter(): Unit
-  def exit(): Unit
-  def update(deltaTime: Float): Unit
+trait State[StateComponent] {
+  def enter(stateComponent: StateComponent): Unit
+  def exit(stateComponent: StateComponent): Unit
+  def update(stateComponent: StateComponent): Unit
   def getFrameRatio: Float
 }

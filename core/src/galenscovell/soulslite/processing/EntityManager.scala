@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.physics.box2d._
 import galenscovell.soulslite.actors.components.{SteeringComponent, _}
 import galenscovell.soulslite.actors.systems._
-import galenscovell.soulslite.processing.fsm.PlayerState
+import galenscovell.soulslite.processing.fsm._
 import galenscovell.soulslite.ui.screens.GameScreen
 
 
@@ -47,8 +47,8 @@ class EntityManager(engine: Engine,
     // Handles AI control
     val aiSystem: SteeringSystem = new SteeringSystem(
       Family.all(
-        classOf[SteeringComponent]
-        // classOf[StateComponent]
+        classOf[SteeringComponent],
+        classOf[StateComponent]
       ).get()
     )
 
@@ -68,8 +68,8 @@ class EntityManager(engine: Engine,
         classOf[DirectionComponent],
         classOf[RenderableComponent],
         classOf[SizeComponent],
-        classOf[SpriteComponent]
-        // classOf[StateComponent]
+        classOf[SpriteComponent],
+        classOf[StateComponent]
       ).get(), spriteBatch, gameScreen
     )
 
@@ -95,6 +95,8 @@ class EntityManager(engine: Engine,
     if (isPlayer) {
       e.add(new PlayerComponent)
       e.add(new StateComponent(PlayerState.NORMAL))
+    } else {
+      e.add(new StateComponent(EnemyState.NORMAL))
     }
 
     engine.addEntity(e)

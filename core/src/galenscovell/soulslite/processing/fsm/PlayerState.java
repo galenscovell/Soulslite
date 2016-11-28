@@ -1,21 +1,23 @@
 package galenscovell.soulslite.processing.fsm;
 
 
-public enum PlayerState implements State {
+import galenscovell.soulslite.actors.components.StateComponent;
+
+public enum PlayerState implements State<StateComponent> {
 
     NORMAL() {
         @Override
-        public void enter() {
+        public void enter(StateComponent stateComponent) {
             System.out.println("Enter NORMAL");
         }
 
         @Override
-        public void exit() {
+        public void exit(StateComponent stateComponent) {
             System.out.println("Exit NORMAL");
         }
 
         @Override
-        public void update(float deltaTime) {
+        public void update(StateComponent stateComponent) {
 
         }
 
@@ -30,20 +32,25 @@ public enum PlayerState implements State {
         Float currentFrame;
 
         @Override
-        public void enter() {
+        public void enter(StateComponent stateComponent) {
             System.out.println("Enter DASH");
             frames = 14f;
             currentFrame = frames;
         }
 
         @Override
-        public void exit() {
+        public void exit(StateComponent stateComponent) {
             System.out.println("Exit DASH");
         }
 
         @Override
-        public void update(float deltaTime) {
+        public void update(StateComponent stateComponent) {
             currentFrame--;
+            if (currentFrame <= 0) {
+                if (stateComponent.revertToPreviousState()) {
+                    System.out.println("Reverted to " + stateComponent.getCurrentState().toString());
+                }
+            }
         }
 
         @Override
@@ -57,20 +64,25 @@ public enum PlayerState implements State {
         Float currentFrame;
 
         @Override
-        public void enter() {
+        public void enter(StateComponent stateComponent) {
             System.out.println("Enter ATTACK");
             frames = 16f;
             currentFrame = frames;
         }
 
         @Override
-        public void exit() {
+        public void exit(StateComponent stateComponent) {
             System.out.println("Exit ATTACK");
         }
 
         @Override
-        public void update(float deltaTime) {
+        public void update(StateComponent stateComponent) {
             currentFrame--;
+            if (currentFrame <= 0) {
+                if (stateComponent.revertToPreviousState()) {
+                    System.out.println("Reverted to " + stateComponent.getCurrentState().toString());
+                }
+            }
         }
 
         @Override
