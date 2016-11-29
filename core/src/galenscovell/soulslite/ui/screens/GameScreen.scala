@@ -14,7 +14,7 @@ import galenscovell.soulslite.Main
 import galenscovell.soulslite.actors.components._
 import galenscovell.soulslite.environment.{PhysicsWorld, TileMap}
 import galenscovell.soulslite.processing._
-import galenscovell.soulslite.processing.steering.SteeringCreator
+import galenscovell.soulslite.processing.generation.{EntityCreator, SteeringCreator}
 import galenscovell.soulslite.util.Constants
 
 
@@ -52,38 +52,39 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   override def create(): Unit = {
     stage = new Stage(viewport, root.spriteBatch)
 
+    val entityCreator: EntityCreator = new EntityCreator(entityManager.getEngine, physicsWorld.getWorld)
+    val steeringCreator: SteeringCreator = new SteeringCreator(physicsWorld.getWorld)
+
     // Establish player entity
-    player = entityManager.makeEntity("player", Constants.MID_ENTITY_SIZE, 20, 20, isPlayer=true)
-    playerBody = player.getComponent(classOf[BodyComponent]).body
-    val playerSteering: SteeringComponent = new SteeringComponent(
-      playerBody, Constants.MID_ENTITY_SIZE, 5, 20, 5, 20
+    player = entityCreator.makePlayer(
+      "player", Constants.MID_ENTITY_SIZE, 20, 20, 5, 20
     )
+    playerBody = player.getComponent(classOf[BodyComponent]).body
+    val playerSteerable: BaseSteerable = player.getComponent(classOf[SteeringComponent]).steering
+
+    // Start camera immediately centered on player
+    worldCamera.position.set(playerBody.getPosition.x, playerBody.getPosition.y, 0)
 
 
     // Temp entities for testing purposes with same graphics as player
     for (x <- 0 until 1) {
-      val testDummy = entityManager.makeEntity("player", Constants.MID_ENTITY_SIZE, 18 + x, 18 + x)
-      val steeringComponent: SteeringComponent = new SteeringComponent(
-        testDummy.getComponent(classOf[BodyComponent]).body, Constants.MID_ENTITY_SIZE, 5, 20, 5, 20
+      val dummy = entityCreator.makeEntity(
+        "player", Constants.MID_ENTITY_SIZE, 18 + x, 18 + x, 5, 20,
+        playerSteerable
       )
-      testDummy.add(steeringComponent)
+      val dummySteerable: BaseSteerable = dummy.getComponent(classOf[SteeringComponent]).steering
 
-      val steeringCreator: SteeringCreator = new SteeringCreator(physicsWorld.getWorld)
-
-      steeringComponent.steering.behavior = steeringCreator.makeBlendedSteering(
-        steeringComponent.steering,
+      dummySteerable.behavior = steeringCreator.makeBlendedSteering(
+        dummySteerable,
         List[SteeringBehavior[Vector2]](
-          steeringCreator.makeRaycastAvoidBehavior(steeringComponent.steering),
-          // steeringCreator.makePursueBehavior(steeringComponent.steering, playerSteering.steering)
-          steeringCreator.makeHideBehavior(steeringComponent.steering, playerSteering.steering, tileMap.getPropSteerables)
+          steeringCreator.makeRaycastAvoidBehavior(dummySteerable),
+//          steeringCreator.makeCollisionAvoidBehavior(dummySteerable, tileMap.getPropSteerables),
+//          steeringCreator.makePursueBehavior(dummySteerable, playerSteerable)
+          steeringCreator.makeHideBehavior(dummySteerable, playerSteerable, tileMap.getPropSteerables)
         ),
-        List[Float](1f, 1f)
+        List[Float](1f, 0.5f)
       )
     }
-
-
-    // Start camera immediately centered on player
-    worldCamera.position.set(playerBody.getPosition.x, playerBody.getPosition.y, 0)
 
     setupEnvironmentShader()
   }

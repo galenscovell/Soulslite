@@ -1,4 +1,4 @@
-package galenscovell.soulslite.processing.steering
+package galenscovell.soulslite.processing
 
 import com.badlogic.gdx.ai.steer._
 import com.badlogic.gdx.ai.utils.Location
@@ -25,6 +25,7 @@ class BaseSteerable(body: Body,
   /********************
     *       Get       *
     ********************/
+  def getBody: Body = body
   override def isTagged: Boolean = tagged
 
   override def getPosition: Vector2 = body.getPosition

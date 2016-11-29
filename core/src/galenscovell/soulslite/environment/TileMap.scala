@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.{Rectangle, Vector2}
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.utils.Array
-import galenscovell.soulslite.processing.steering.BaseSteerable
+import galenscovell.soulslite.processing.BaseSteerable
 import galenscovell.soulslite.util.Constants
 
 

@@ -1,7 +1,7 @@
-package galenscovell.soulslite.processing.steering
+package galenscovell.soulslite.processing.generation
 
 import com.badlogic.gdx.ai.steer.behaviors._
-import com.badlogic.gdx.ai.steer.proximities.RadiusProximity
+import com.badlogic.gdx.ai.steer.proximities._
 import com.badlogic.gdx.ai.steer.utils.RayConfiguration
 import com.badlogic.gdx.ai.steer.utils.rays.{CentralRayWithWhiskersConfiguration, SingleRayConfiguration}
 import com.badlogic.gdx.ai.steer.{Steerable, SteeringBehavior}
@@ -9,12 +9,13 @@ import com.badlogic.gdx.ai.utils.RaycastCollisionDetector
 import com.badlogic.gdx.math.{MathUtils, Vector2}
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.Array
+import galenscovell.soulslite.processing.BaseSteerable
 import galenscovell.soulslite.util.Box2DRaycastCollisionDetector
 
 
 class SteeringCreator(world: World) {
 
-  // Arrive at a set distance from the target steerable
+  // Arrive at a set distance from the target steerable, attempting to have zero velocity upon arrival
   def makeArriveBehavior(entitySteerable: BaseSteerable,
                          targetSteerable: BaseSteerable): Arrive[Vector2] = {
     new Arrive[Vector2](entitySteerable, targetSteerable)
@@ -59,9 +60,11 @@ class SteeringCreator(world: World) {
                        obstacles: Array[Steerable[Vector2]]): Hide[Vector2] = {
     val radiusProximity: RadiusProximity[Vector2] =
       new RadiusProximity[Vector2](entitySteerable, obstacles, entitySteerable.getBoundingRadius + 1)
+    val infiniteProximity: InfiniteProximity[Vector2] =
+      new InfiniteProximity[Vector2](entitySteerable, obstacles)
     new Hide[Vector2](entitySteerable, targetSteerable, radiusProximity)
       .setEnabled(true)
-      .setDistanceFromBoundary(2)
+      .setDistanceFromBoundary(1)
       .setTimeToTarget(0.1f)
       .setArrivalTolerance(0.25f)
       .setDecelerationRadius(2)
@@ -70,6 +73,7 @@ class SteeringCreator(world: World) {
   // Wander aimlessly
   // This utilizes a 'wander circle' around the entity -- a random spot from the circumference of the circle
   //  is chosen for the new target location
+  // If GdxAI.getTimepiece.getTime is not called on update, the wander orientation will not change
   def makeWanderBehavior(entitySteerable: BaseSteerable): Wander[Vector2] = {
     new Wander[Vector2](entitySteerable)
       .setEnabled(true)
@@ -79,6 +83,17 @@ class SteeringCreator(world: World) {
       .setWanderRate(MathUtils.PI2 * 4) // Rate at which new spot is chosen from the wander circle
   }
 
+  // Collision avoidance using proximity, works well for obstacles that can be represented by a point and radius
+  // Obstacles are other Steerables that don't move, ie props on the map such as pillars
+  def makeCollisionAvoidBehavior(entitySteerable: BaseSteerable,
+                                 obstacles: Array[Steerable[Vector2]]): CollisionAvoidance[Vector2] = {
+    val radiusProximity: RadiusProximity[Vector2] =
+      new RadiusProximity[Vector2](entitySteerable, obstacles, entitySteerable.getBoundingRadius + 1)
+    new CollisionAvoidance[Vector2](entitySteerable, radiusProximity)
+      .setEnabled(true)
+  }
+
+  // Collision avoidance using raycasting, works well for large collisions such as world boundaries
   def makeRaycastAvoidBehavior(entitySteerable: BaseSteerable): RaycastObstacleAvoidance[Vector2] = {
     val singleRay: RayConfiguration[Vector2] =
       new SingleRayConfiguration[Vector2](entitySteerable, 4f)

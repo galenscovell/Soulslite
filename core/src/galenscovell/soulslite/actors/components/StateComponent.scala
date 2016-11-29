@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Component
 import galenscovell.soulslite.processing.fsm.State
 
 
-class StateComponent(startState: State[StateComponent]) extends Component {
+class StateComponent(startState: State[StateComponent], val steeringComponent: SteeringComponent) extends Component {
   private var previousState: State[StateComponent] = _
   private var currentState: State[StateComponent] = _
   setState(startState)

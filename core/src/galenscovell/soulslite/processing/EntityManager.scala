@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.physics.box2d._
 import galenscovell.soulslite.actors.components.{SteeringComponent, _}
 import galenscovell.soulslite.actors.systems._
-import galenscovell.soulslite.processing.fsm._
 import galenscovell.soulslite.ui.screens.GameScreen
 
 
@@ -26,11 +25,19 @@ class EntityManager(engine: Engine,
       ).get()
     )
 
-    // Handles entity position and velocity
+    // Handles entity position, velocity, and physics body
     val movementSystem: MovementSystem = new MovementSystem(
       Family.all(
         classOf[BodyComponent],
         classOf[DirectionComponent]
+      ).get()
+    )
+
+    // Lets every other entity know where the player is currently positioned
+    val whereIsPlayerSystem: WhereIsPlayerSystem = new WhereIsPlayerSystem(
+      Family.all(
+        classOf[BodyComponent],
+        classOf[WhereIsPlayerComponent]
       ).get()
     )
 
@@ -75,36 +82,19 @@ class EntityManager(engine: Engine,
 
     engine.addSystem(stateSystem)
     engine.addSystem(movementSystem)
+    engine.addSystem(whereIsPlayerSystem)
     engine.addSystem(playerSystem)
     engine.addSystem(aiSystem)
     engine.addSystem(collisionSystem)
     engine.addSystem(renderSystem)
   }
 
-  def makeEntity(etype: String, size: Float, posX: Float, posY: Float, isPlayer: Boolean = false): Entity = {
-    val e: Entity = new Entity
-    val bodyComponent: BodyComponent = new BodyComponent(e, world, posX, posY, size)
-    e.add(new AnimationComponent(etype))
-    e.add(bodyComponent)
-    e.add(new DirectionComponent)
-    e.add(new RenderableComponent)
-    e.add(new SpriteComponent(etype))
-    e.add(new SizeComponent(size))
-    e.add(new WeaponComponent(world, bodyComponent.body))
-
-    if (isPlayer) {
-      e.add(new PlayerComponent)
-      e.add(new StateComponent(PlayerState.NORMAL))
-    } else {
-      e.add(new StateComponent(EnemyState.NORMAL))
-    }
-
-    engine.addEntity(e)
-    e
-  }
-
   def update(delta: Float): Unit = {
     GdxAI.getTimepiece.update(delta)
     engine.update(delta)
+  }
+
+  def getEngine: Engine = {
+    engine
   }
 }
