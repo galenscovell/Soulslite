@@ -3,17 +3,17 @@ package galenscovell.soulslite.processing.fsm;
 
 import galenscovell.soulslite.actors.components.StateComponent;
 
-public enum PlayerState implements State<StateComponent> {
+public enum RangedAgent implements State<StateComponent> {
 
-    NORMAL() {
+    DEFAULT() {
         @Override
         public void enter(StateComponent stateComponent) {
-            System.out.println("Enter NORMAL");
+            System.out.println("Enemy NORMAL");
         }
 
         @Override
         public void exit(StateComponent stateComponent) {
-            System.out.println("Exit NORMAL");
+            System.out.println("Enemy NORMAL");
         }
 
         @Override
@@ -27,35 +27,47 @@ public enum PlayerState implements State<StateComponent> {
         }
     },
 
-    DASH() {
-        Float frames;
-        Float currentFrame;
-
+    PURSUE() {
         @Override
         public void enter(StateComponent stateComponent) {
-            System.out.println("Enter DASH");
-            frames = 14f;
-            currentFrame = frames;
+            System.out.println("Enemy PURSUE");
         }
 
         @Override
         public void exit(StateComponent stateComponent) {
-            System.out.println("Exit DASH");
+            System.out.println("Enemy PURSUE");
         }
 
         @Override
         public void update(StateComponent stateComponent) {
-            currentFrame--;
-            if (currentFrame <= 0) {
-                if (stateComponent.revertToPreviousState()) {
-                    System.out.println("Reverted to " + stateComponent.getCurrentState().toString());
-                }
-            }
+
         }
 
         @Override
         public float getFrameRatio() {
-            return currentFrame / frames;
+            return 0;
+        }
+    },
+
+    EVADE() {
+        @Override
+        public void enter(StateComponent stateComponent) {
+            System.out.println("Enemy EVADE");
+        }
+
+        @Override
+        public void exit(StateComponent stateComponent) {
+            System.out.println("Enemy EVADE");
+        }
+
+        @Override
+        public void update(StateComponent stateComponent) {
+
+        }
+
+        @Override
+        public float getFrameRatio() {
+            return 0;
         }
     },
 
@@ -65,14 +77,14 @@ public enum PlayerState implements State<StateComponent> {
 
         @Override
         public void enter(StateComponent stateComponent) {
-            System.out.println("Enter ATTACK");
+            System.out.println("Enemy ATTACK");
             frames = 16f;
             currentFrame = frames;
         }
 
         @Override
         public void exit(StateComponent stateComponent) {
-            System.out.println("Exit ATTACK");
+            System.out.println("Enemy ATTACK");
         }
 
         @Override
@@ -80,7 +92,7 @@ public enum PlayerState implements State<StateComponent> {
             currentFrame--;
             if (currentFrame <= 0) {
                 if (stateComponent.revertToPreviousState()) {
-                    System.out.println("Reverted to " + stateComponent.getCurrentState().toString());
+                    System.out.println("Enemy reverted to " + stateComponent.getCurrentState().toString());
                 }
             }
         }

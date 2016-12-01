@@ -40,7 +40,6 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   // For camera
   private val lerpPos: Vector3 = new Vector3(0, 0, 0)
   private var minCamX, minCamY, maxCamX, maxCamY: Float = 0f
-  private var player: Entity = _
   private var playerBody: Body = _
 
   create()
@@ -56,9 +55,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     val steeringCreator: SteeringCreator = new SteeringCreator(physicsWorld.getWorld)
 
     // Establish player entity
-    player = entityCreator.makePlayer(
-      "player", Constants.MID_ENTITY_SIZE, 20, 20, 5, 20
-    )
+    val player: Entity = entityCreator.makePlayer("player", Constants.MID_ENTITY_SIZE, 20, 20, 5, 20)
     playerBody = player.getComponent(classOf[BodyComponent]).body
     val playerSteerable: BaseSteerable = player.getComponent(classOf[SteeringComponent]).steering
 
@@ -68,10 +65,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 
     // Temp entities for testing purposes with same graphics as player
     for (x <- 0 until 1) {
-      val dummy = entityCreator.makeEntity(
-        "player", Constants.MID_ENTITY_SIZE, 18 + x, 18 + x, 5, 20,
-        playerSteerable
-      )
+      val dummy = entityCreator.fromJson("testEntity", 18 + x, 18 + x, playerSteerable)
       val dummySteerable: BaseSteerable = dummy.getComponent(classOf[SteeringComponent]).steering
 
       dummySteerable.behavior = steeringCreator.makeBlendedSteering(

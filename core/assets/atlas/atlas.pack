@@ -208,7 +208,28 @@ entity/player-down2
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-down-idle
+  rotate: false
+  xy: 8, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-down2
+  rotate: false
+  xy: 8, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-down0
+  rotate: false
+  xy: 48, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-down0
   rotate: false
   xy: 48, 20
   size: 32, 32
@@ -222,7 +243,21 @@ entity/player-down1
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-down1
+  rotate: false
+  xy: 88, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-down10
+  rotate: false
+  xy: 128, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-down10
   rotate: false
   xy: 128, 20
   size: 32, 32
@@ -236,7 +271,21 @@ entity/player-down11
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-down11
+  rotate: false
+  xy: 168, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-down3
+  rotate: false
+  xy: 208, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-down3
   rotate: false
   xy: 208, 20
   size: 32, 32
@@ -250,7 +299,21 @@ entity/player-down4
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-down4
+  rotate: false
+  xy: 248, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-down5
+  rotate: false
+  xy: 288, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-down5
   rotate: false
   xy: 288, 20
   size: 32, 32
@@ -264,7 +327,21 @@ entity/player-down6
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-down6
+  rotate: false
+  xy: 328, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-down7
+  rotate: false
+  xy: 368, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-down7
   rotate: false
   xy: 368, 20
   size: 32, 32
@@ -278,7 +355,21 @@ entity/player-down8
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-down8
+  rotate: false
+  xy: 408, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-down9
+  rotate: false
+  xy: 448, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-down9
   rotate: false
   xy: 448, 20
   size: 32, 32
@@ -299,7 +390,28 @@ entity/player-left2
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-left-idle
+  rotate: false
+  xy: 488, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-left2
+  rotate: false
+  xy: 488, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-left0
+  rotate: false
+  xy: 528, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-left0
   rotate: false
   xy: 528, 20
   size: 32, 32
@@ -313,7 +425,21 @@ entity/player-left1
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-left1
+  rotate: false
+  xy: 568, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-left10
+  rotate: false
+  xy: 608, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-left10
   rotate: false
   xy: 608, 20
   size: 32, 32
@@ -327,7 +453,21 @@ entity/player-left11
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-left11
+  rotate: false
+  xy: 648, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-left3
+  rotate: false
+  xy: 688, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-left3
   rotate: false
   xy: 688, 20
   size: 32, 32
@@ -341,7 +481,21 @@ entity/player-left4
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-left4
+  rotate: false
+  xy: 728, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-left5
+  rotate: false
+  xy: 768, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-left5
   rotate: false
   xy: 768, 20
   size: 32, 32
@@ -355,7 +509,21 @@ entity/player-left6
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-left6
+  rotate: false
+  xy: 808, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-left7
+  rotate: false
+  xy: 848, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-left7
   rotate: false
   xy: 848, 20
   size: 32, 32
@@ -369,7 +537,21 @@ entity/player-left8
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-left8
+  rotate: false
+  xy: 888, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-left9
+  rotate: false
+  xy: 928, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-left9
   rotate: false
   xy: 928, 20
   size: 32, 32
@@ -390,7 +572,28 @@ entity/player-right2
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-right-idle
+  rotate: false
+  xy: 968, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-right2
+  rotate: false
+  xy: 968, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-right0
+  rotate: false
+  xy: 1008, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-right0
   rotate: false
   xy: 1008, 20
   size: 32, 32
@@ -404,7 +607,21 @@ entity/player-right1
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-right1
+  rotate: false
+  xy: 1048, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-right10
+  rotate: false
+  xy: 1088, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-right10
   rotate: false
   xy: 1088, 20
   size: 32, 32
@@ -418,7 +635,21 @@ entity/player-right11
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-right11
+  rotate: false
+  xy: 1128, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-right3
+  rotate: false
+  xy: 1168, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-right3
   rotate: false
   xy: 1168, 20
   size: 32, 32
@@ -432,7 +663,21 @@ entity/player-right4
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-right4
+  rotate: false
+  xy: 1208, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-right5
+  rotate: false
+  xy: 1248, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-right5
   rotate: false
   xy: 1248, 20
   size: 32, 32
@@ -446,7 +691,21 @@ entity/player-right6
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-right6
+  rotate: false
+  xy: 1288, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-right7
+  rotate: false
+  xy: 1328, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-right7
   rotate: false
   xy: 1328, 20
   size: 32, 32
@@ -460,7 +719,21 @@ entity/player-right8
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-right8
+  rotate: false
+  xy: 1368, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-right9
+  rotate: false
+  xy: 1408, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-right9
   rotate: false
   xy: 1408, 20
   size: 32, 32
@@ -481,7 +754,28 @@ entity/player-up1
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-up-idle
+  rotate: false
+  xy: 1448, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-up1
+  rotate: false
+  xy: 1448, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-up0
+  rotate: false
+  xy: 1488, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-up0
   rotate: false
   xy: 1488, 20
   size: 32, 32
@@ -495,7 +789,21 @@ entity/player-up10
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-up10
+  rotate: false
+  xy: 1528, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-up11
+  rotate: false
+  xy: 1568, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-up11
   rotate: false
   xy: 1568, 20
   size: 32, 32
@@ -509,7 +817,21 @@ entity/player-up2
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-up2
+  rotate: false
+  xy: 1608, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-up3
+  rotate: false
+  xy: 1648, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-up3
   rotate: false
   xy: 1648, 20
   size: 32, 32
@@ -523,7 +845,21 @@ entity/player-up4
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-up4
+  rotate: false
+  xy: 1688, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-up5
+  rotate: false
+  xy: 1728, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-up5
   rotate: false
   xy: 1728, 20
   size: 32, 32
@@ -537,7 +873,21 @@ entity/player-up6
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-up6
+  rotate: false
+  xy: 1768, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-up7
+  rotate: false
+  xy: 1808, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/testEntity-up7
   rotate: false
   xy: 1808, 20
   size: 32, 32
@@ -551,6 +901,13 @@ entity/player-up8
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-up8
+  rotate: false
+  xy: 1848, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-up9
   rotate: false
   xy: 1888, 20
@@ -558,7 +915,21 @@ entity/player-up9
   orig: 32, 32
   offset: 0, 0
   index: -1
+entity/testEntity-up9
+  rotate: false
+  xy: 1888, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entity/player-dash0
+  rotate: false
+  xy: 8, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+entity/testEntity-dash0
   rotate: false
   xy: 8, 2
   size: 16, 16

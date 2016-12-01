@@ -5,7 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math._
 import galenscovell.soulslite.actors.components._
 import galenscovell.soulslite.processing.GameController
-import galenscovell.soulslite.processing.fsm.PlayerState
+import galenscovell.soulslite.processing.fsm.PlayerAgent
 import galenscovell.soulslite.util.Constants
 
 
@@ -33,7 +33,7 @@ class PlayerSystem(family: Family, controllerHandler: GameController) extends It
     /********************
       *     Normal      *
       ********************/
-    if (stateComponent.isInState(PlayerState.NORMAL)) {
+    if (stateComponent.isInState(PlayerAgent.DEFAULT)) {
       // Regular movement if not attacking or dashing
       bodyComponent.body.setLinearVelocity(
         controllerHandler.leftAxis.x * 5,
@@ -42,19 +42,19 @@ class PlayerSystem(family: Family, controllerHandler: GameController) extends It
 
       // Dash input handling
       if (controllerHandler.dashPressed) {
-        stateComponent.setState(PlayerState.DASH)
+        stateComponent.setState(PlayerAgent.DASH)
       }
 
       // Attack input handling
       if (controllerHandler.attackPressed) {
-        stateComponent.setState(PlayerState.ATTACK)
+        stateComponent.setState(PlayerAgent.ATTACK)
         weaponComponent.startAttack(directionComponent.direction)
       }
 
     /********************
       *      Dash       *
       ********************/
-    } else if (stateComponent.isInState(PlayerState.DASH)) {
+    } else if (stateComponent.isInState(PlayerAgent.DASH)) {
       controllerHandler.dashPressed = false
 
       // If player is stationary, start dash in facing direction
@@ -86,7 +86,7 @@ class PlayerSystem(family: Family, controllerHandler: GameController) extends It
     /********************
       *     Attack      *
       ********************/
-    } else if (stateComponent.isInState(PlayerState.ATTACK)) {
+    } else if (stateComponent.isInState(PlayerAgent.ATTACK)) {
       controllerHandler.attackPressed = false
       bodyComponent.body.setLinearVelocity(0, 0)
 

@@ -6,7 +6,7 @@ import galenscovell.soulslite.processing.BaseSteerable
 
 
 class WhereIsPlayerComponent(playerSteerable: BaseSteerable) extends Component {
-  var distanceFromPlayer: Vector2 = new Vector2()
+  var distanceFromPlayer: Float = 0f
 
 
   def getPlayerPosition: Vector2 = {

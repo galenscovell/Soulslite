@@ -5,7 +5,7 @@ import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.g2d._
 import galenscovell.soulslite.actors.components._
 import galenscovell.soulslite.actors.components.dynamic.ColorComponent
-import galenscovell.soulslite.processing.fsm.PlayerState
+import galenscovell.soulslite.processing.fsm.PlayerAgent
 import galenscovell.soulslite.ui.screens.GameScreen
 
 
@@ -50,7 +50,7 @@ class RenderSystem(family: Family, spriteBatch: SpriteBatch, gameScreen: GameScr
       // Draw animation if in motion, otherwise static sprite
       if (bodyComponent.inMotion) {
         var rotation = 0f
-        if (stateComponent.isInState(PlayerState.DASH)) {
+        if (stateComponent.isInState(PlayerAgent.DASH)) {
           direction = 4
           rotation = bodyComponent.body.getLinearVelocity.angle()
         }

@@ -54,8 +54,10 @@ class EntityManager(engine: Engine,
     // Handles AI control
     val aiSystem: SteeringSystem = new SteeringSystem(
       Family.all(
+        classOf[BodyComponent],
+        classOf[StateComponent],
         classOf[SteeringComponent],
-        classOf[StateComponent]
+        classOf[WhereIsPlayerComponent]
       ).get()
     )
 
