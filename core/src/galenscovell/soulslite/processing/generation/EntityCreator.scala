@@ -13,6 +13,12 @@ import galenscovell.soulslite.util.Constants
 import scala.collection.mutable.ArrayBuffer
 
 
+/**
+  * EntityCreator constructs entities including the player.
+  * Non-player entities are deserialized from JSON data.
+  * @param engine the ECS entity manager engine
+  * @param world the box2D physics world
+  */
 class EntityCreator(engine: Engine, world: World) {
   private val dataSource: String = "data/entities.json"
 
@@ -49,6 +55,7 @@ class EntityCreator(engine: Engine, world: World) {
     engine.addEntity(e)
     e
   }
+
 
   def fromJson(entityType: String, startX: Float, startY: Float,
                playerSteerable: BaseSteerable): Entity = {

@@ -2,6 +2,8 @@
     "TestLevel": {
         "testEntity": [18, 18],
         "testEntity": [18, 24],
-        "item0": [18, 14]
+        "item0": [18, 14],
+        "button0": [20, 30],
+        "eventLocation0": [40, 55]
     }
 }

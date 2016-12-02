@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="16" tileheight="16" backgroundcolor="#181020" nextobjectid="65">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="16" tileheight="16" backgroundcolor="#181020" nextobjectid="91">
  <tileset firstgid="1" name="Test" tilewidth="16" tileheight="16" tilecount="17" columns="0">
   <tile id="0">
    <image width="16" height="16" source="../atlas-working/tiles/test-cliffside.png"/>
@@ -80,11 +80,11 @@
 0,0,0,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,10,0,0,0,
 0,0,0,1,2,2,2,2,2,2,2,2,2,2,4,5,5,5,5,6,6,5,5,5,5,5,5,5,7,5,5,5,6,5,5,5,10,0,0,0,
 0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,4,5,5,5,6,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,10,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,4,5,5,5,5,5,5,5,7,5,5,5,5,5,5,5,5,5,5,5,10,0,0,0,
-0,0,0,0,12,11,11,11,11,11,11,11,13,0,0,0,1,4,5,5,7,5,5,5,5,5,5,6,5,6,5,5,5,5,6,5,10,0,0,0,
-0,0,0,12,5,6,6,5,7,5,6,5,5,13,0,0,0,1,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,0,0,0,
-0,0,0,9,5,6,6,5,5,5,5,8,5,10,0,0,0,0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,0,0,0,
-0,0,0,9,8,5,5,5,6,5,6,6,5,10,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,2,2,2,2,2,4,7,5,5,5,5,5,5,5,5,5,5,5,10,0,0,0,
+0,0,0,0,12,11,11,11,11,11,11,11,13,0,0,0,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,4,5,6,5,10,0,0,0,
+0,0,0,12,5,6,6,5,7,5,6,5,5,13,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,2,2,2,2,0,0,0,
+0,0,0,9,5,6,6,5,5,5,5,8,5,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,
+0,0,0,9,8,5,5,5,6,5,6,6,5,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,4,5,5,5,5,5,5,5,5,5,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,1,2,2,2,2,2,2,2,2,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -186,61 +186,57 @@
 </data>
  </layer>
  <objectgroup name="BoundaryObjects">
-  <object id="1" type="Boundary" x="47" y="60" width="2" height="292"/>
-  <object id="2" type="Boundary" x="589" y="211.333" width="2" height="218.333"/>
-  <object id="3" type="Boundary" x="302" y="444" width="275.667" height="2"/>
-  <object id="5" type="Boundary" x="62.6667" y="365" width="178.667" height="2"/>
-  <object id="8" type="Boundary" x="63.3333" y="352.333" width="2" height="14.6667"/>
-  <object id="10" type="Boundary" x="46.6667" y="350" width="18" height="2"/>
-  <object id="11" type="Boundary" x="238.667" y="382" width="17.3333" height="2"/>
-  <object id="12" type="Boundary" x="254.333" y="398.667" width="17.3333" height="2"/>
-  <object id="13" type="Boundary" x="270.333" y="414.667" width="17.3333" height="2"/>
-  <object id="14" type="Boundary" x="286.333" y="430.333" width="17.3333" height="2"/>
-  <object id="15" type="Boundary" x="239" y="367.333" width="2" height="14.6667"/>
-  <object id="16" type="Boundary" x="254.333" y="384" width="2" height="14.6667"/>
-  <object id="17" type="Boundary" x="270" y="401" width="2" height="14.6667"/>
-  <object id="18" type="Boundary" x="285.667" y="417" width="2" height="14.6667"/>
-  <object id="19" type="Boundary" x="302.333" y="431.333" width="2" height="14.6667"/>
-  <object id="20" type="Boundary" x="576.333" y="430.667" width="2" height="14.6667"/>
-  <object id="21" type="Boundary" x="576.667" y="430.333" width="15" height="2"/>
-  <object id="25" type="Boundary" x="64" y="32" width="159.333" height="12"/>
-  <object id="26" type="Boundary" x="48" y="44" width="15" height="16"/>
-  <object id="27" type="Boundary" x="224" y="44" width="15" height="16"/>
-  <object id="29" type="Boundary" x="238.667" y="60" width="2" height="88.8333"/>
-  <object id="30" type="Boundary" x="271.333" y="84.5" width="2" height="64.6666"/>
-  <object id="31" type="Boundary" x="414" y="83.8334" width="2" height="110.333"/>
-  <object id="32" type="Boundary" x="287.333" y="66.3333" width="2" height="18.3334"/>
-  <object id="33" type="Boundary" x="398.667" y="67" width="2" height="14.6667"/>
-  <object id="34" type="Boundary" x="575" y="195.333" width="2" height="14.6667"/>
-  <object id="35" type="Boundary" x="271.667" y="83" width="17.3333" height="2"/>
-  <object id="36" type="Boundary" x="398.667" y="82.3333" width="17.3333" height="2"/>
-  <object id="37" type="Boundary" x="575" y="209.333" width="16" height="2"/>
-  <object id="38" type="Boundary" x="240.667" y="147" width="31.3333" height="2"/>
-  <object id="39" type="Boundary" x="287.333" y="65.6667" width="113" height="2"/>
-  <object id="40" type="Boundary" x="414" y="194.333" width="162.667" height="2"/>
-  <object id="42" type="Boundary" x="62.3332" y="493.333" width="147.334" height="2"/>
-  <object id="43" type="Boundary" x="65.6665" y="416" width="141.667" height="2"/>
-  <object id="44" type="Boundary" x="64.6667" y="416.667" width="2" height="14.6667"/>
-  <object id="45" type="Boundary" x="62.3333" y="479.667" width="2" height="14.6667"/>
-  <object id="46" type="Boundary" x="208.667" y="480.667" width="2" height="14.6667"/>
-  <object id="47" type="Boundary" x="205.667" y="417.333" width="2" height="14.6667"/>
-  <object id="48" type="Boundary" x="49.3333" y="431.333" width="18" height="2"/>
-  <object id="49" type="Boundary" x="48" y="479" width="17" height="2"/>
-  <object id="50" type="Boundary" x="208.333" y="479.333" width="16" height="2"/>
-  <object id="51" type="Boundary" x="205.667" y="431.667" width="18" height="2"/>
-  <object id="52" type="Boundary" x="48" y="431.333" width="2" height="49.3334"/>
-  <object id="53" type="Boundary" x="222.333" y="431.667" width="2" height="49.3334"/>
+  <object id="1" type="Boundary" x="46" y="60" width="1" height="290"/>
+  <object id="2" type="Boundary" x="593" y="211" width="1" height="219"/>
+  <object id="5" type="Boundary" x="64" y="365" width="173" height="1"/>
+  <object id="10" type="Boundary" x="48" y="349" width="13" height="1"/>
+  <object id="21" type="Boundary" x="528" y="429" width="64" height="1"/>
+  <object id="25" type="Boundary" x="63" y="32" width="161" height="12"/>
+  <object id="26" type="Boundary" x="48" y="44" width="14" height="16"/>
+  <object id="27" type="Boundary" x="225" y="44" width="15" height="16"/>
+  <object id="29" type="Boundary" x="241" y="60" width="1" height="88"/>
+  <object id="30" type="Boundary" x="270" y="83" width="1" height="65"/>
+  <object id="31" type="Boundary" x="417" y="85" width="1" height="111"/>
+  <object id="32" type="Boundary" x="286" y="67" width="1" height="15"/>
+  <object id="33" type="Boundary" x="401" y="67" width="1" height="15"/>
+  <object id="34" type="Boundary" x="577" y="195" width="1" height="15"/>
+  <object id="35" type="Boundary" x="272" y="83" width="15" height="1"/>
+  <object id="36" type="Boundary" x="401" y="83" width="17" height="1"/>
+  <object id="37" type="Boundary" x="577" y="211" width="15" height="1"/>
+  <object id="38" type="Boundary" x="243" y="147" width="26" height="1"/>
+  <object id="39" type="Boundary" x="288" y="67" width="112" height="1"/>
+  <object id="40" type="Boundary" x="419" y="195" width="157" height="1"/>
+  <object id="67" type="Boundary" x="526" y="413" width="1" height="17"/>
+  <object id="68" type="Boundary" x="384" y="413" width="141" height="1"/>
+  <object id="69" type="Boundary" x="256" y="397" width="125" height="1"/>
+  <object id="73" type="Boundary" x="240" y="381" width="13" height="1"/>
+  <object id="74" type="Boundary" x="382" y="397" width="1" height="17"/>
+  <object id="75" type="Boundary" x="254" y="381" width="1" height="17"/>
+  <object id="76" type="Boundary" x="238" y="365" width="1" height="17"/>
+  <object id="77" type="Boundary" x="62" y="349" width="1" height="17"/>
+  <object id="78" type="Boundary" x="62" y="477" width="1" height="17"/>
+  <object id="80" type="Boundary" x="209" y="479" width="1" height="15"/>
+  <object id="81" type="Boundary" x="48" y="477" width="13" height="1"/>
+  <object id="82" type="Boundary" x="209" y="477" width="15" height="1"/>
+  <object id="83" type="Boundary" x="64" y="493" width="144" height="1"/>
+  <object id="84" type="Boundary" x="46" y="420" width="1" height="58"/>
+  <object id="85" type="Boundary" x="48" y="420" width="13" height="1"/>
+  <object id="86" type="Boundary" x="64" y="404" width="144" height="1"/>
+  <object id="87" type="Boundary" x="62" y="404" width="1" height="17"/>
+  <object id="88" type="Boundary" x="225" y="420" width="1" height="58"/>
+  <object id="89" type="Boundary" x="210" y="420" width="14" height="1"/>
+  <object id="90" type="Boundary" x="209" y="404" width="1" height="17"/>
  </objectgroup>
  <objectgroup name="PropObjects">
-  <object id="23" type="Pillar" x="464" y="232" width="79.6667" height="20"/>
-  <object id="28" type="Pillar" x="112" y="136" width="63.333" height="20"/>
-  <object id="41" type="Pillar" x="160" y="440" width="47" height="20"/>
-  <object id="54" type="Pillar" x="336" y="328" width="32" height="20"/>
-  <object id="59" type="Pillar" x="448" y="312" width="16" height="20"/>
-  <object id="60" type="Pillar" x="480" y="360" width="32" height="20"/>
-  <object id="61" type="Pillar" x="240" y="216" width="16" height="20"/>
-  <object id="62" type="Pillar" x="96" y="408" width="16" height="20"/>
-  <object id="63" type="Pillar" x="160" y="248" width="32" height="20"/>
-  <object id="64" type="Pillar" x="320" y="168" width="32" height="20"/>
+  <object id="23" type="Pillar" x="465" y="232" width="78" height="20"/>
+  <object id="28" type="Pillar" x="113" y="136" width="62" height="20"/>
+  <object id="41" type="Pillar" x="161" y="440" width="46" height="20"/>
+  <object id="54" type="Pillar" x="337" y="328" width="30" height="20"/>
+  <object id="59" type="Pillar" x="449" y="312" width="14" height="20"/>
+  <object id="60" type="Pillar" x="481" y="360" width="30" height="20"/>
+  <object id="61" type="Pillar" x="241" y="216" width="14" height="20"/>
+  <object id="62" type="Pillar" x="97" y="408" width="14" height="20"/>
+  <object id="63" type="Pillar" x="161" y="248" width="30" height="20"/>
+  <object id="64" type="Pillar" x="321" y="168" width="30" height="20"/>
  </objectgroup>
 </map>

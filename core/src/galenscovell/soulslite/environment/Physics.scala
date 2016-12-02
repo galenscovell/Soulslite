@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.{Matrix4, Vector2}
 import com.badlogic.gdx.physics.box2d._
 
 
-class PhysicsWorld {
+class Physics {
   private val world: World = new World(new Vector2(0, 0), true)  // Gravity, whether to sleep or not
   private val debugWorldRenderer: Box2DDebugRenderer = new Box2DDebugRenderer()
 

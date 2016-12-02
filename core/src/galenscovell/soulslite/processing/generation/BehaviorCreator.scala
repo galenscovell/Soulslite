@@ -13,7 +13,7 @@ import galenscovell.soulslite.processing.BaseSteerable
 import galenscovell.soulslite.util.Box2DRaycastCollisionDetector
 
 
-class SteeringCreator(world: World) {
+class BehaviorCreator(world: World) {
 
   // Arrive at a set distance from the target steerable, attempting to have zero velocity upon arrival
   def makeArriveBehavior(entitySteerable: BaseSteerable,
@@ -96,12 +96,12 @@ class SteeringCreator(world: World) {
   // Collision avoidance using raycasting, works well for large collisions such as world boundaries
   def makeRaycastAvoidBehavior(entitySteerable: BaseSteerable): RaycastObstacleAvoidance[Vector2] = {
     val singleRay: RayConfiguration[Vector2] =
-      new SingleRayConfiguration[Vector2](entitySteerable, 4f)
+      new SingleRayConfiguration[Vector2](entitySteerable, entitySteerable.getBoundingRadius + 1)
     val whiskerRays: RayConfiguration[Vector2] =
-      new CentralRayWithWhiskersConfiguration[Vector2](entitySteerable, 4f, 3f, 90 * MathUtils.degreesToRadians)
+      new CentralRayWithWhiskersConfiguration[Vector2](entitySteerable, entitySteerable.getBoundingRadius + 1, 1f, 90 * MathUtils.degreesToRadians)
     val collisionDetector: RaycastCollisionDetector[Vector2] =
       new Box2DRaycastCollisionDetector(world)
-    new RaycastObstacleAvoidance[Vector2](entitySteerable, whiskerRays, collisionDetector, 2f)
+    new RaycastObstacleAvoidance[Vector2](entitySteerable, singleRay, collisionDetector, entitySteerable.getBoundingRadius + 1)
         .setEnabled(true)
   }
 

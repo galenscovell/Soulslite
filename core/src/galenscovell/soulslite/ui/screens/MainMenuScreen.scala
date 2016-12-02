@@ -69,6 +69,7 @@ class MainMenuScreen(root: Main) extends AbstractScreen(root) {
     povDirection match {
       case PovDirection.north => selection -= 1
       case PovDirection.south => selection += 1
+      case _ =>
     }
 
     if (selection > 3) {
