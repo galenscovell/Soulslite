@@ -111,6 +111,7 @@ class EntityCreator(engine: Engine, world: World) {
     )
 
     // Unique for non-player
+    e.add(new PathComponent)
     e.add(new StateComponent(agent, steeringComponent))
     e.add(new WhereIsPlayerComponent(playerSteerable))
 

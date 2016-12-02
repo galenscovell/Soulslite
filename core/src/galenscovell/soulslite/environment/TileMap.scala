@@ -16,8 +16,8 @@ import galenscovell.soulslite.processing.pathfinding.AStarGraph
 import galenscovell.soulslite.util.Constants
 
 
-class TileMap(world: World) {
-  private val tileMap: TiledMap = new TmxMapLoader().load("maps/test.tmx")
+class TileMap(world: World, mapName: String) {
+  private val tileMap: TiledMap = new TmxMapLoader().load(s"maps/$mapName.tmx")
   private val tiledMapRenderer: OrthogonalTiledMapRenderer =
     new OrthogonalTiledMapRenderer(tileMap, Constants.TILE_SIZE / Constants.PIXEL_PER_METER)
 
@@ -87,6 +87,10 @@ class TileMap(world: World) {
     shape.dispose()
 
     body
+  }
+
+  def getAStarGraph: AStarGraph = {
+    aStarGraph
   }
 
   def getPropSteerables: Array[Steerable[Vector2]] = {

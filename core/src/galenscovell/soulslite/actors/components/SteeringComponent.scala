@@ -9,7 +9,7 @@ class SteeringComponent(body: Body,
                         boundingRadius: Float,
                         maxLinearSpeed: Float,
                         maxLinearAcceleration: Float) extends Component {
-  val steering: BaseSteerable = new BaseSteerable(
+  val steerable: BaseSteerable = new BaseSteerable(
     body, boundingRadius, maxLinearSpeed, maxLinearAcceleration, 0, 0
   )
 }

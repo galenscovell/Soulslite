@@ -7,31 +7,33 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import galenscovell.soulslite.actors.components._
 import galenscovell.soulslite.processing.BaseSteerable
+import galenscovell.soulslite.processing.pathfinding.{AStarGraph, Pathfinder}
 
 
-class SteeringSystem(family: Family) extends IteratingSystem(family) {
+class AISystem(family: Family, aStarGraph: AStarGraph) extends IteratingSystem(family) {
   private val bodyMapper: ComponentMapper[BodyComponent] =
     ComponentMapper.getFor(classOf[BodyComponent])
+  private val pathMapper: ComponentMapper[PathComponent] =
+    ComponentMapper.getFor(classOf[PathComponent])
   private val stateMapper: ComponentMapper[StateComponent] =
     ComponentMapper.getFor(classOf[StateComponent])
   private val steeringMapper: ComponentMapper[SteeringComponent] =
     ComponentMapper.getFor(classOf[SteeringComponent])
-  private val whereIsPlayerMapper: ComponentMapper[WhereIsPlayerComponent] =
-    ComponentMapper.getFor(classOf[WhereIsPlayerComponent])
 
   private val steerOutput: SteeringAcceleration[Vector2] =
     new SteeringAcceleration[Vector2](new Vector2())
+  private val pathfinder: Pathfinder = new Pathfinder(aStarGraph)
 
 
   override def processEntity(entity: Entity, deltaTime: Float): Unit = {
     val body: Body = bodyMapper.get(entity).body
+    val pathComponent: PathComponent = pathMapper.get(entity)
     val stateComponent: StateComponent = stateMapper.get(entity)
-    val steering: BaseSteerable = steeringMapper.get(entity).steering
-    val whereIsPlayerDistance: Float = whereIsPlayerMapper.get(entity).distanceFromPlayer
+    val steerable: BaseSteerable = steeringMapper.get(entity).steerable
 
-    if (steering.behavior != null) {
-      steering.behavior.calculateSteering(steerOutput)
-      applySteering(deltaTime, body, steering)
+    if (steerable.behavior != null) {
+      steerable.behavior.calculateSteering(steerOutput)
+      applySteering(deltaTime, body, steerable)
     }
   }
 

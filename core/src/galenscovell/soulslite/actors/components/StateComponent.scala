@@ -7,6 +7,7 @@ import galenscovell.soulslite.processing.fsm.State
 class StateComponent(startState: State[StateComponent], val steeringComponent: SteeringComponent) extends Component {
   private var previousState: State[StateComponent] = _
   private var currentState: State[StateComponent] = _
+  private var distanceFromPlayer: Float = 0f
   setState(startState)
 
 
@@ -36,15 +37,15 @@ class StateComponent(startState: State[StateComponent], val steeringComponent: S
     }
   }
 
-  def getCurrentState: State[StateComponent] = {
-    currentState
-  }
-
-  def getPreviousState: State[StateComponent] = {
-    previousState
-  }
-
   def isInState(state: State[StateComponent]): Boolean = {
     currentState == state
   }
+
+  def setDistanceFromPlayer(dst: Float): Unit = {
+    distanceFromPlayer = dst
+  }
+
+  def getCurrentState: State[StateComponent] = currentState
+  def getPreviousState: State[StateComponent] = previousState
+  def getDistanceFromPlayer: Float = distanceFromPlayer
 }

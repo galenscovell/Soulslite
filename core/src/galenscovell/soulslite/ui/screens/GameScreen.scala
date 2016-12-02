@@ -20,11 +20,14 @@ import galenscovell.soulslite.util.Constants
 
 class GameScreen(root: Main) extends AbstractScreen(root) {
   private val entityBatch: SpriteBatch = new SpriteBatch()
-  private val worldCamera: OrthographicCamera = new OrthographicCamera(Constants.SCREEN_X, Constants.SCREEN_Y)
+  private val worldCamera: OrthographicCamera =
+    new OrthographicCamera(Constants.SCREEN_X, Constants.SCREEN_Y)
+
   private val gameController: GameController = new GameController
   private val physics: Physics = new Physics
-  private val entityManager: EntityManager = new EntityManager(new Engine, entityBatch, gameController, physics.getWorld, this)
-  private val tileMap: TileMap = new TileMap(physics.getWorld)
+  private val tileMap: TileMap = new TileMap(physics.getWorld, "test")
+  private val entityManager: EntityManager =
+    new EntityManager(entityBatch, gameController, physics.getWorld, tileMap.getAStarGraph, this)
 
   // Box2d has a limit on velocity of 2.0 units per step
   // The max speed is 120m/s at 60fps
@@ -57,7 +60,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     // Establish player entity
     val player: Entity = entityCreator.makePlayer("player", Constants.MID_ENTITY_SIZE, 20, 20, 5, 20)
     playerBody = player.getComponent(classOf[BodyComponent]).body
-    val playerSteerable: BaseSteerable = player.getComponent(classOf[SteeringComponent]).steering
+    val playerSteerable: BaseSteerable = player.getComponent(classOf[SteeringComponent]).steerable
 
     // Start camera immediately centered on player
     worldCamera.position.set(playerBody.getPosition.x, playerBody.getPosition.y, 0)
@@ -66,7 +69,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     // Temp entities for testing purposes with same graphics as player
     for (x <- 0 until 1) {
       val dummy = entityCreator.fromJson("testEntity", 18 + x, 18 + x, playerSteerable)
-      val dummySteerable: BaseSteerable = dummy.getComponent(classOf[SteeringComponent]).steering
+      val dummySteerable: BaseSteerable = dummy.getComponent(classOf[SteeringComponent]).steerable
 
       dummySteerable.behavior = behaviorCreator.makeBlendedSteering(
         dummySteerable,
@@ -143,7 +146,8 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   }
 
   def inCamera(x: Float, y: Float): Boolean = {
-    // Determines if a point falls within the camera (+/- medium entity size to reduce chances of pop-in)
+    // Determines if a point falls within the camera
+    // (+/- medium entity size to reduce chance of pop-in)
     (x + Constants.MID_ENTITY_SIZE) >= minCamX &&
       (y + Constants.MID_ENTITY_SIZE) >= minCamY &&
       (x - Constants.MID_ENTITY_SIZE) <= maxCamX &&

@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2
 import galenscovell.soulslite.actors.components._
 
 
-class MovementSystem(family: Family) extends IteratingSystem(family) {
+class DirectionSystem(family: Family) extends IteratingSystem(family) {
   private val bodyMapper: ComponentMapper[BodyComponent] =
     ComponentMapper.getFor(classOf[BodyComponent])
   private val directionMapper: ComponentMapper[DirectionComponent] =
