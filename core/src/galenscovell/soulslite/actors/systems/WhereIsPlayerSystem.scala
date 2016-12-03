@@ -23,6 +23,7 @@ class WhereIsPlayerSystem(family: Family) extends IteratingSystem(family) {
     val currentPosition: Vector2 = bodyComponent.body.getPosition
     val currentPlayerPosition: Vector2 = whereIsPlayerComponent.getPlayerPosition
 
+    stateComponent.setPlayerPosition(currentPlayerPosition)
     stateComponent.setDistanceFromPlayer(currentPosition.dst2(currentPlayerPosition))
   }
 }

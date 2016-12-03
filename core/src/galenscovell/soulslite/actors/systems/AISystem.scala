@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import galenscovell.soulslite.actors.components._
 import galenscovell.soulslite.processing.BaseSteerable
-import galenscovell.soulslite.processing.pathfinding.{AStarGraph, Pathfinder}
+import galenscovell.soulslite.processing.pathfinding._
 
 
 class AISystem(family: Family, aStarGraph: AStarGraph) extends IteratingSystem(family) {
@@ -29,11 +29,35 @@ class AISystem(family: Family, aStarGraph: AStarGraph) extends IteratingSystem(f
     val body: Body = bodyMapper.get(entity).body
     val pathComponent: PathComponent = pathMapper.get(entity)
     val stateComponent: StateComponent = stateMapper.get(entity)
-    val steerable: BaseSteerable = steeringMapper.get(entity).steerable
+    val steeringComponent: SteeringComponent = steeringMapper.get(entity)
 
-    if (steerable.behavior != null) {
-      steerable.behavior.calculateSteering(steerOutput)
-      applySteering(deltaTime, body, steerable)
+    val entityPosition: Vector2 = body.getPosition
+
+    // Pathfinding
+    if (pathComponent.tick()) {
+      val playerPosition: Vector2 = stateComponent.getPlayerPosition
+      pathComponent.path.clear()
+
+      val foundPath: Array[Node] = pathfinder.findPath(entityPosition, playerPosition)
+      if (foundPath != null && foundPath.nonEmpty) {
+        for (node: Node <- foundPath) {
+          pathComponent.path.push(node)
+        }
+        steeringComponent.nodeArriveBehavior.setTarget(pathComponent.path.pop())
+      }
+    }
+
+    if (pathComponent.path.nonEmpty) {
+      val currentTargetPosition: Vector2 = steeringComponent.nodeArriveBehavior.getTarget.getPosition
+      if (pathComponent.nodeReached(currentTargetPosition, entityPosition)) {
+        steeringComponent.nodeArriveBehavior.setTarget(pathComponent.path.pop())
+      }
+    }
+
+    // AI is using steering behavior
+    if (steeringComponent.steerable.behavior != null && steeringComponent.nodeArriveBehavior.getTarget != null) {
+      steeringComponent.steerable.behavior.calculateSteering(steerOutput)
+      applySteering(deltaTime, body, steeringComponent.steerable)
     }
   }
 

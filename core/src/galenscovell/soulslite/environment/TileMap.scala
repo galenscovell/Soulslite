@@ -112,5 +112,4 @@ class TileMap(world: World, mapName: String) {
   def renderOverlapLayer(): Unit = {
     tiledMapRenderer.render(overlapLayers)
   }
-
 }

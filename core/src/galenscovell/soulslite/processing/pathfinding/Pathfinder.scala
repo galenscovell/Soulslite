@@ -1,77 +1,104 @@
 package galenscovell.soulslite.processing.pathfinding
 
-import com.badlogic.gdx.ai.pfa._
-import com.badlogic.gdx.ai.pfa.indexed.{IndexedAStarPathFinder, IndexedGraph}
-import com.badlogic.gdx.math.{MathUtils, Vector2}
-import com.badlogic.gdx.utils.Array
+import com.badlogic.gdx.math.Vector2
+
+import scala.collection.mutable.ArrayBuffer
 
 
 class Pathfinder(graph: AStarGraph) {
-  private val heuristic: Heuristic[Node] = (node: Node, endNode: Node) => {
-      val dx: Float = endNode.x - node.x
-      val dy: Float = endNode.y - node.y
-      // Math.abs(dx) + Math.abs(dy).toFloat          // Manhattan distance
-      Math.sqrt(dx * dx + dy * dy).toFloat            // Euclidean distance
-      // Math.max(Math.abs(dx), Math.abs(dy)).toFloat // Chebyshev distance
-    }
-  private val neighborhood: scala.Array[Vector2] = scala.Array(
-    new Vector2(-1, 0),
-    new Vector2(0, -1),
-    new Vector2(0, 1),
-    new Vector2(1 ,0)
-  )
-  private val pathfinder: IndexedAStarPathFinder[Node] = new IndexedAStarPathFinder[Node](createConnections())
+  private val openList: ArrayBuffer[Node] = new ArrayBuffer()
+  private val closedList: ArrayBuffer[Node] = new ArrayBuffer()
+  private val maxSearchDistance: Float = 45f
 
 
-  def findPath(source: Vector2, target: Vector2, connectionPath: GraphPath[Connection[Node]]): Unit = {
-    val sourceX: Int = MathUtils.floor(source.x)
-    val sourceY: Int = MathUtils.floor(source.y)
-    val targetX: Int = MathUtils.floor(target.x)
-    val targetY: Int = MathUtils.floor(target.y)
-
-    if (!(sourceX < 0 || sourceX >= graph.getWidth || sourceY < 0 || sourceY >= graph.getHeight
-       || targetX < 0 || targetX >= graph.getWidth || targetY < 0 || targetY >= graph.getHeight)) {
-      val sourceNode: Node = graph.getNodeAt(sourceX, sourceY)
-      val targetNode: Node = graph.getNodeAt(targetX, targetY)
-      connectionPath.clear()
-      pathfinder.searchConnectionPath(sourceNode, targetNode, heuristic, connectionPath)
+  def resetParents(): Unit = {
+    for (row: Array[Node] <- graph.getGraph) {
+      for (node: Node <- row) {
+        node.setParent(null)
+      }
     }
   }
 
+  def findPath(startNodeVector: Vector2, endNodeVector: Vector2): Array[Node] = {
+    resetParents()
+    val startNode: Node = graph.getNodeAt(startNodeVector.x, startNodeVector.y)
+    val endNode: Node = graph.getNodeAt(endNodeVector.x, endNodeVector.y)
+    findPath(startNode, endNode)
+  }
 
-  private def createConnections(): MyGraph = {
-    val height: Int = graph.getHeight
-    val width: Int = graph.getWidth
-    val myGraph: MyGraph = new MyGraph(graph)
+  def findPath(startNode: Node, endNode: Node): Array[Node] = {
+    openList.clear()
+    closedList.clear()
 
-    for (y <- height - 1 to 0 by -1) {
-      for (x <- 0 until width) {
-        val node: Node = graph.getNodeAt(x, y)
-        if (!node.isWall) {
-          // Add Connection for each valid neighbor
-          for (offset <- neighborhood.indices) {
-            val neighborX: Int = node.x + neighborhood(offset).x.toInt
-            val neighborY: Int = node.y + neighborhood(offset).y.toInt
+    startNode.setCostFromStart(0)
+    startNode.setTotalCost(startNode.getCostFromStart + heuristic(startNode, endNode))
+    val startNodePosition: Vector2 = startNode.position
+    openList.append(startNode)
 
-            if (neighborX >= 0 && neighborX < width && neighborY >= 0 && neighborY < height) {
-              val neighbor: Node = graph.getNodeAt(neighborX, neighborY)
-              if (!neighbor.isWall) {
-                node.getConnections.add(new DefaultConnection[Node](node, neighbor))
-              }
+    while (openList.nonEmpty) {
+      val current: Node = getBestNode(endNode)
+      val distanceFromStart: Float = current.getPosition.dst2(startNodePosition)
+
+      if (current == endNode || distanceFromStart > maxSearchDistance) {
+        return tracePath(current)
+      }
+
+      openList.remove(openList.indexOf(current))
+      closedList.append(current)
+
+      for (neighborNode: Node <- current.getConnections) {
+        if (!closedList.contains(neighborNode)) {
+          neighborNode.setTotalCost(current.getCostFromStart + heuristic(neighborNode, endNode))
+
+          if (!openList.contains(neighborNode)) {
+            neighborNode.setParent(current)
+            openList.append(neighborNode)
+          } else {
+            if (neighborNode.getCostFromStart < current.getCostFromStart) {
+              neighborNode.setCostFromStart(neighborNode.getCostFromStart)
+              neighborNode.setParent(neighborNode.getParent)
             }
           }
         }
-        node.getConnections.shuffle()
+      }
+    }
+    null
+  }
+
+  private def heuristic(node: Node, endNode: Node): Float = {
+    val dx: Float = endNode.x - node.x
+    val dy: Float = endNode.y - node.y
+    // Math.abs(dx) + Math.abs(dy).toFloat          // Manhattan distance
+    Math.sqrt(dx * dx + dy * dy).toFloat            // Euclidean distance
+    // Math.max(Math.abs(dx), Math.abs(dy)).toFloat // Chebyshev distance
+  }
+
+  private def getBestNode(endNode: Node): Node = {
+    var minCost: Double = Double.PositiveInfinity
+    var bestNode: Node = null
+
+    for (n: Node <- openList) {
+      val totalCost: Double = n.getCostFromStart + heuristic(n, endNode)
+      if (minCost > totalCost) {
+        minCost = totalCost
+        bestNode = n
       }
     }
 
-    myGraph
+    bestNode
   }
 
+  private def tracePath(n: Node): Array[Node] = {
+    val path: ArrayBuffer[Node] = ArrayBuffer[Node]()
+    var node: Node = n
 
-  private class MyGraph(grid: AStarGraph) extends IndexedGraph[Node] {
-    override def getIndex(node: Node) = node.getIndex
-    override def getConnections(fromNode: Node): Array[Connection[Node]] = fromNode.getConnections
-    override def getNodeCount: Int = grid.getWidth * grid.getHeight
+    while (node.getParent != null) {
+      path.append(node)
+      node = node.getParent
+    }
+
+    path.drop(1)      // Drop first node added (targetNode)
+    path.dropRight(1) // Drop final node added (startNode)
+    path.toArray
   }
 }

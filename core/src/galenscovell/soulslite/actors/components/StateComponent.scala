@@ -1,6 +1,7 @@
 package galenscovell.soulslite.actors.components
 
 import com.badlogic.ashley.core.Component
+import com.badlogic.gdx.math.Vector2
 import galenscovell.soulslite.processing.fsm.State
 
 
@@ -8,6 +9,8 @@ class StateComponent(startState: State[StateComponent], val steeringComponent: S
   private var previousState: State[StateComponent] = _
   private var currentState: State[StateComponent] = _
   private var distanceFromPlayer: Float = 0f
+  private var playerPosition: Vector2 = new Vector2(0, 0)
+
   setState(startState)
 
 
@@ -45,7 +48,13 @@ class StateComponent(startState: State[StateComponent], val steeringComponent: S
     distanceFromPlayer = dst
   }
 
+  def setPlayerPosition(pos: Vector2): Unit = {
+    playerPosition.x = pos.x
+    playerPosition.y = pos.y
+  }
+
   def getCurrentState: State[StateComponent] = currentState
   def getPreviousState: State[StateComponent] = previousState
   def getDistanceFromPlayer: Float = distanceFromPlayer
+  def getPlayerPosition: Vector2 = playerPosition
 }
