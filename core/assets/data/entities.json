@@ -3,7 +3,7 @@
         "size": "mid",
         "agent": "ranged",
         "maxLinearSpeed": 5,
-        "maxLinearAcceleration": 20,
+        "maxLinearAcceleration": 50,
         "attack": {
             "shape": [
                 [0.5, 0.65],

@@ -30,10 +30,23 @@ class AStarGraph(world: World, tileMap: TiledMap, var width: Int, var height: In
   createConnections()
 
 
+  /********************
+    *       Get       *
+    ********************/
+  def getWidth: Int = width
+  def getHeight: Int = height
+  def getNodeAt(x: Int, y: Int): Node = graph(y)(x)
+  def getNodeAt(x: Float, y: Float): Node = graph(Math.round(y))(Math.round(x))
+  def getGraph: Array[Array[Node]] = graph
+
+
+  /********************
+    *    Creation     *
+    ********************/
   private def constructGraph(): Unit = {
     for (y <- height - 1 to 0 by -1) {
       for (x <- 0 until width) {
-        graph(y)(x) = new Node(x, y, x * height + y)
+        graph(y)(x) = new Node(x, y)
         wall = false
         world.QueryAABB(
           queryCallback,
@@ -70,6 +83,10 @@ class AStarGraph(world: World, tileMap: TiledMap, var width: Int, var height: In
     }
   }
 
+
+  /********************
+    *      Debug      *
+    ********************/
   def debugPrint(): Unit = {
     println()
     for (y <- height - 1 to 0 by -1) {
@@ -80,10 +97,4 @@ class AStarGraph(world: World, tileMap: TiledMap, var width: Int, var height: In
     }
     println()
   }
-
-  def getWidth: Int = width
-  def getHeight: Int = height
-  def getNodeAt(x: Int, y: Int): Node = graph(y)(x)
-  def getNodeAt(x: Float, y: Float): Node = graph(Math.round(y))(Math.round(x))
-  def getGraph: Array[Array[Node]] = graph
 }

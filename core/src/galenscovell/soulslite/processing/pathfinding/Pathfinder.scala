@@ -15,6 +15,7 @@ class Pathfinder(graph: AStarGraph) {
     for (row: Array[Node] <- graph.getGraph) {
       for (node: Node <- row) {
         node.setParent(null)
+        node.removeMarked()
       }
     }
   }
@@ -90,15 +91,16 @@ class Pathfinder(graph: AStarGraph) {
 
   private def tracePath(n: Node): Array[Node] = {
     val path: ArrayBuffer[Node] = ArrayBuffer[Node]()
-    var node: Node = n
+
+    // Skip last node added (targetNode)
+    var node: Node = n.getParent
 
     while (node.getParent != null) {
       path.append(node)
+      node.makeMarked()
       node = node.getParent
     }
 
-    path.drop(1)      // Drop first node added (targetNode)
-    path.dropRight(1) // Drop final node added (startNode)
-    path.toArray
+    path.reverse.toArray
   }
 }

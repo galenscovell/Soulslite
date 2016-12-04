@@ -11,18 +11,31 @@ class Physics {
   debugWorldRenderer.setDrawVelocities(true)
 
 
-  def getWorld: World = {
-    world
-  }
+  /********************
+    *       Get       *
+    ********************/
+  def getWorld: World = world
 
+
+  /********************
+    *      Update     *
+    ********************/
   def update(timestep: Float): Unit = {
     world.step(timestep, 8, 3)
   }
 
+
+  /********************
+    *      Render     *
+    ********************/
   def debugRender(cameraMatrix: Matrix4): Unit = {
     debugWorldRenderer.render(world, cameraMatrix)
   }
 
+
+  /********************
+    *     Dispose     *
+    ********************/
   def dispose(): Unit = {
     debugWorldRenderer.dispose()
     world.dispose()

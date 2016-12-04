@@ -4,7 +4,7 @@ import com.badlogic.gdx.controllers._
 import com.badlogic.gdx.math.Vector2
 
 
-class GameController extends ControllerAdapter {
+class ControllerHandler extends ControllerAdapter {
   val leftAxis: Vector2 = new Vector2(0, 0)
   val rightAxis: Vector2 = new Vector2(0, 0)
   var dashPressed: Boolean = false

@@ -27,7 +27,7 @@ class BodyComponent(entity: Entity, world: World, posX: Float, posY: Float,
 
   private def createFixture: Fixture = {
 //    val shape: PolygonShape = new PolygonShape()
-//    shape.setAsBox(Constants.MID_ENTITY_SIZE / 3, Constants.MID_ENTITY_SIZE / 3)
+//    shape.setAsBox(size / 3, size / 3)
     val shape: CircleShape = new CircleShape()
     shape.setRadius(size / 3)
 
@@ -51,6 +51,6 @@ class BodyComponent(entity: Entity, world: World, posX: Float, posY: Float,
   }
 
   def inMotion: Boolean = {
-    !body.getLinearVelocity.isZero(0.001f)
+    !body.getLinearVelocity.isZero(0.005f)
   }
 }

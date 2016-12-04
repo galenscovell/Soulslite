@@ -30,6 +30,40 @@ class TileMap(world: World, mapName: String) {
   create()
 
 
+  /********************
+    *       Get       *
+    ********************/
+  def getAStarGraph: AStarGraph = aStarGraph
+  def getPropSteerables: Array[Steerable[Vector2]] = propSteerables
+
+
+  /********************
+    *      Update     *
+    ********************/
+  def updateShader(shaderProgram: ShaderProgram): Unit = {
+    tiledMapRenderer.getBatch.setShader(shaderProgram)
+  }
+
+  def updateCamera(camera: OrthographicCamera): Unit = {
+    tiledMapRenderer.setView(camera)
+  }
+
+
+  /********************
+    *      Render     *
+    ********************/
+  def renderBaseLayer(): Unit = {
+    tiledMapRenderer.render(baseLayers)
+  }
+
+  def renderOverlapLayer(): Unit = {
+    tiledMapRenderer.render(overlapLayers)
+  }
+
+
+  /********************
+    *    Creation     *
+    ********************/
   private def create(): Unit = {
     val prop: MapProperties = tileMap.getProperties
     val mapWidth: Int = prop.get("width", classOf[Integer])
@@ -87,29 +121,5 @@ class TileMap(world: World, mapName: String) {
     shape.dispose()
 
     body
-  }
-
-  def getAStarGraph: AStarGraph = {
-    aStarGraph
-  }
-
-  def getPropSteerables: Array[Steerable[Vector2]] = {
-    propSteerables
-  }
-
-  def updateShader(shaderProgram: ShaderProgram): Unit = {
-    tiledMapRenderer.getBatch.setShader(shaderProgram)
-  }
-
-  def updateCamera(camera: OrthographicCamera): Unit = {
-    tiledMapRenderer.setView(camera)
-  }
-
-  def renderBaseLayer(): Unit = {
-    tiledMapRenderer.render(baseLayers)
-  }
-
-  def renderOverlapLayer(): Unit = {
-    tiledMapRenderer.render(overlapLayers)
   }
 }

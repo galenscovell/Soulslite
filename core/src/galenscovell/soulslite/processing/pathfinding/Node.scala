@@ -2,12 +2,12 @@ package galenscovell.soulslite.processing.pathfinding
 
 import com.badlogic.gdx.ai.utils.Location
 import com.badlogic.gdx.math.Vector2
-import galenscovell.soulslite.util.{Box2DLocation, Box2DSteeringUtils}
+import galenscovell.soulslite.util._
 
 import scala.collection.mutable.ArrayBuffer
 
 
-class Node(val x: Int, val y: Int, index: Int) extends Location[Vector2] {
+class Node(val x: Int, val y: Int) extends Location[Vector2] {
   private var parent: Node = _
   private var costFromStart, totalCost: Double = _
   private val connections: ArrayBuffer[Node] = new ArrayBuffer[Node]()
@@ -18,17 +18,17 @@ class Node(val x: Int, val y: Int, index: Int) extends Location[Vector2] {
 
 
   /********************
-    *     Getters     *
+    *       Get       *
     ********************/
   def getCostFromStart: Double = costFromStart
   def getTotalCost: Double = totalCost
   def getParent: Node = parent
-  def getIndex: Int = index
   def getConnections: ArrayBuffer[Node] = connections
+  override def toString: String = s"Node ($x, $y)"
 
 
   /********************
-    *     Setters     *
+    *       Set       *
     ********************/
   def setCostFromStart(cost: Double): Unit = {
     costFromStart = cost
@@ -42,31 +42,29 @@ class Node(val x: Int, val y: Int, index: Int) extends Location[Vector2] {
     parent = node
   }
 
-
   def makeWall(): Unit = {
     isWall = true
   }
 
   def makeFloor(): Unit = {
     isWall = false
-    isMarked = false
   }
 
   def makeMarked(): Unit = {
     isMarked = true
   }
 
+  def removeMarked(): Unit = {
+    isMarked = false
+  }
+
   def debugPrint: String = {
     if (isWall) {
       "W"
-    } else if (isMarked) {
-      "+"
     } else {
       "."
     }
   }
-
-  override def toString: String = s"Node $index: ($x, $y)"
 
 
   /********************

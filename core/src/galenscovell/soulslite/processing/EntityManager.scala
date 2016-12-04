@@ -11,7 +11,7 @@ import galenscovell.soulslite.ui.screens.GameScreen
 
 
 class EntityManager(spriteBatch: SpriteBatch,
-                    controllerHandler: GameController,
+                    controllerHandler: ControllerHandler,
                     world: World,
                     aStarGraph: AStarGraph,
                     gameScreen: GameScreen) {
@@ -20,6 +20,24 @@ class EntityManager(spriteBatch: SpriteBatch,
   setupSystems()
 
 
+  /********************
+    *       Get       *
+    ********************/
+  def getEngine: Engine = engine
+
+
+  /********************
+    *      Update     *
+    ********************/
+  def update(delta: Float): Unit = {
+    GdxAI.getTimepiece.update(delta)
+    engine.update(delta)
+  }
+
+
+  /********************
+    *    Creation     *
+    ********************/
   private def setupSystems(): Unit = {
     // Lets every other entity know where the player is currently positioned
     val whereIsPlayerSystem: WhereIsPlayerSystem = new WhereIsPlayerSystem(
@@ -94,11 +112,4 @@ class EntityManager(spriteBatch: SpriteBatch,
     engine.addSystem(collisionSystem)
     engine.addSystem(renderSystem)
   }
-
-  def update(delta: Float): Unit = {
-    GdxAI.getTimepiece.update(delta)
-    engine.update(delta)
-  }
-
-  def getEngine: Engine = engine
 }

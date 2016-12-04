@@ -31,34 +31,36 @@ class AISystem(family: Family, aStarGraph: AStarGraph) extends IteratingSystem(f
     val stateComponent: StateComponent = stateMapper.get(entity)
     val steeringComponent: SteeringComponent = steeringMapper.get(entity)
 
+    pathfind(body, pathComponent, stateComponent, steeringComponent)
+
+    if (steeringComponent.hasBehavior) {
+      steeringComponent.getBehavior.calculateSteering(steerOutput)
+      applySteering(deltaTime, body, steeringComponent.getSteerable)
+    } else {
+      body.setLinearVelocity(0, 0)
+    }
+  }
+
+  def pathfind(body: Body, pathComponent: PathComponent, stateComponent: StateComponent,
+               steeringComponent: SteeringComponent): Unit = {
     val entityPosition: Vector2 = body.getPosition
 
-    // Pathfinding
+    // Pathfinding happens at set intervals (depending on entity type?)
     if (pathComponent.tick()) {
+      // Locate player and clear old path
       val playerPosition: Vector2 = stateComponent.getPlayerPosition
-      pathComponent.path.clear()
 
+      // Find path to player
       val foundPath: Array[Node] = pathfinder.findPath(entityPosition, playerPosition)
-      if (foundPath != null && foundPath.nonEmpty) {
-        for (node: Node <- foundPath) {
-          pathComponent.path.push(node)
-        }
-        steeringComponent.nodeArriveBehavior.setTarget(pathComponent.path.pop())
+
+      // Add path nodes to path and set first node as next target location
+      if (foundPath != null && foundPath.length > 1) {
+        pathComponent.setLinePath(foundPath)
+        steeringComponent.setNewFollowPath(pathComponent.getLinePath)
       }
     }
 
-    if (pathComponent.path.nonEmpty) {
-      val currentTargetPosition: Vector2 = steeringComponent.nodeArriveBehavior.getTarget.getPosition
-      if (pathComponent.nodeReached(currentTargetPosition, entityPosition)) {
-        steeringComponent.nodeArriveBehavior.setTarget(pathComponent.path.pop())
-      }
-    }
 
-    // AI is using steering behavior
-    if (steeringComponent.steerable.behavior != null && steeringComponent.nodeArriveBehavior.getTarget != null) {
-      steeringComponent.steerable.behavior.calculateSteering(steerOutput)
-      applySteering(deltaTime, body, steeringComponent.steerable)
-    }
   }
 
   def applySteering(delta: Float, body: Body, steering: BaseSteerable): Unit = {

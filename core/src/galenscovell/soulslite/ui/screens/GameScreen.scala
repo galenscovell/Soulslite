@@ -1,6 +1,6 @@
 package galenscovell.soulslite.ui.screens
 
-import com.badlogic.ashley.core.{Engine, Entity}
+import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx._
 import com.badlogic.gdx.ai.steer.SteeringBehavior
 import com.badlogic.gdx.controllers.Controllers
@@ -14,7 +14,8 @@ import galenscovell.soulslite.Main
 import galenscovell.soulslite.actors.components._
 import galenscovell.soulslite.environment.{Physics, TileMap}
 import galenscovell.soulslite.processing._
-import galenscovell.soulslite.processing.generation.{EntityCreator, BehaviorCreator}
+import galenscovell.soulslite.processing.generation.{BehaviorCreator, EntityCreator}
+import galenscovell.soulslite.processing.pathfinding.PathfindDebugRenderer
 import galenscovell.soulslite.util.Constants
 
 
@@ -23,11 +24,12 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   private val worldCamera: OrthographicCamera =
     new OrthographicCamera(Constants.SCREEN_X, Constants.SCREEN_Y)
 
-  private val gameController: GameController = new GameController
+  private val controllerHandler: ControllerHandler = new ControllerHandler
   private val physics: Physics = new Physics
   private val tileMap: TileMap = new TileMap(physics.getWorld, "test")
   private val entityManager: EntityManager =
-    new EntityManager(entityBatch, gameController, physics.getWorld, tileMap.getAStarGraph, this)
+    new EntityManager(entityBatch, controllerHandler, physics.getWorld, tileMap.getAStarGraph, this)
+  private val pathfindDebugRenderer: PathfindDebugRenderer = new PathfindDebugRenderer(tileMap.getAStarGraph)
 
   // Box2d has a limit on velocity of 2.0 units per step
   // The max speed is 120m/s at 60fps
@@ -60,7 +62,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     // Establish player entity
     val player: Entity = entityCreator.makePlayer("player", Constants.MID_ENTITY_SIZE, 20, 20, 5, 20)
     playerBody = player.getComponent(classOf[BodyComponent]).body
-    val playerSteerable: BaseSteerable = player.getComponent(classOf[SteeringComponent]).steerable
+    val playerSteerable: BaseSteerable = player.getComponent(classOf[SteeringComponent]).getSteerable
 
     // Start camera immediately centered on player
     worldCamera.position.set(playerBody.getPosition.x, playerBody.getPosition.y, 0)
@@ -69,26 +71,28 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     // Temp entities for testing purposes with same graphics as player
     for (x <- 0 until 1) {
       val dummy = entityCreator.fromJson("testEntity", 18 + x, 18 + x, playerSteerable)
-      val dummySteerable: BaseSteerable = dummy.getComponent(classOf[SteeringComponent]).steerable
+      val dummySteerable: BaseSteerable = dummy.getComponent(classOf[SteeringComponent]).getSteerable
 
-      dummySteerable.behavior = behaviorCreator.makeBlendedSteering(
-        dummySteerable,
-        List[SteeringBehavior[Vector2]](
-          behaviorCreator.makeRaycastAvoidBehavior(dummySteerable),
-          behaviorCreator.makeCollisionAvoidBehavior(dummySteerable, tileMap.getPropSteerables),
-          behaviorCreator.makePursueBehavior(dummySteerable, playerSteerable)
-          //behaviorCreator.makeHideBehavior(dummySteerable, playerSteerable, tileMap.getPropSteerables)
-          //behaviorCreator.makeArriveBehavior(dummySteerable, playerSteerable)
-        ),
-        List[Float](1f, 1f, 0.75f)
-      )
+//      dummySteerable.behavior = behaviorCreator.makeBlendedSteering(
+//        dummySteerable,
+//        List[SteeringBehavior[Vector2]](
+//          behaviorCreator.makeRaycastAvoidBehavior(dummySteerable),
+//          behaviorCreator.makeCollisionAvoidBehavior(dummySteerable, tileMap.getPropSteerables),
+//          behaviorCreator.makeWanderBehavior(dummySteerable)
+//          // behaviorCreator.makePursueBehavior(dummySteerable, playerSteerable)
+//          //behaviorCreator.makeHideBehavior(dummySteerable, playerSteerable, tileMap.getPropSteerables)
+//          //behaviorCreator.makeArriveBehavior(dummySteerable, playerSteerable)
+//        ),
+//        List[Float](1f, 1f, 0.5f)
+//      )
 
 //      dummySteerable.behavior = behaviorCreator.makePrioritySteering(
 //        dummySteerable,
 //        List[SteeringBehavior[Vector2]](
 //          behaviorCreator.makeRaycastAvoidBehavior(dummySteerable),
 //          behaviorCreator.makeCollisionAvoidBehavior(dummySteerable, tileMap.getPropSteerables),
-//          behaviorCreator.makePursueBehavior(dummySteerable, playerSteerable)
+//          behaviorCreator.makeWanderBehavior(dummySteerable)
+//          // behaviorCreator.makePursueBehavior(dummySteerable, playerSteerable)
 //          //behaviorCreator.makeHideBehavior(dummySteerable, playerSteerable, tileMap.getPropSteerables)
 //          //behaviorCreator.makeArriveBehavior(dummySteerable, playerSteerable)
 //        )
@@ -190,6 +194,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     tileMap.renderBaseLayer()
     entityBatch.begin()
     entityManager.update(delta)
+    pathfindDebugRenderer.render(entityBatch)
     entityBatch.end()
     tileMap.renderOverlapLayer()
 
@@ -210,7 +215,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   override def show(): Unit = {
     Gdx.input.setInputProcessor(stage)
     Controllers.clearListeners()
-    Controllers.addListener(gameController)
+    Controllers.addListener(controllerHandler)
   }
 
   override def resize(width: Int, height: Int): Unit = {
