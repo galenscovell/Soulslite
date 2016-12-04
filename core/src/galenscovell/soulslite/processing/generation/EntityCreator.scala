@@ -39,18 +39,17 @@ class EntityCreator(engine: Engine, world: World) {
 
     e.add(new AnimationComponent(etype))
     e.add(bodyComponent)
-    e.add(new DirectionComponent)
     e.add(new RenderableComponent)
     e.add(new SizeComponent(size))
-    e.add(new SpriteComponent(etype))
     e.add(steeringComponent)
     e.add(new WeaponComponent(
       world, bodyComponent.body, attackShape, 90, 0, 5)
     )
 
     // Unique for player
+    e.add(new AgentStateComponent(PlayerAgent.DEFAULT, steeringComponent))
+    e.add(new MovementStateComponent(true))
     e.add(new PlayerComponent)
-    e.add(new StateComponent(PlayerAgent.DEFAULT, steeringComponent))
 
     engine.addEntity(e)
     e
@@ -101,18 +100,17 @@ class EntityCreator(engine: Engine, world: World) {
 
     e.add(new AnimationComponent(entityType))
     e.add(bodyComponent)
-    e.add(new DirectionComponent)
     e.add(new RenderableComponent)
     e.add(new SizeComponent(size))
-    e.add(new SpriteComponent(entityType))
     e.add(steeringComponent)
     e.add(new WeaponComponent(
       world, bodyComponent.body, attackShape.toArray, startAngle, 0, attackSpeed)
     )
 
     // Unique for non-player
+    e.add(new AgentStateComponent(agent, steeringComponent))
     e.add(new PathComponent)
-    e.add(new StateComponent(agent, steeringComponent))
+    e.add(new MovementStateComponent(false))
     e.add(new WhereIsPlayerComponent(playerSteerable))
 
     engine.addEntity(e)

@@ -10,30 +10,30 @@ import galenscovell.soulslite.util.Constants
 
 
 class PlayerSystem(family: Family, controllerHandler: ControllerHandler) extends IteratingSystem(family) {
+  private val agentStateMapper: ComponentMapper[AgentStateComponent] =
+    ComponentMapper.getFor(classOf[AgentStateComponent])
   private val bodyMapper: ComponentMapper[BodyComponent] =
     ComponentMapper.getFor(classOf[BodyComponent])
-  private val directionMapper: ComponentMapper[DirectionComponent] =
-    ComponentMapper.getFor(classOf[DirectionComponent])
-  private val stateMapper: ComponentMapper[StateComponent] =
-    ComponentMapper.getFor(classOf[StateComponent])
+  private val movementStateMapper: ComponentMapper[MovementStateComponent] =
+    ComponentMapper.getFor(classOf[MovementStateComponent])
   private val weaponMapper: ComponentMapper[WeaponComponent] =
     ComponentMapper.getFor(classOf[WeaponComponent])
 
 
   override def processEntity(entity: Entity, deltaTime: Float): Unit = {
+    val agentStateComponent: AgentStateComponent = agentStateMapper.get(entity)
     val bodyComponent: BodyComponent = bodyMapper.get(entity)
-    val directionComponent: DirectionComponent = directionMapper.get(entity)
-    val stateComponent: StateComponent = stateMapper.get(entity)
+    val movementStateComponent: MovementStateComponent = movementStateMapper.get(entity)
     val weaponComponent: WeaponComponent = weaponMapper.get(entity)
 
     val startVelocity: Vector2 = bodyComponent.body.getLinearVelocity
-    val stateFrameRatio: Float = stateComponent.getCurrentState.getFrameRatio
+    val stateFrameRatio: Float = agentStateComponent.getCurrentState.getFrameRatio
 
 
     /********************
       *     Normal      *
       ********************/
-    if (stateComponent.isInState(PlayerAgent.DEFAULT)) {
+    if (agentStateComponent.isInState(PlayerAgent.DEFAULT)) {
       // Regular movement if not attacking or dashing
       bodyComponent.body.setLinearVelocity(
         controllerHandler.leftAxis.x * 5,
@@ -42,28 +42,28 @@ class PlayerSystem(family: Family, controllerHandler: ControllerHandler) extends
 
       // Dash input handling
       if (controllerHandler.dashPressed) {
-        stateComponent.setState(PlayerAgent.DASH)
+        agentStateComponent.setState(PlayerAgent.DASH)
       }
 
       // Attack input handling
       if (controllerHandler.attackPressed) {
-        stateComponent.setState(PlayerAgent.ATTACK)
-        weaponComponent.startAttack(directionComponent.direction)
+        agentStateComponent.setState(PlayerAgent.ATTACK)
+        weaponComponent.startAttack(movementStateComponent.getCurrentState)
       }
 
     /********************
       *      Dash       *
       ********************/
-    } else if (stateComponent.isInState(PlayerAgent.DASH)) {
+    } else if (agentStateComponent.isInState(PlayerAgent.DASH)) {
       controllerHandler.dashPressed = false
 
       // If player is stationary, start dash in facing direction
       if (!bodyComponent.inMotion) {
-        directionComponent.direction match {
-          case 0 => startVelocity.x += 0.5f
-          case 1 => startVelocity.y += 0.5f
-          case 2 => startVelocity.x -= 0.5f
-          case 3 => startVelocity.y -= 0.5f
+        movementStateComponent.getCurrentState match {
+          case "right" => startVelocity.x += 0.5f
+          case "up" => startVelocity.y += 0.5f
+          case "left" => startVelocity.x -= 0.5f
+          case "down" => startVelocity.y -= 0.5f
         }
       }
 
@@ -80,13 +80,13 @@ class PlayerSystem(family: Family, controllerHandler: ControllerHandler) extends
 
       // Allow player slight control during dash
       bodyComponent.body.applyForceToCenter(
-        controllerHandler.leftAxis.x * 500, controllerHandler.leftAxis.y * 500, true
+        controllerHandler.leftAxis.x * 300, controllerHandler.leftAxis.y * 300, true
       )
 
     /********************
       *     Attack      *
       ********************/
-    } else if (stateComponent.isInState(PlayerAgent.ATTACK)) {
+    } else if (agentStateComponent.isInState(PlayerAgent.ATTACK)) {
       controllerHandler.attackPressed = false
       bodyComponent.body.setLinearVelocity(0, 0)
 

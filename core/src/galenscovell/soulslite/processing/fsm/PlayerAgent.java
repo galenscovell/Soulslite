@@ -1,29 +1,34 @@
 package galenscovell.soulslite.processing.fsm;
 
 
-import galenscovell.soulslite.actors.components.StateComponent;
+import galenscovell.soulslite.actors.components.AgentStateComponent;
 
-public enum PlayerAgent implements State<StateComponent> {
+public enum PlayerAgent implements State<AgentStateComponent> {
 
     DEFAULT() {
         @Override
-        public void enter(StateComponent stateComponent) {
+        public void enter(AgentStateComponent agentStateComponent) {
             System.out.println("Player NORMAL");
         }
 
         @Override
-        public void exit(StateComponent stateComponent) {
+        public void exit(AgentStateComponent agentStateComponent) {
             System.out.println("Player NORMAL");
         }
 
         @Override
-        public void update(StateComponent stateComponent) {
+        public void update(AgentStateComponent agentStateComponent) {
 
         }
 
         @Override
         public float getFrameRatio() {
             return 0;
+        }
+
+        @Override
+        public String getName() {
+            return "default";
         }
     },
 
@@ -32,23 +37,23 @@ public enum PlayerAgent implements State<StateComponent> {
         Float currentFrame;
 
         @Override
-        public void enter(StateComponent stateComponent) {
+        public void enter(AgentStateComponent agentStateComponent) {
             System.out.println("Player DASH");
             frames = 14f;
             currentFrame = frames;
         }
 
         @Override
-        public void exit(StateComponent stateComponent) {
+        public void exit(AgentStateComponent agentStateComponent) {
             System.out.println("Player DASH");
         }
 
         @Override
-        public void update(StateComponent stateComponent) {
+        public void update(AgentStateComponent agentStateComponent) {
             currentFrame--;
             if (currentFrame <= 0) {
-                if (stateComponent.revertToPreviousState()) {
-                    System.out.println("Player reverted to " + stateComponent.getCurrentState().toString());
+                if (agentStateComponent.revertToPreviousState()) {
+                    System.out.println("Player reverted to " + agentStateComponent.getCurrentState().toString());
                 }
             }
         }
@@ -56,6 +61,11 @@ public enum PlayerAgent implements State<StateComponent> {
         @Override
         public float getFrameRatio() {
             return currentFrame / frames;
+        }
+
+        @Override
+        public String getName() {
+            return "dash";
         }
     },
 
@@ -64,23 +74,23 @@ public enum PlayerAgent implements State<StateComponent> {
         Float currentFrame;
 
         @Override
-        public void enter(StateComponent stateComponent) {
+        public void enter(AgentStateComponent agentStateComponent) {
             System.out.println("Player ATTACK");
             frames = 16f;
             currentFrame = frames;
         }
 
         @Override
-        public void exit(StateComponent stateComponent) {
+        public void exit(AgentStateComponent agentStateComponent) {
             System.out.println("Player ATTACK");
         }
 
         @Override
-        public void update(StateComponent stateComponent) {
+        public void update(AgentStateComponent agentStateComponent) {
             currentFrame--;
             if (currentFrame <= 0) {
-                if (stateComponent.revertToPreviousState()) {
-                    System.out.println("Player reverted to " + stateComponent.getCurrentState().toString());
+                if (agentStateComponent.revertToPreviousState()) {
+                    System.out.println("Player reverted to " + agentStateComponent.getCurrentState().toString());
                 }
             }
         }
@@ -88,6 +98,11 @@ public enum PlayerAgent implements State<StateComponent> {
         @Override
         public float getFrameRatio() {
             return currentFrame / frames;
+        }
+
+        @Override
+        public String getName() {
+            return "attack";
         }
     }
 }

@@ -35,7 +35,7 @@ class WeaponComponent(world: World, body: Body, attackShape: Array[Vector2],
     fixture
   }
 
-  def startAttack(direction: Int): Unit = {
+  def startAttack(movementStateName: String): Unit = {
     val filter: Filter = weaponFixture.getFilterData
     filter.categoryBits = Constants.ATTACK_CATEGORY
     filter.maskBits = Constants.ATTACK_ON_MASK
@@ -43,6 +43,12 @@ class WeaponComponent(world: World, body: Body, attackShape: Array[Vector2],
 
     // Direction is ordinal - will need to be played with to change where
     //  attack angle starts and ends
+    val direction: Int = movementStateName match {
+      case "right" => 0
+      case "up" => 1
+      case "left" => 2
+      case "down" => 3
+    }
     // This start angle will be 45deg in relation to ordinal direction
     val angle: Float = Math.toRadians(direction * startAngle).toFloat
     body.setTransform(body.getPosition, angle)

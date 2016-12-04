@@ -2,7 +2,6 @@ package galenscovell.soulslite.ui.screens
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx._
-import com.badlogic.gdx.ai.steer.SteeringBehavior
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics._
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -69,9 +68,9 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 
 
     // Temp entities for testing purposes with same graphics as player
-    for (x <- 0 until 1) {
-      val dummy = entityCreator.fromJson("testEntity", 18 + x, 18 + x, playerSteerable)
-      val dummySteerable: BaseSteerable = dummy.getComponent(classOf[SteeringComponent]).getSteerable
+//    for (x <- 0 until 1) {
+//      val dummy = entityCreator.fromJson("testEntity", 18 + x, 18 + x, playerSteerable)
+//      val dummySteerable: BaseSteerable = dummy.getComponent(classOf[SteeringComponent]).getSteerable
 
 //      dummySteerable.behavior = behaviorCreator.makeBlendedSteering(
 //        dummySteerable,
@@ -97,7 +96,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
 //          //behaviorCreator.makeArriveBehavior(dummySteerable, playerSteerable)
 //        )
 //      )
-    }
+//    }
 
     setupEnvironmentShader()
   }

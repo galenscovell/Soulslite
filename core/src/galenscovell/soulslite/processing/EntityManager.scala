@@ -10,11 +10,8 @@ import galenscovell.soulslite.processing.pathfinding.AStarGraph
 import galenscovell.soulslite.ui.screens.GameScreen
 
 
-class EntityManager(spriteBatch: SpriteBatch,
-                    controllerHandler: ControllerHandler,
-                    world: World,
-                    aStarGraph: AStarGraph,
-                    gameScreen: GameScreen) {
+class EntityManager(spriteBatch: SpriteBatch, controllerHandler: ControllerHandler,
+                    world: World, aStarGraph: AStarGraph, gameScreen: GameScreen) {
   private val engine: Engine = new Engine
 
   setupSystems()
@@ -42,8 +39,8 @@ class EntityManager(spriteBatch: SpriteBatch,
     // Lets every other entity know where the player is currently positioned
     val whereIsPlayerSystem: WhereIsPlayerSystem = new WhereIsPlayerSystem(
       Family.all(
+        classOf[AgentStateComponent],
         classOf[BodyComponent],
-        classOf[StateComponent],
         classOf[WhereIsPlayerComponent]
       ).get()
     )
@@ -51,16 +48,19 @@ class EntityManager(spriteBatch: SpriteBatch,
     // Handles states of entities
     val stateSystem: StateSystem = new StateSystem(
       Family.all(
-        classOf[StateComponent]
+        classOf[AgentStateComponent],
+        classOf[BodyComponent],
+        classOf[MovementStateComponent]
       ).get()
     )
 
     // Handles player controls
     val playerSystem: PlayerSystem = new PlayerSystem(
       Family.all(
+        classOf[AgentStateComponent],
         classOf[BodyComponent],
+        classOf[MovementStateComponent],
         classOf[PlayerComponent],
-        classOf[StateComponent],
         classOf[WeaponComponent]
       ).get(), controllerHandler
     )
@@ -68,19 +68,11 @@ class EntityManager(spriteBatch: SpriteBatch,
     // Handles AI controls
     val aiSystem: AISystem = new AISystem(
       Family.all(
+        classOf[AgentStateComponent],
         classOf[BodyComponent],
         classOf[PathComponent],
-        classOf[StateComponent],
         classOf[SteeringComponent]
       ).get(), aStarGraph
-    )
-
-    // Determines entity direction based on body velocity
-    val directionSystem: DirectionSystem = new DirectionSystem(
-      Family.all(
-        classOf[BodyComponent],
-        classOf[DirectionComponent]
-      ).get()
     )
 
     // Handles specialized collisions
@@ -94,13 +86,12 @@ class EntityManager(spriteBatch: SpriteBatch,
     // Handles entity graphics
     val renderSystem: RenderSystem = new RenderSystem(
       Family.all(
+        classOf[AgentStateComponent],
         classOf[AnimationComponent],
         classOf[BodyComponent],
-        classOf[DirectionComponent],
+        classOf[MovementStateComponent],
         classOf[RenderableComponent],
-        classOf[SizeComponent],
-        classOf[SpriteComponent],
-        classOf[StateComponent]
+        classOf[SizeComponent]
       ).get(), spriteBatch, gameScreen
     )
 
@@ -108,7 +99,6 @@ class EntityManager(spriteBatch: SpriteBatch,
     engine.addSystem(stateSystem)
     engine.addSystem(playerSystem)
     engine.addSystem(aiSystem)
-    engine.addSystem(directionSystem)
     engine.addSystem(collisionSystem)
     engine.addSystem(renderSystem)
   }

@@ -5,11 +5,11 @@ import com.badlogic.gdx.math.Vector2
 import galenscovell.soulslite.processing.fsm.State
 
 
-class StateComponent(startState: State[StateComponent], val steeringComponent: SteeringComponent) extends Component {
-  private var previousState: State[StateComponent] = _
-  private var currentState: State[StateComponent] = _
+class AgentStateComponent(startState: State[AgentStateComponent], val steeringComponent: SteeringComponent) extends Component {
+  private var previousState: State[AgentStateComponent] = _
+  private var currentState: State[AgentStateComponent] = _
   private var distanceFromPlayer: Float = 0f
-  private var playerPosition: Vector2 = new Vector2(0, 0)
+  private val playerPosition: Vector2 = new Vector2(0, 0)
 
   setState(startState)
 
@@ -18,7 +18,7 @@ class StateComponent(startState: State[StateComponent], val steeringComponent: S
     currentState.update(this)
   }
 
-  def setState(newState: State[StateComponent]): Unit = {
+  def setState(newState: State[AgentStateComponent]): Unit = {
     if (currentState != null) {
       previousState = currentState
       currentState.exit(this)
@@ -40,7 +40,7 @@ class StateComponent(startState: State[StateComponent], val steeringComponent: S
     }
   }
 
-  def isInState(state: State[StateComponent]): Boolean = {
+  def isInState(state: State[AgentStateComponent]): Boolean = {
     currentState == state
   }
 
@@ -53,8 +53,8 @@ class StateComponent(startState: State[StateComponent], val steeringComponent: S
     playerPosition.y = pos.y
   }
 
-  def getCurrentState: State[StateComponent] = currentState
-  def getPreviousState: State[StateComponent] = previousState
+  def getCurrentState: State[AgentStateComponent] = currentState
+  def getPreviousState: State[AgentStateComponent] = previousState
   def getDistanceFromPlayer: Float = distanceFromPlayer
   def getPlayerPosition: Vector2 = playerPosition
 }

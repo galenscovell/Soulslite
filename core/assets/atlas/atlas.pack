@@ -194,742 +194,411 @@ atlas2.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-entity/player-down-idle
+entity/charge/left-idle
+  rotate: false
+  xy: 8, 2
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+entity/charge/right-idle
+  rotate: false
+  xy: 56, 2
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+
+atlas3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+entity/player/default-down0
   rotate: false
   xy: 8, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/player-down2
-  rotate: false
-  xy: 8, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/testEntity-down-idle
-  rotate: false
-  xy: 8, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/testEntity-down2
-  rotate: false
-  xy: 8, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-down0
+entity/player/default-down1
   rotate: false
   xy: 48, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-down0
-  rotate: false
-  xy: 48, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-down1
+entity/player/default-down10
   rotate: false
   xy: 88, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-down1
-  rotate: false
-  xy: 88, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-down10
+entity/player/default-down11
   rotate: false
   xy: 128, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-down10
-  rotate: false
-  xy: 128, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-down11
+entity/player/default-down2
   rotate: false
   xy: 168, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-down11
+entity/player/idle-down0
   rotate: false
   xy: 168, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/player-down3
+entity/player/default-down3
   rotate: false
   xy: 208, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-down3
-  rotate: false
-  xy: 208, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-down4
+entity/player/default-down4
   rotate: false
   xy: 248, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-down4
-  rotate: false
-  xy: 248, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-down5
+entity/player/default-down5
   rotate: false
   xy: 288, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-down5
-  rotate: false
-  xy: 288, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-down6
+entity/player/default-down6
   rotate: false
   xy: 328, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-down6
-  rotate: false
-  xy: 328, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-down7
+entity/player/default-down7
   rotate: false
   xy: 368, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-down7
-  rotate: false
-  xy: 368, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-down8
+entity/player/default-down8
   rotate: false
   xy: 408, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-down8
-  rotate: false
-  xy: 408, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-down9
+entity/player/default-down9
   rotate: false
   xy: 448, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-down9
-  rotate: false
-  xy: 448, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-left-idle
+entity/player/default-left0
   rotate: false
   xy: 488, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/player-left2
-  rotate: false
-  xy: 488, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/testEntity-left-idle
-  rotate: false
-  xy: 488, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/testEntity-left2
-  rotate: false
-  xy: 488, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-left0
+entity/player/default-left1
   rotate: false
   xy: 528, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-left0
-  rotate: false
-  xy: 528, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-left1
+entity/player/default-left10
   rotate: false
   xy: 568, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-left1
-  rotate: false
-  xy: 568, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-left10
+entity/player/default-left11
   rotate: false
   xy: 608, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-left10
-  rotate: false
-  xy: 608, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-left11
+entity/player/default-left2
   rotate: false
   xy: 648, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-left11
-  rotate: false
-  xy: 648, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-left3
+entity/player/default-left3
   rotate: false
   xy: 688, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-left3
-  rotate: false
-  xy: 688, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-left4
+entity/player/default-left4
   rotate: false
   xy: 728, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-left4
-  rotate: false
-  xy: 728, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-left5
+entity/player/default-left5
   rotate: false
   xy: 768, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-left5
-  rotate: false
-  xy: 768, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-left6
+entity/player/default-left6
   rotate: false
   xy: 808, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-left6
-  rotate: false
-  xy: 808, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-left7
+entity/player/default-left7
   rotate: false
   xy: 848, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-left7
-  rotate: false
-  xy: 848, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-left8
+entity/player/default-left8
   rotate: false
   xy: 888, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-left8
-  rotate: false
-  xy: 888, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-left9
+entity/player/default-left9
   rotate: false
   xy: 928, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-left9
-  rotate: false
-  xy: 928, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-right-idle
+entity/player/default-right0
   rotate: false
   xy: 968, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/player-right2
-  rotate: false
-  xy: 968, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/testEntity-right-idle
-  rotate: false
-  xy: 968, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/testEntity-right2
-  rotate: false
-  xy: 968, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-right0
+entity/player/default-right1
   rotate: false
   xy: 1008, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-right0
-  rotate: false
-  xy: 1008, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-right1
+entity/player/default-right10
   rotate: false
   xy: 1048, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-right1
-  rotate: false
-  xy: 1048, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-right10
+entity/player/default-right11
   rotate: false
   xy: 1088, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-right10
-  rotate: false
-  xy: 1088, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-right11
+entity/player/default-right2
   rotate: false
   xy: 1128, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-right11
-  rotate: false
-  xy: 1128, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-right3
+entity/player/default-right3
   rotate: false
   xy: 1168, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-right3
-  rotate: false
-  xy: 1168, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-right4
+entity/player/default-right4
   rotate: false
   xy: 1208, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-right4
-  rotate: false
-  xy: 1208, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-right5
+entity/player/default-right5
   rotate: false
   xy: 1248, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-right5
-  rotate: false
-  xy: 1248, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-right6
+entity/player/default-right6
   rotate: false
   xy: 1288, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-right6
-  rotate: false
-  xy: 1288, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-right7
+entity/player/default-right7
   rotate: false
   xy: 1328, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-right7
-  rotate: false
-  xy: 1328, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-right8
+entity/player/default-right8
   rotate: false
   xy: 1368, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-right8
-  rotate: false
-  xy: 1368, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-right9
+entity/player/default-right9
   rotate: false
   xy: 1408, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-right9
-  rotate: false
-  xy: 1408, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-up-idle
+entity/player/default-up0
   rotate: false
   xy: 1448, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/player-up1
-  rotate: false
-  xy: 1448, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/testEntity-up-idle
-  rotate: false
-  xy: 1448, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/testEntity-up1
-  rotate: false
-  xy: 1448, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-up0
+entity/player/default-up1
   rotate: false
   xy: 1488, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-up0
+entity/player/idle-up0
   rotate: false
   xy: 1488, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/player-up10
+entity/player/default-up10
   rotate: false
   xy: 1528, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-up10
-  rotate: false
-  xy: 1528, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-up11
+entity/player/default-up11
   rotate: false
   xy: 1568, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-up11
-  rotate: false
-  xy: 1568, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-up2
+entity/player/default-up2
   rotate: false
   xy: 1608, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-up2
-  rotate: false
-  xy: 1608, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-up3
+entity/player/default-up3
   rotate: false
   xy: 1648, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-up3
-  rotate: false
-  xy: 1648, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-up4
+entity/player/default-up4
   rotate: false
   xy: 1688, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-up4
-  rotate: false
-  xy: 1688, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-up5
+entity/player/default-up5
   rotate: false
   xy: 1728, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-up5
-  rotate: false
-  xy: 1728, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-up6
+entity/player/default-up6
   rotate: false
   xy: 1768, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-up6
-  rotate: false
-  xy: 1768, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-up7
+entity/player/default-up7
   rotate: false
   xy: 1808, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-up7
-  rotate: false
-  xy: 1808, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-up8
+entity/player/default-up8
   rotate: false
   xy: 1848, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-up8
-  rotate: false
-  xy: 1848, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player-up9
+entity/player/default-up9
   rotate: false
   xy: 1888, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/testEntity-up9
+entity/player/idle-left0
   rotate: false
-  xy: 1888, 20
+  xy: 1928, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-entity/player-dash0
+entity/player/idle-right0
+  rotate: false
+  xy: 1968, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+entity/player/dash-down0
   rotate: false
   xy: 8, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-entity/testEntity-dash0
+entity/player/dash-left0
+  rotate: false
+  xy: 8, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+entity/player/dash-right0
+  rotate: false
+  xy: 8, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+entity/player/dash-up0
   rotate: false
   xy: 8, 2
   size: 16, 16
@@ -937,7 +606,7 @@ entity/testEntity-dash0
   offset: 0, 0
   index: -1
 
-atlas3.png
+atlas4.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none

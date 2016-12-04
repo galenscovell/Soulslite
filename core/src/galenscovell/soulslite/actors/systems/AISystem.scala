@@ -11,12 +11,12 @@ import galenscovell.soulslite.processing.pathfinding._
 
 
 class AISystem(family: Family, aStarGraph: AStarGraph) extends IteratingSystem(family) {
+  private val agentStateMapper: ComponentMapper[AgentStateComponent] =
+    ComponentMapper.getFor(classOf[AgentStateComponent])
   private val bodyMapper: ComponentMapper[BodyComponent] =
     ComponentMapper.getFor(classOf[BodyComponent])
   private val pathMapper: ComponentMapper[PathComponent] =
     ComponentMapper.getFor(classOf[PathComponent])
-  private val stateMapper: ComponentMapper[StateComponent] =
-    ComponentMapper.getFor(classOf[StateComponent])
   private val steeringMapper: ComponentMapper[SteeringComponent] =
     ComponentMapper.getFor(classOf[SteeringComponent])
 
@@ -26,12 +26,12 @@ class AISystem(family: Family, aStarGraph: AStarGraph) extends IteratingSystem(f
 
 
   override def processEntity(entity: Entity, deltaTime: Float): Unit = {
+    val agentStateComponent: AgentStateComponent = agentStateMapper.get(entity)
     val body: Body = bodyMapper.get(entity).body
     val pathComponent: PathComponent = pathMapper.get(entity)
-    val stateComponent: StateComponent = stateMapper.get(entity)
     val steeringComponent: SteeringComponent = steeringMapper.get(entity)
 
-    pathfind(body, pathComponent, stateComponent, steeringComponent)
+    pathfind(body, pathComponent, agentStateComponent, steeringComponent)
 
     if (steeringComponent.hasBehavior) {
       steeringComponent.getBehavior.calculateSteering(steerOutput)
@@ -41,7 +41,7 @@ class AISystem(family: Family, aStarGraph: AStarGraph) extends IteratingSystem(f
     }
   }
 
-  def pathfind(body: Body, pathComponent: PathComponent, stateComponent: StateComponent,
+  def pathfind(body: Body, pathComponent: PathComponent, stateComponent: AgentStateComponent,
                steeringComponent: SteeringComponent): Unit = {
     val entityPosition: Vector2 = body.getPosition
 

@@ -4,34 +4,56 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.graphics.g2d.{Animation, TextureRegion}
 import galenscovell.soulslite.util.Resources
 
+import scala.collection.mutable
+
 
 class AnimationComponent(entityType: String) extends Component {
-  private val up: Animation = createAnimation("up", 12)
-  private val down: Animation = createAnimation("down", 12)
-  private val left: Animation = createAnimation("left", 12)
-  private val right: Animation = createAnimation("right", 12)
-  private val dash: Animation = createAnimation("dash", 1)
-
+  private val animations: Map[String, Animation] = createAnimations()
   var stateTime: Float = 0.0f
 
 
-  private def createAnimation(t: String, n: Int): Animation = {
-    val textures: Array[TextureRegion] = new Array[TextureRegion](n)
+  private def createAnimations(): Map[String, Animation] = {
+    val map: mutable.Map[String, Animation] = mutable.Map[String, Animation]()
 
-    for (i: Int <- 0 until n) {
-      textures(i) = Resources.atlas.findRegion("entity/" + entityType + "-" + t + i.toString)
+    val animationInfo: mutable.Map[String, Int] = mutable.Map[String, Int]()
+    entityType match {
+      case "player" =>
+        animationInfo.put("default-up", 12)
+        animationInfo.put("default-down", 12)
+        animationInfo.put("default-left", 12)
+        animationInfo.put("default-right", 12)
+        animationInfo.put("dash-up", 1)
+        animationInfo.put("dash-down", 1)
+        animationInfo.put("dash-left", 1)
+        animationInfo.put("dash-right", 1)
+        animationInfo.put("idle-up", 1)
+        animationInfo.put("idle-down", 1)
+        animationInfo.put("idle-left", 1)
+        animationInfo.put("idle-right", 1)
+      case "charge" =>
+        animationInfo.put("default-left", 8)
+        animationInfo.put("default-right", 8)
+        animationInfo.put("idle-left", 1)
+        animationInfo.put("idle-right", 1)
+      case _ =>
     }
 
-    new Animation(0.1f, textures:_*)
+    for ((key, value) <- animationInfo) {
+      val textures: Array[TextureRegion] = new Array[TextureRegion](value)
+      for (i: Int <- 0 until value) {
+        textures(i) = Resources.atlas.findRegion(s"entity/$entityType/$key$i")
+      }
+      map.put(key, new Animation(0.1f, textures:_*))
+    }
+
+    map.toMap
   }
 
-  def getCurrentAnimation(direction: Int): Animation = {
-    direction match {
-      case 0 => right
-      case 1 => up
-      case 2 => left
-      case 3 => down
-      case 4 => dash
+  def getCurrentAnimation(agentStateName: String, movementStateName: String, isIdle: Boolean): Animation = {
+    if (isIdle) {
+      animations(s"idle-$movementStateName")
+    } else {
+      animations(s"$agentStateName-$movementStateName")
     }
   }
 }
