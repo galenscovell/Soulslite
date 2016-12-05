@@ -1,5 +1,6 @@
 package galenscovell.soulslite.ui.screens
 
+import aurelienribon.tweenengine.TweenManager
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx._
 import com.badlogic.gdx.controllers.Controllers
@@ -23,6 +24,7 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
   private val worldCamera: OrthographicCamera =
     new OrthographicCamera(Constants.SCREEN_X, Constants.SCREEN_Y)
 
+  private val tweenManager: TweenManager = new TweenManager
   private val controllerHandler: ControllerHandler = new ControllerHandler
   private val physics: Physics = new Physics
   private val tileMap: TileMap = new TileMap(physics.getWorld, "test")
@@ -196,6 +198,9 @@ class GameScreen(root: Main) extends AbstractScreen(root) {
     pathfindDebugRenderer.render(entityBatch)
     entityBatch.end()
     tileMap.renderOverlapLayer()
+
+    // Update tweens
+    tweenManager.update(delta)
 
     physics.debugRender(worldCamera.combined)
 

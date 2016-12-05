@@ -70,11 +70,11 @@ class PlayerSystem(family: Family, controllerHandler: ControllerHandler) extends
       val normalizedVelocity: Vector2 = startVelocity.nor()
       if (stateFrameRatio > 0.35f) {
         bodyComponent.body.applyForceToCenter(
-          normalizedVelocity.x * (7000 * stateFrameRatio), normalizedVelocity.y * (7000 * stateFrameRatio), true
+          normalizedVelocity.x * (8000 * stateFrameRatio), normalizedVelocity.y * (8000 * stateFrameRatio), true
         )
       } else if (stateFrameRatio > 0) {
         bodyComponent.body.applyForceToCenter(
-          normalizedVelocity.x * (-1000 * stateFrameRatio), normalizedVelocity.y * (-1000 * stateFrameRatio), true
+          normalizedVelocity.x * (-1600 * stateFrameRatio), normalizedVelocity.y * (-1600 * stateFrameRatio), true
         )
       }
 

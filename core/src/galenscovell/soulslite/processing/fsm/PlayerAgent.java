@@ -39,7 +39,7 @@ public enum PlayerAgent implements State<AgentStateComponent> {
         @Override
         public void enter(AgentStateComponent agentStateComponent) {
             System.out.println("Player DASH");
-            frames = 14f;
+            frames = 16f;
             currentFrame = frames;
         }
 

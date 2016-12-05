@@ -5,14 +5,14 @@ filter: Nearest,Nearest
 repeat: none
 current_marker
   rotate: false
-  xy: 8, 45
+  xy: 2, 45
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 blue_button0_np
   rotate: false
-  xy: 8, 7
+  xy: 2, 7
   size: 36, 36
   split: 4, 4, 4, 4
   orig: 36, 36
@@ -20,7 +20,7 @@ blue_button0_np
   index: -1
 blue_button1_np
   rotate: false
-  xy: 96, 89
+  xy: 84, 89
   size: 36, 36
   split: 4, 4, 4, 4
   orig: 36, 36
@@ -28,7 +28,7 @@ blue_button1_np
   index: -1
 blue_button_bars0_np
   rotate: false
-  xy: 52, 7
+  xy: 40, 7
   size: 36, 36
   split: 4, 4, 4, 4
   orig: 36, 36
@@ -36,7 +36,7 @@ blue_button_bars0_np
   index: -1
 blue_button_bars1_np
   rotate: false
-  xy: 96, 51
+  xy: 84, 51
   size: 36, 36
   split: 4, 4, 4, 4
   orig: 36, 36
@@ -44,7 +44,7 @@ blue_button_bars1_np
   index: -1
 empty_button0_np
   rotate: false
-  xy: 140, 89
+  xy: 122, 89
   size: 36, 36
   split: 4, 4, 4, 4
   orig: 36, 36
@@ -52,7 +52,7 @@ empty_button0_np
   index: -1
 green_button0_np
   rotate: false
-  xy: 96, 13
+  xy: 122, 51
   size: 36, 36
   split: 4, 4, 4, 4
   orig: 36, 36
@@ -60,7 +60,7 @@ green_button0_np
   index: -1
 green_button1_np
   rotate: false
-  xy: 140, 51
+  xy: 160, 89
   size: 36, 36
   split: 4, 4, 4, 4
   orig: 36, 36
@@ -68,42 +68,42 @@ green_button1_np
   index: -1
 test-box-0
   rotate: false
-  xy: 184, 93
+  xy: 160, 55
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 test-box-1
   rotate: false
-  xy: 140, 17
+  xy: 198, 93
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 test-box-2
   rotate: false
-  xy: 184, 59
+  xy: 78, 11
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 test-box-3
   rotate: false
-  xy: 224, 93
+  xy: 112, 17
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 test-box-4
   rotate: false
-  xy: 224, 59
+  xy: 146, 17
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 test-np-0
   rotate: false
-  xy: 264, 101
+  xy: 180, 29
   size: 24, 24
   split: 0, 0, 0, 0
   orig: 24, 24
@@ -111,39 +111,7 @@ test-np-0
   index: -1
 test-np-1
   rotate: false
-  xy: 264, 75
-  size: 24, 24
-  split: 0, 0, 0, 0
-  orig: 24, 24
-  offset: 0, 0
-  index: -1
-test-np-2
-  rotate: false
-  xy: 296, 101
-  size: 24, 24
-  split: 0, 0, 0, 0
-  orig: 24, 24
-  offset: 0, 0
-  index: -1
-test-np-3
-  rotate: false
-  xy: 296, 75
-  size: 24, 24
-  split: 0, 0, 0, 0
-  orig: 24, 24
-  offset: 0, 0
-  index: -1
-test-np-4
-  rotate: false
-  xy: 328, 101
-  size: 24, 24
-  split: 0, 0, 0, 0
-  orig: 24, 24
-  offset: 0, 0
-  index: -1
-text-field-bg-np
-  rotate: false
-  xy: 328, 101
+  xy: 180, 3
   size: 24, 24
   split: 0, 0, 0, 0
   orig: 24, 24
@@ -151,15 +119,47 @@ text-field-bg-np
   index: -1
 font-cursor-np
   rotate: false
-  xy: 328, 75
+  xy: 232, 101
   size: 3, 24
   split: 0, 0, 0, 0
   orig: 3, 24
   offset: 0, 0
   index: -1
+test-np-2
+  rotate: false
+  xy: 194, 63
+  size: 24, 24
+  split: 0, 0, 0, 0
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+test-np-3
+  rotate: false
+  xy: 220, 67
+  size: 24, 24
+  split: 0, 0, 0, 0
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+test-np-4
+  rotate: false
+  xy: 206, 37
+  size: 24, 24
+  split: 0, 0, 0, 0
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+text-field-bg-np
+  rotate: false
+  xy: 206, 37
+  size: 24, 24
+  split: 0, 0, 0, 0
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
 vertical-bar-empty-np
   rotate: false
-  xy: 8, 2
+  xy: 84, 46
   size: 14, 3
   split: 0, 0, 0, 0
   orig: 14, 3
@@ -167,7 +167,7 @@ vertical-bar-empty-np
   index: -1
 vertical-bar-fill-np
   rotate: false
-  xy: 96, 8
+  xy: 2, 2
   size: 14, 3
   split: 0, 0, 0, 0
   orig: 14, 3
@@ -175,7 +175,7 @@ vertical-bar-fill-np
   index: -1
 horizontal-bar-empty-np
   rotate: false
-  xy: 184, 51
+  xy: 232, 93
   size: 3, 6
   split: 0, 0, 0, 0
   orig: 3, 6
@@ -183,7 +183,7 @@ horizontal-bar-empty-np
   index: -1
 horizontal-bar-fill-np
   rotate: false
-  xy: 180, 43
+  xy: 194, 55
   size: 3, 6
   split: 0, 0, 0, 0
   orig: 3, 6
@@ -196,14 +196,14 @@ filter: Nearest,Nearest
 repeat: none
 entity/charge/left-idle
   rotate: false
-  xy: 8, 2
+  xy: 2, 2
   size: 40, 40
   orig: 40, 40
   offset: 0, 0
   index: -1
 entity/charge/right-idle
   rotate: false
-  xy: 56, 2
+  xy: 44, 2
   size: 40, 40
   orig: 40, 40
   offset: 0, 0
@@ -213,394 +213,436 @@ atlas3.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+entity/player/dash-right0
+  rotate: false
+  xy: 2, 86
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+entity/player/dash-right1
+  rotate: false
+  xy: 2, 44
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+entity/player/dash-right2
+  rotate: false
+  xy: 2, 2
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+entity/player/dash-right3
+  rotate: false
+  xy: 44, 86
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+entity/player/dash-right4
+  rotate: false
+  xy: 44, 44
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+entity/player/dash-right5
+  rotate: false
+  xy: 44, 2
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+entity/player/dash-right6
+  rotate: false
+  xy: 86, 86
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
 entity/player/default-down0
   rotate: false
-  xy: 8, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 86, 44
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-down1
   rotate: false
-  xy: 48, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 86, 2
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-down10
   rotate: false
-  xy: 88, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 128, 86
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-down11
   rotate: false
-  xy: 128, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 128, 44
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-down2
   rotate: false
-  xy: 168, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player/idle-down0
-  rotate: false
-  xy: 168, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 128, 2
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-down3
   rotate: false
-  xy: 208, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 170, 86
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-down4
   rotate: false
-  xy: 248, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 170, 44
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-down5
   rotate: false
-  xy: 288, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 170, 2
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-down6
   rotate: false
-  xy: 328, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 212, 86
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-down7
   rotate: false
-  xy: 368, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 212, 44
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-down8
   rotate: false
-  xy: 408, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 212, 2
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-down9
   rotate: false
-  xy: 448, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 254, 86
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-left0
   rotate: false
-  xy: 488, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 254, 44
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-left1
   rotate: false
-  xy: 528, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 254, 2
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-left10
   rotate: false
-  xy: 568, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 296, 86
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-left11
   rotate: false
-  xy: 608, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 296, 44
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-left2
   rotate: false
-  xy: 648, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 296, 2
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-left3
   rotate: false
-  xy: 688, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 338, 86
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-left4
   rotate: false
-  xy: 728, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 338, 44
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-left5
   rotate: false
-  xy: 768, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 338, 2
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-left6
   rotate: false
-  xy: 808, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 380, 86
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-left7
   rotate: false
-  xy: 848, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 380, 44
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-left8
   rotate: false
-  xy: 888, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 380, 2
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-left9
   rotate: false
-  xy: 928, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 422, 86
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-right0
   rotate: false
-  xy: 968, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 422, 44
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-right1
   rotate: false
-  xy: 1008, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 422, 2
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-right10
   rotate: false
-  xy: 1048, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 464, 86
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-right11
   rotate: false
-  xy: 1088, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 464, 44
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-right2
   rotate: false
-  xy: 1128, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 464, 2
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-right3
   rotate: false
-  xy: 1168, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 506, 86
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-right4
   rotate: false
-  xy: 1208, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 506, 44
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-right5
   rotate: false
-  xy: 1248, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 506, 2
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-right6
   rotate: false
-  xy: 1288, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 548, 86
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-right7
   rotate: false
-  xy: 1328, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 548, 44
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-right8
   rotate: false
-  xy: 1368, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 548, 2
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-right9
   rotate: false
-  xy: 1408, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 590, 86
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-up0
   rotate: false
-  xy: 1448, 20
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-entity/player/default-up1
-  rotate: false
-  xy: 1488, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 590, 44
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/idle-up0
   rotate: false
-  xy: 1488, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 590, 44
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+entity/player/default-up1
+  rotate: false
+  xy: 590, 2
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-up10
   rotate: false
-  xy: 1528, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 632, 86
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-up11
   rotate: false
-  xy: 1568, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 632, 44
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-up2
   rotate: false
-  xy: 1608, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 632, 2
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-up3
   rotate: false
-  xy: 1648, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 674, 86
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-up4
   rotate: false
-  xy: 1688, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 674, 44
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-up5
   rotate: false
-  xy: 1728, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 674, 2
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-up6
   rotate: false
-  xy: 1768, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 716, 86
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-up7
   rotate: false
-  xy: 1808, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 716, 44
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-up8
   rotate: false
-  xy: 1848, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 716, 2
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/default-up9
   rotate: false
-  xy: 1888, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 758, 86
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+entity/player/idle-down0
+  rotate: false
+  xy: 758, 44
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/idle-left0
   rotate: false
-  xy: 1928, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 758, 2
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/idle-right0
   rotate: false
-  xy: 1968, 20
-  size: 32, 32
-  orig: 32, 32
+  xy: 800, 86
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
 entity/player/dash-down0
   rotate: false
-  xy: 8, 2
+  xy: 800, 68
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 entity/player/dash-left0
   rotate: false
-  xy: 8, 2
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-entity/player/dash-right0
-  rotate: false
-  xy: 8, 2
+  xy: 800, 68
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 entity/player/dash-up0
   rotate: false
-  xy: 8, 2
+  xy: 800, 68
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -612,126 +654,126 @@ filter: Nearest,Nearest
 repeat: none
 tiles/test-cliffside-top
   rotate: false
-  xy: 8, 164
+  xy: 2, 38
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 tiles/test-cliffside-topleft
   rotate: false
-  xy: 8, 146
+  xy: 2, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 tiles/test-cliffside-topright
   rotate: false
-  xy: 32, 164
+  xy: 20, 38
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 tiles/test-cliffside
   rotate: false
-  xy: 8, 128
+  xy: 2, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 tiles/test-empty
   rotate: false
-  xy: 32, 146
+  xy: 20, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 tiles/test-floor-0
   rotate: false
-  xy: 8, 110
+  xy: 38, 38
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 tiles/test-floor-1
   rotate: false
-  xy: 32, 128
+  xy: 20, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 tiles/test-floor-2
   rotate: false
-  xy: 8, 92
+  xy: 38, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 tiles/test-floor-3
   rotate: false
-  xy: 32, 110
+  xy: 56, 38
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 tiles/test-floor-left
   rotate: false
-  xy: 8, 74
+  xy: 38, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 tiles/test-floor-right
   rotate: false
-  xy: 32, 92
+  xy: 56, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 tiles/test-floor-top
   rotate: false
-  xy: 8, 56
+  xy: 74, 38
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 tiles/test-floor-topleft
   rotate: false
-  xy: 32, 74
+  xy: 56, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 tiles/test-floor-topright
   rotate: false
-  xy: 8, 38
+  xy: 74, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 tiles/test-pillar-bottom-0
   rotate: false
-  xy: 32, 56
+  xy: 92, 38
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 tiles/test-pillar-middle
   rotate: false
-  xy: 8, 20
+  xy: 110, 38
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 tiles/test-pillar-surface-0
   rotate: false
-  xy: 32, 38
+  xy: 74, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 tiles/test-pillar-top-0
   rotate: false
-  xy: 8, 2
+  xy: 92, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

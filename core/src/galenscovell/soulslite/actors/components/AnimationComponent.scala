@@ -9,6 +9,7 @@ import scala.collection.mutable
 
 class AnimationComponent(entityType: String) extends Component {
   private val animations: Map[String, Animation] = createAnimations()
+  private var currentAnimation: Animation = _
   var stateTime: Float = 0.0f
 
 
@@ -25,7 +26,7 @@ class AnimationComponent(entityType: String) extends Component {
         animationInfo.put("dash-up", 1)
         animationInfo.put("dash-down", 1)
         animationInfo.put("dash-left", 1)
-        animationInfo.put("dash-right", 1)
+        animationInfo.put("dash-right", 7)
         animationInfo.put("idle-up", 1)
         animationInfo.put("idle-down", 1)
         animationInfo.put("idle-left", 1)
@@ -43,17 +44,29 @@ class AnimationComponent(entityType: String) extends Component {
       for (i: Int <- 0 until value) {
         textures(i) = Resources.atlas.findRegion(s"entity/$entityType/$key$i")
       }
-      map.put(key, new Animation(0.1f, textures:_*))
+      map.put(key, new Animation(1f / value, textures:_*))
     }
 
     map.toMap
   }
 
+  def currentAnimationComplete: Boolean = {
+    currentAnimation.isAnimationFinished(stateTime)
+  }
+
   def getCurrentAnimation(agentStateName: String, movementStateName: String, isIdle: Boolean): Animation = {
-    if (isIdle) {
+    val newAnimation: Animation = if (isIdle) {
       animations(s"idle-$movementStateName")
     } else {
       animations(s"$agentStateName-$movementStateName")
     }
+
+    // If new animation is different, reset stateframe and set new animation as current
+    if (newAnimation != currentAnimation) {
+      stateTime = 0f
+      currentAnimation = newAnimation
+    }
+
+    currentAnimation
   }
 }
