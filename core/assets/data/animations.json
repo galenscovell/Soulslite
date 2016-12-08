@@ -1,0 +1,36 @@
+{
+    "player": {
+        "default": {
+            "up": [0, 0],
+            "down": [0, 0],
+            "left": [0, 0],
+            "right": [0, 0],
+            "frames": 12,
+            "speed": 0.1
+        },
+        "dash": {
+            "up": [0, 0],
+            "down": [0, 0],
+            "left": [0, 0],
+            "right": [0, 0],
+            "frames": 1,
+            "speed": 0.1
+        },
+        "idle": {
+            "up": [0, 0],
+            "down": [0, 0],
+            "left": [0, 0],
+            "right": [0, 0],
+            "frames": 1,
+            "speed": 0
+        },
+        "attack1": {
+            "up": [0, 0],
+            "down": [0, 0],
+            "left": [0, 0],
+            "right": [13, 10],
+            "frames": 4,
+            "speed": 0.1
+        }
+    }
+}

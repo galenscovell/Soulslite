@@ -1,61 +1,59 @@
 package galenscovell.soulslite.actors.components
 
 import com.badlogic.ashley.core.Component
-import com.badlogic.gdx.graphics.g2d.{Animation, TextureRegion}
-import galenscovell.soulslite.util.Resources
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.utils.{JsonReader, JsonValue}
+import galenscovell.soulslite.graphics.EntityAnimation
 
 import scala.collection.mutable
 
 
 class AnimationComponent(entityType: String) extends Component {
-  private val animations: Map[String, Animation] = createAnimations()
-  private var currentAnimation: Animation = _
+  private val animations: Map[String, EntityAnimation] = fromJsonForEntity(entityType)
+  private var currentAnimation: EntityAnimation = _
   var stateTime: Float = 0.0f
 
 
-  private def createAnimations(): Map[String, Animation] = {
-    val map: mutable.Map[String, Animation] = mutable.Map[String, Animation]()
+  def fromJsonForEntity(entityName: String): Map[String, EntityAnimation] = {
+    val map: mutable.Map[String, EntityAnimation] = mutable.Map[String, EntityAnimation]()
 
-    val animationInfo: mutable.Map[String, Int] = mutable.Map[String, Int]()
-    entityType match {
-      case "player" =>
-        animationInfo.put("default-up", 12)
-        animationInfo.put("default-down", 12)
-        animationInfo.put("default-left", 12)
-        animationInfo.put("default-right", 12)
-        animationInfo.put("dash-up", 1)
-        animationInfo.put("dash-down", 1)
-        animationInfo.put("dash-left", 1)
-        animationInfo.put("dash-right", 7)
-        animationInfo.put("idle-up", 1)
-        animationInfo.put("idle-down", 1)
-        animationInfo.put("idle-left", 1)
-        animationInfo.put("idle-right", 1)
-      case "charge" =>
-        animationInfo.put("default-left", 8)
-        animationInfo.put("default-right", 8)
-        animationInfo.put("idle-left", 1)
-        animationInfo.put("idle-right", 1)
-      case _ =>
-    }
+    val fullJson: JsonValue = new JsonReader().parse(Gdx.files.internal("data/animations.json"))
+    val entityJson: JsonValue = fullJson.get(entityName)
 
-    for ((key, value) <- animationInfo) {
-      val textures: Array[TextureRegion] = new Array[TextureRegion](value)
-      for (i: Int <- 0 until value) {
-        textures(i) = Resources.atlas.findRegion(s"entity/$entityType/$key$i")
+    // Iterate across animations (default, dash, idle, etc.)
+    for (a: Int <- 0 until entityJson.size) {
+      val animation: JsonValue = entityJson.get(a)
+      val animationName: String = animation.name
+      val frames: Int = animation.getInt("frames")
+      val speed: Float = animation.getFloat("speed")
+
+      // Create animations for each available direction
+      for (dir: String <- List("up", "down", "left", "right")) {
+
+        // If entity has animation for a given direction, construct new animation object for it
+        if (animation.has(dir)) {
+          val fullName: String = s"$animationName-$dir"
+          println(fullName)
+          val offsetArray: JsonValue = animation.get(dir)
+          val offsetVector: Vector2 = new Vector2(offsetArray.getInt(0), offsetArray.getInt(1))
+          val entityAnimation: EntityAnimation = new EntityAnimation(entityName, fullName, frames, speed, offsetVector)
+
+          // Add new animation to entity animation map under its name ("anim-dir")
+          map.put(fullName, entityAnimation)
+        }
       }
-      map.put(key, new Animation(1f / value, textures:_*))
     }
 
     map.toMap
   }
 
   def currentAnimationComplete: Boolean = {
-    currentAnimation.isAnimationFinished(stateTime)
+    currentAnimation.getAnimation.isAnimationFinished(stateTime)
   }
 
-  def getCurrentAnimation(agentStateName: String, movementStateName: String, isIdle: Boolean): Animation = {
-    val newAnimation: Animation = if (isIdle) {
+  def getCurrentAnimation(agentStateName: String, movementStateName: String, isIdle: Boolean): EntityAnimation = {
+    val newAnimation: EntityAnimation = if (isIdle) {
       animations(s"idle-$movementStateName")
     } else {
       animations(s"$agentStateName-$movementStateName")
